@@ -9,18 +9,16 @@
 /* Begin PBXBuildFile section */
 		52E477332875999600884F2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477322875999600884F2B /* AppDelegate.swift */; };
 		52E477352875999600884F2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477342875999600884F2B /* SceneDelegate.swift */; };
-		52E477372875999600884F2B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* ViewController.swift */; };
+		52E477372875999600884F2B /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* InitialViewController.swift */; };
 		52E4773C2875999900884F2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E4773B2875999900884F2B /* Assets.xcassets */; };
-		52E4773F2875999900884F2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E4773D2875999900884F2B /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		52E4772F2875999600884F2B /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E477322875999600884F2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E477342875999600884F2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		52E477362875999600884F2B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		52E477362875999600884F2B /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		52E4773B2875999900884F2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		52E4773E2875999900884F2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52E477402875999900884F2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,9 +54,8 @@
 			children = (
 				52E477322875999600884F2B /* AppDelegate.swift */,
 				52E477342875999600884F2B /* SceneDelegate.swift */,
-				52E477362875999600884F2B /* ViewController.swift */,
+				52E477362875999600884F2B /* InitialViewController.swift */,
 				52E4773B2875999900884F2B /* Assets.xcassets */,
-				52E4773D2875999900884F2B /* LaunchScreen.storyboard */,
 				52E477402875999900884F2B /* Info.plist */,
 			);
 			path = QuizApp;
@@ -123,7 +120,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52E4773F2875999900884F2B /* LaunchScreen.storyboard in Resources */,
 				52E4773C2875999900884F2B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,24 +151,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52E477372875999600884F2B /* ViewController.swift in Sources */,
+				52E477372875999600884F2B /* InitialViewController.swift in Sources */,
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		52E4773D2875999900884F2B /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				52E4773E2875999900884F2B /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		52E477412875999900884F2B /* Debug */ = {
