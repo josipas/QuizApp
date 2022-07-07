@@ -1,9 +1,9 @@
-enum CustomInputFieldType {
+public enum CustomInputFieldType {
 
     case email
     case password
 
-    var description: String {
+    public var description: String? {
         switch self {
         case .email:
             return "Email"

@@ -1,11 +1,11 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class CustomInputFieldView: UIView {
 
-    private var inputTextField: UITextField!
-    private var showPasswordButton: UIButton!
-    private var type: CustomInputFieldType!
+    var inputTextField: UITextField!
+    var showPasswordButton: UIButton!
+    var type: CustomInputFieldType?
 
     init(type: CustomInputFieldType) {
         super.init(frame: .zero)
@@ -25,7 +25,7 @@ class CustomInputFieldView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        layer.cornerRadius = bounds.height / 2
+        self.layer.cornerRadius = self.bounds.height / 2
     }
 
 }
@@ -34,13 +34,18 @@ extension CustomInputFieldView: ConstructViewsProtocol {
 
     func createViews() {
         inputTextField = UITextField()
-        addSubview(inputTextField)
-
         showPasswordButton = UIButton()
-        addSubview(showPasswordButton)
+
+        self.addSubview(inputTextField)
+        self.addSubview(showPasswordButton)
     }
 
     func styleViews() {
+        guard
+            let type = type,
+            let placeholder = type.description
+        else { return }
+
         backgroundColor = .white.withAlphaComponent(0.3)
 
         showPasswordButton.isHidden = true
@@ -53,7 +58,7 @@ extension CustomInputFieldView: ConstructViewsProtocol {
         inputTextField.tintColor = .white
         inputTextField.font = .systemFont(ofSize: 16, weight: .bold)
         inputTextField.attributedPlaceholder = NSAttributedString(
-            string: type.description,
+            string: placeholder,
             attributes: [
                 NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.6),
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
@@ -66,10 +71,6 @@ extension CustomInputFieldView: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
-        snp.makeConstraints {
-            $0.height.equalTo(45)
-        }
-
         inputTextField.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.trailing.equalTo(showPasswordButton.snp.leading).offset(-20)
@@ -111,12 +112,12 @@ extension CustomInputFieldView: ConstructViewsProtocol {
 extension CustomInputFieldView: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.white.cgColor
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.white.cgColor
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        layer.borderWidth = 0
+        self.layer.borderWidth = 0
 
         if type == .password {
             showPasswordButton.isHidden = true
