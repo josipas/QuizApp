@@ -1,11 +1,11 @@
-import SnapKit
 import UIKit
+import SnapKit
 
 class CustomInputFieldView: UIView {
 
-    var inputTextField: UITextField!
-    var showPasswordButton: UIButton!
-    var type: CustomInputFieldType?
+    private var inputTextField: UITextField!
+    private var showPasswordButton: UIButton!
+    private var type: CustomInputFieldType!
 
     init(type: CustomInputFieldType) {
         super.init(frame: .zero)
@@ -25,7 +25,7 @@ class CustomInputFieldView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.layer.cornerRadius = self.bounds.height / 2
+        layer.cornerRadius = bounds.height / 2
     }
 
 }
@@ -34,17 +34,14 @@ extension CustomInputFieldView: ConstructViewsProtocol {
 
     func createViews() {
         inputTextField = UITextField()
-        showPasswordButton = UIButton()
+        addSubview(inputTextField)
 
-        self.addSubview(inputTextField)
-        self.addSubview(showPasswordButton)
+        showPasswordButton = UIButton()
+        addSubview(showPasswordButton)
     }
 
     func styleViews() {
-        guard
-            let type = type,
-            let placeholder = type.description
-        else { return }
+        guard let placeholder = type.description else { return }
 
         backgroundColor = .white.withAlphaComponent(0.3)
 
@@ -71,6 +68,10 @@ extension CustomInputFieldView: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
+        snp.makeConstraints {
+            $0.height.equalTo(45)
+        }
+
         inputTextField.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.trailing.equalTo(showPasswordButton.snp.leading).offset(-20)
@@ -112,12 +113,12 @@ extension CustomInputFieldView: ConstructViewsProtocol {
 extension CustomInputFieldView: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.white.cgColor
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.white.cgColor
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.layer.borderWidth = 0
+        layer.borderWidth = 0
 
         if type == .password {
             showPasswordButton.isHidden = true
