@@ -10,19 +10,21 @@
 		5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */; };
 		526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */; };
 		526755242876D7FC00DFA655 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 526755232876D7FC00DFA655 /* SnapKit */; };
+		526755262876EEFF00DFA655 /* CustomInputFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755252876EEFF00DFA655 /* CustomInputFieldType.swift */; };
 		52E477332875999600884F2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477322875999600884F2B /* AppDelegate.swift */; };
 		52E477352875999600884F2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477342875999600884F2B /* SceneDelegate.swift */; };
-		52E477372875999600884F2B /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* InitialViewController.swift */; };
+		52E477372875999600884F2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* LoginViewController.swift */; };
 		52E4773C2875999900884F2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E4773B2875999900884F2B /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldView.swift; sourceTree = "<group>"; };
 		526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
+		526755252876EEFF00DFA655 /* CustomInputFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldType.swift; sourceTree = "<group>"; };
 		52E4772F2875999600884F2B /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E477322875999600884F2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E477342875999600884F2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		52E477362875999600884F2B /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		52E477362875999600884F2B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		52E4773B2875999900884F2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52E477402875999900884F2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,7 +64,8 @@
 				52E477342875999600884F2B /* SceneDelegate.swift */,
 				526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */,
 				5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */,
-				52E477362875999600884F2B /* InitialViewController.swift */,
+				526755252876EEFF00DFA655 /* CustomInputFieldType.swift */,
+				52E477362875999600884F2B /* LoginViewController.swift */,
 				52E4773B2875999900884F2B /* Assets.xcassets */,
 				52E477402875999900884F2B /* Info.plist */,
 			);
@@ -166,7 +169,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */,
-				52E477372875999600884F2B /* InitialViewController.swift in Sources */,
+				52E477372875999600884F2B /* LoginViewController.swift in Sources */,
+				526755262876EEFF00DFA655 /* CustomInputFieldType.swift in Sources */,
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
 				5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */,
