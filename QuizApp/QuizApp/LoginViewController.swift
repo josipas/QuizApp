@@ -20,6 +20,9 @@ extension LoginViewController: ConstructViewsProtocol {
     func createViews() {
         emailInputTextField = CustomInputFieldView(type: .email)
         passwordInputTextField = CustomInputFieldView(type: .password)
+
+        view.addSubview(emailInputTextField)
+        view.addSubview(passwordInputTextField)
     }
 
     func styleViews() {
