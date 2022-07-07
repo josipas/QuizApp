@@ -3,6 +3,7 @@ import UIKit
 class LoginViewController: UIViewController {
 
     private let gradient = CAGradientLayer()
+    private var titleLabel: UILabel!
     private var emailInputTextField: CustomInputFieldView!
     private var passwordInputTextField: CustomInputFieldView!
 
@@ -32,6 +33,9 @@ class LoginViewController: UIViewController {
 extension LoginViewController: ConstructViewsProtocol {
 
     func createViews() {
+        titleLabel = UILabel()
+        view.addSubview(titleLabel)
+
         emailInputTextField = CustomInputFieldView(type: .email)
         view.addSubview(emailInputTextField)
 
@@ -40,11 +44,20 @@ extension LoginViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
+        titleLabel.textColor = .white
+        titleLabel.font = .systemFont(ofSize: 32, weight: .bold)
+        titleLabel.textAlignment = .center
+        titleLabel.text = "PopQuiz"
     }
 
     func defineLayoutForViews() {
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(80)
+            $0.trailing.leading.equalToSuperview().inset(30)
+        }
+
         emailInputTextField.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(140)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(140)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
 
