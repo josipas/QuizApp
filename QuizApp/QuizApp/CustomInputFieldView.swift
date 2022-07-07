@@ -110,6 +110,7 @@ extension CustomInputFieldView: ConstructViewsProtocol {
 }
 
 extension CustomInputFieldView: UITextFieldDelegate {
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.white.cgColor
@@ -122,4 +123,5 @@ extension CustomInputFieldView: UITextFieldDelegate {
             showPasswordButton.isHidden = true
         }
     }
+
 }

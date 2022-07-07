@@ -9,7 +9,6 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         createViews()
-        addSubviews()
         styleViews()
         defineLayoutForViews()
     }
@@ -21,11 +20,6 @@ extension LoginViewController: ConstructViewsProtocol {
     func createViews() {
         emailInputTextField = CustomInputFieldView(type: .email)
         passwordInputTextField = CustomInputFieldView(type: .password)
-    }
-
-    func addSubviews() {
-        view.addSubview(emailInputTextField)
-        view.addSubview(passwordInputTextField)
     }
 
     func styleViews() {
