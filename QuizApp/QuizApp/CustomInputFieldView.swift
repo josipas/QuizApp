@@ -41,8 +41,6 @@ extension CustomInputFieldView: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        guard let placeholder = type.description else { return }
-
         backgroundColor = .white.withAlphaComponent(0.3)
 
         showPasswordButton.isHidden = true
@@ -55,7 +53,7 @@ extension CustomInputFieldView: ConstructViewsProtocol {
         inputTextField.tintColor = .white
         inputTextField.font = .systemFont(ofSize: 16, weight: .bold)
         inputTextField.attributedPlaceholder = NSAttributedString(
-            string: placeholder,
+            string: type.description,
             attributes: [
                 NSAttributedString.Key.foregroundColor: UIColor.white.withAlphaComponent(0.6),
                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)

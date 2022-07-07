@@ -3,7 +3,7 @@ enum CustomInputFieldType {
     case email
     case password
 
-    var description: String? {
+    var description: String {
         switch self {
         case .email:
             return "Email"
