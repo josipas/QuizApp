@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */; };
 		526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */; };
+		526755242876D7FC00DFA655 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 526755232876D7FC00DFA655 /* SnapKit */; };
 		52E477332875999600884F2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477322875999600884F2B /* AppDelegate.swift */; };
 		52E477352875999600884F2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477342875999600884F2B /* SceneDelegate.swift */; };
 		52E477372875999600884F2B /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* InitialViewController.swift */; };
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526755242876D7FC00DFA655 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +86,9 @@
 			dependencies = (
 			);
 			name = QuizApp;
+			packageProductDependencies = (
+				526755232876D7FC00DFA655 /* SnapKit */,
+			);
 			productName = QuizApp;
 			productReference = 52E4772F2875999600884F2B /* QuizApp.app */;
 			productType = "com.apple.product-type.application";
@@ -112,6 +117,9 @@
 				Base,
 			);
 			mainGroup = 52E477262875999600884F2B;
+			packageReferences = (
+				526755222876D7FC00DFA655 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 52E477302875999600884F2B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -358,6 +366,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		526755222876D7FC00DFA655 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		526755232876D7FC00DFA655 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 526755222876D7FC00DFA655 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 52E477272875999600884F2B /* Project object */;
 }
