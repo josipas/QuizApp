@@ -3,6 +3,9 @@ import UIKit
 class LoginViewController: UIViewController {
 
     private let gradient = CAGradientLayer()
+
+    private var viewModel: LoginViewModel!
+
     private var scrollView: UIScrollView!
     private var contentView: UIView!
     private var titleLabel: UILabel!
@@ -11,6 +14,16 @@ class LoginViewController: UIViewController {
     private var loginButton: UIButton!
     private var email: String!
     private var password: String!
+
+    init(viewModel: LoginViewModel) {
+        super.init(nibName: nil, bundle: nil)
+
+        self.viewModel = viewModel
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,21 +139,9 @@ extension LoginViewController: CustomInputFieldDelegate {
     func reportChanges(_ type: CustomInputFieldType, _ text: String) {
         switch type {
         case .email:
-            email = text
+            viewModel.onEmailChange(email: text)
         case .password:
-            password = text
-        }
-
-        if
-            let email = email,
-            !email.isEmpty,
-            let password = password,
-            !password.isEmpty {
-                loginButton.isEnabled = true
-                loginButton.alpha = 1
-        } else {
-            loginButton.isEnabled = false
-            loginButton.alpha = 0.6
+            viewModel.onPasswordChange(password: text)
         }
     }
 
