@@ -12,8 +12,6 @@ class LoginViewController: UIViewController {
     private var emailInputTextField: CustomInputFieldView!
     private var passwordInputTextField: CustomInputFieldView!
     private var loginButton: UIButton!
-    private var email: String!
-    private var password: String!
 
     init(viewModel: LoginViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -37,6 +35,12 @@ class LoginViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
+        loginButton.layer.cornerRadius = loginButton.bounds.height / 2
+
+        configureGradient()
+    }
+
+    private func configureGradient() {
         let startColor = UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor
         let endColor = UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
 
@@ -46,12 +50,20 @@ class LoginViewController: UIViewController {
         gradient.endPoint = CGPoint(x: 0.25, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
-
-        loginButton.layer.cornerRadius = loginButton.bounds.height / 2
     }
 
-    func addActions() {
+    private func addActions() {
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+    }
+
+    private func enableLoginButton() {
+        loginButton.isEnabled = true
+        loginButton.alpha = 1
+    }
+
+    private func disableLoginButton() {
+        loginButton.isEnabled = false
+        loginButton.alpha = 0.6
     }
 
     @objc private func loginButtonTapped() {
@@ -142,6 +154,16 @@ extension LoginViewController: CustomInputFieldDelegate {
             viewModel.onEmailChange(email: text)
         case .password:
             viewModel.onPasswordChange(password: text)
+        }
+
+        if
+            let email = email,
+            !email.isEmpty,
+            let password = password,
+            !password.isEmpty {
+                enableLoginButton()
+        } else {
+            disableLoginButton()
         }
     }
 
