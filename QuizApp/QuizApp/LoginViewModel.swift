@@ -38,6 +38,7 @@ class LoginViewModel {
             errorMessage = ""
             isButtonEnabled = true
         } else {
+            isButtonEnabled = false
             errorMessage = "Please enter valid data"
         }
     }
