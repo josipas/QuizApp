@@ -126,6 +126,8 @@ extension LoginViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
+        navigationController?.isNavigationBarHidden = true
+
         emailInputTextField.delegate = self
         passwordInputTextField.delegate = self
 
