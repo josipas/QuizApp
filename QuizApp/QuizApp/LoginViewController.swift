@@ -92,7 +92,7 @@ class LoginViewController: UIViewController {
     }
 
     @objc private func loginButtonTapped() {
-        print("Login button tapped!")
+        viewModel.onButtonClick()
     }
 
 }

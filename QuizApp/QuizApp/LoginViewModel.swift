@@ -12,13 +12,21 @@ class LoginViewModel {
     func onEmailChange(email: String) {
         self.email = email
 
+        errorMessage =  ""
+
         validate()
     }
 
     func onPasswordChange(password: String) {
         self.password = password
 
+        errorMessage = ""
+
         validate()
+    }
+
+    func onButtonClick() {
+        authorize()
     }
 
     private func validateEmail() -> Bool {
@@ -34,19 +42,11 @@ class LoginViewModel {
         let isEmailValid = validateEmail()
         let isPasswordValid = validatePassword()
 
-        if isEmailValid && isPasswordValid {
-            errorMessage = ""
-            isButtonEnabled = true
-        } else if isEmailValid && !isPasswordValid {
-            isButtonEnabled = false
-            errorMessage = "Please enter correct password"
-        } else if !isEmailValid && isPasswordValid {
-            isButtonEnabled = false
-            errorMessage = "Please enter correct email"
-        } else {
-            isButtonEnabled = false
-            errorMessage = "Please enter correct email and password"
-        }
+        isButtonEnabled = isEmailValid && isPasswordValid
+    }
+
+    private func authorize() {
+        errorMessage = "Please enter correct email and password"
     }
 
 }
