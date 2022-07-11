@@ -14,7 +14,6 @@ class LoginViewController: UIViewController {
     private var passwordInputTextField: CustomInputFieldView!
     private var errorLabel: UILabel!
     private var loginButton: UIButton!
-
     private var cancellables = Set<AnyCancellable>()
 
     init(viewModel: LoginViewModel) {
@@ -127,11 +126,11 @@ extension LoginViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        stackView.axis = .vertical
-        stackView.spacing = 18
-
         emailInputTextField.delegate = self
         passwordInputTextField.delegate = self
+
+        stackView.axis = .vertical
+        stackView.spacing = 18
 
         titleLabel.textColor = .white
         titleLabel.font = .systemFont(ofSize: 32, weight: .bold)
@@ -160,8 +159,8 @@ extension LoginViewController: ConstructViewsProtocol {
         }
 
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top).inset(80)
-            $0.trailing.leading.equalToSuperview()
+            $0.top.equalToSuperview().inset(80)
+            $0.trailing.leading.equalToSuperview().inset(30)
         }
 
         stackView.snp.makeConstraints {
