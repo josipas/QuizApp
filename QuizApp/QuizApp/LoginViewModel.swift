@@ -35,7 +35,7 @@ class LoginViewModel {
     }
 
     private func validatePassword() -> Bool {
-        return password.count >= 8 ? true : false
+        password.count >= 8
     }
 
     private func validate() {
