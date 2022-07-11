@@ -41,7 +41,6 @@ class LoginViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         loginButton.layer.cornerRadius = loginButton.bounds.height / 2
-        scrollView.frame = view.bounds
 
         configureGradient()
     }
@@ -139,7 +138,7 @@ extension LoginViewController: ConstructViewsProtocol {
         titleLabel.textAlignment = .center
         titleLabel.text = "PopQuiz"
 
-        errorLabel.textColor = .white
+        errorLabel.textColor = .systemRed
         errorLabel.numberOfLines = 0
 
         loginButton.backgroundColor = .white

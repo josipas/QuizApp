@@ -27,7 +27,7 @@ class LoginViewModel {
     }
 
     private func validatePassword() -> Bool {
-        return password.count < 8 ? false : true
+        return password.count >= 8 ? true : false
     }
 
     private func validate() {
@@ -37,9 +37,15 @@ class LoginViewModel {
         if isEmailValid && isPasswordValid {
             errorMessage = ""
             isButtonEnabled = true
+        } else if isEmailValid && !isPasswordValid {
+            isButtonEnabled = false
+            errorMessage = "Please enter correct password"
+        } else if !isEmailValid && isPasswordValid {
+            isButtonEnabled = false
+            errorMessage = "Please enter correct email"
         } else {
             isButtonEnabled = false
-            errorMessage = "Please enter valid data"
+            errorMessage = "Please enter correct email and password"
         }
     }
 
