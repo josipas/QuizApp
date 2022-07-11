@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E40F287824E60047E2F2 /* LoginViewModel.swift */; };
+		5224E412287C31390047E2F2 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E411287C31390047E2F2 /* Coordinator.swift */; };
+		5224E414287C3FAC0047E2F2 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E413287C3FAC0047E2F2 /* CoordinatorProtocol.swift */; };
 		5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */; };
 		526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */; };
 		526755242876D7FC00DFA655 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 526755232876D7FC00DFA655 /* SnapKit */; };
@@ -20,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		5224E40F287824E60047E2F2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		5224E411287C31390047E2F2 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		5224E413287C3FAC0047E2F2 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldView.swift; sourceTree = "<group>"; };
 		526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		526755252876EEFF00DFA655 /* CustomInputFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldType.swift; sourceTree = "<group>"; };
@@ -65,6 +69,8 @@
 				52E477322875999600884F2B /* AppDelegate.swift */,
 				52E477342875999600884F2B /* SceneDelegate.swift */,
 				526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */,
+				5224E411287C31390047E2F2 /* Coordinator.swift */,
+				5224E413287C3FAC0047E2F2 /* CoordinatorProtocol.swift */,
 				5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */,
 				526755252876EEFF00DFA655 /* CustomInputFieldType.swift */,
 				5224E40F287824E60047E2F2 /* LoginViewModel.swift */,
@@ -171,10 +177,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5224E412287C31390047E2F2 /* Coordinator.swift in Sources */,
 				526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */,
 				52E477372875999600884F2B /* LoginViewController.swift in Sources */,
 				526755262876EEFF00DFA655 /* CustomInputFieldType.swift in Sources */,
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
+				5224E414287C3FAC0047E2F2 /* CoordinatorProtocol.swift in Sources */,
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
 				5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */,
 				5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */,
