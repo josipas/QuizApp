@@ -150,8 +150,9 @@ extension LoginViewController: CustomInputFieldDelegate {
             let email = email,
             !email.isEmpty,
             let password = password,
-            !password.isEmpty {
-                enableLoginButton()
+            !password.isEmpty
+        {
+            enableLoginButton()
         } else {
             disableLoginButton()
         }
