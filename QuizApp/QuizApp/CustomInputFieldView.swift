@@ -1,11 +1,17 @@
 import UIKit
 import SnapKit
 
+protocol CustomInputFieldDelegate: AnyObject {
+    func reportChanges(_ type: CustomInputFieldType, _ text: String)
+}
+
 class CustomInputFieldView: UIView {
 
     private var inputTextField: UITextField!
     private var showPasswordButton: UIButton!
     private var type: CustomInputFieldType!
+
+    weak var delegate: CustomInputFieldDelegate?
 
     init(type: CustomInputFieldType) {
         super.init(frame: .zero)
@@ -94,6 +100,8 @@ extension CustomInputFieldView: ConstructViewsProtocol {
         if !text.isEmpty && type == .password {
             showPasswordButton.isHidden = false
         }
+
+        delegate?.reportChanges(type, text)
     }
 
     @objc private func tappedShowPasswordButton() {
