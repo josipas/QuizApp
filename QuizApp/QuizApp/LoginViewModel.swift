@@ -3,6 +3,8 @@ import UIKit
 
 class LoginViewModel {
 
+    private let loginUseCase = LoginUseCase()
+
     @Published var isButtonEnabled = false
     @Published var errorMessage = ""
 
@@ -26,7 +28,9 @@ class LoginViewModel {
     }
 
     func onButtonClick() {
-        authorize()
+        Task(priority: .background) {
+            await authorize()
+        }
     }
 
     private func validateEmail() -> Bool {
@@ -35,7 +39,7 @@ class LoginViewModel {
     }
 
     private func validatePassword() -> Bool {
-        password.count >= 8
+        password.count >= 6
     }
 
     private func validate() {
@@ -45,8 +49,14 @@ class LoginViewModel {
         isButtonEnabled = isEmailValid && isPasswordValid
     }
 
-    private func authorize() {
-        errorMessage = "Please enter correct email and password"
+    private func authorize() async {
+        let accessToken = await loginUseCase.login(username: email, password: password)
+
+        if let accessToken = accessToken {
+            print(accessToken)
+        } else {
+            errorMessage = "Please enter correct email and password"
+        }
     }
 
 }

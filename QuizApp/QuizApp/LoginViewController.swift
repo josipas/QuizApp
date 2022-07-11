@@ -59,8 +59,10 @@ class LoginViewController: UIViewController {
             .sink { [weak self] errorMessage in
                 guard let self = self else { return }
 
-                self.errorLabel.isHidden = errorMessage.isEmpty
-                self.errorLabel.text = errorMessage
+                DispatchQueue.main.async {
+                    self.errorLabel.isHidden = errorMessage.isEmpty
+                    self.errorLabel.text = errorMessage
+                }
             }
             .store(in: &cancellables)
     }
