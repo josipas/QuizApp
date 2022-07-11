@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 
 class LoginViewController: UIViewController {
@@ -5,13 +6,16 @@ class LoginViewController: UIViewController {
     private let gradient = CAGradientLayer()
 
     private var viewModel: LoginViewModel!
-
     private var scrollView: UIScrollView!
     private var contentView: UIView!
+    private var stackView: UIStackView!
     private var titleLabel: UILabel!
     private var emailInputTextField: CustomInputFieldView!
     private var passwordInputTextField: CustomInputFieldView!
+    private var errorLabel: UILabel!
     private var loginButton: UIButton!
+
+    private var cancellables = Set<AnyCancellable>()
 
     init(viewModel: LoginViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -30,14 +34,37 @@ class LoginViewController: UIViewController {
         styleViews()
         defineLayoutForViews()
         addActions()
+        bindViewModel()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         loginButton.layer.cornerRadius = loginButton.bounds.height / 2
+        scrollView.frame = view.bounds
 
         configureGradient()
+    }
+
+    private func bindViewModel() {
+        viewModel
+            .$isButtonEnabled
+            .sink { [weak self] isLoginEnabled in
+                guard let self = self else { return }
+
+                isLoginEnabled ? self.enableLoginButton() : self.disableLoginButton()
+            }
+            .store(in: &cancellables)
+
+        viewModel
+            .$errorMessage
+            .sink { [weak self] errorMessage in
+                guard let self = self else { return }
+
+                self.errorLabel.isHidden = errorMessage.isEmpty
+                self.errorLabel.text = errorMessage
+            }
+            .store(in: &cancellables)
     }
 
     private func configureGradient() {
@@ -81,20 +108,29 @@ extension LoginViewController: ConstructViewsProtocol {
         contentView = UIView()
         scrollView.addSubview(contentView)
 
+        stackView = UIStackView()
+        contentView.addSubview(stackView)
+
         titleLabel = UILabel()
         contentView.addSubview(titleLabel)
 
         emailInputTextField = CustomInputFieldView(type: .email)
-        contentView.addSubview(emailInputTextField)
+        stackView.addArrangedSubview(emailInputTextField)
 
         passwordInputTextField = CustomInputFieldView(type: .password)
-        contentView.addSubview(passwordInputTextField)
+        stackView.addArrangedSubview(passwordInputTextField)
+
+        errorLabel = UILabel()
+        stackView.addArrangedSubview(errorLabel)
 
         loginButton = UIButton()
-        contentView.addSubview(loginButton)
+        stackView.addArrangedSubview(loginButton)
     }
 
     func styleViews() {
+        stackView.axis = .vertical
+        stackView.spacing = 18
+
         emailInputTextField.delegate = self
         passwordInputTextField.delegate = self
 
@@ -102,6 +138,9 @@ extension LoginViewController: ConstructViewsProtocol {
         titleLabel.font = .systemFont(ofSize: 32, weight: .bold)
         titleLabel.textAlignment = .center
         titleLabel.text = "PopQuiz"
+
+        errorLabel.textColor = .white
+        errorLabel.numberOfLines = 0
 
         loginButton.backgroundColor = .white
         loginButton.setTitleColor(UIColor(red: 0.387, green: 0.16, blue: 0.871, alpha: 1), for: .normal)
@@ -122,24 +161,16 @@ extension LoginViewController: ConstructViewsProtocol {
         }
 
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(80)
-            $0.trailing.leading.equalToSuperview().inset(30)
+            $0.top.equalTo(contentView.snp.top).inset(80)
+            $0.trailing.leading.equalToSuperview()
         }
 
-        emailInputTextField.snp.makeConstraints {
+        stackView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(140)
-            $0.leading.trailing.equalToSuperview().inset(30)
-        }
-
-        passwordInputTextField.snp.makeConstraints {
-            $0.top.equalTo(emailInputTextField.snp.bottom).offset(18)
-            $0.leading.trailing.equalToSuperview().inset(30)
+            $0.trailing.leading.bottom.equalToSuperview().inset(30)
         }
 
         loginButton.snp.makeConstraints {
-            $0.top.equalTo(passwordInputTextField.snp.bottom).offset(18)
-            $0.leading.trailing.equalToSuperview().inset(30)
-            $0.bottom.equalToSuperview().inset(100)
             $0.height.equalTo(45)
         }
     }
@@ -154,16 +185,6 @@ extension LoginViewController: CustomInputFieldDelegate {
             viewModel.onEmailChange(email: text)
         case .password:
             viewModel.onPasswordChange(password: text)
-        }
-
-        if
-            let email = email,
-            !email.isEmpty,
-            let password = password,
-            !password.isEmpty {
-                enableLoginButton()
-        } else {
-            disableLoginButton()
         }
     }
 
