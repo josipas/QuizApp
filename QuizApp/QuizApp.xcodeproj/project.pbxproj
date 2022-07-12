@@ -10,17 +10,16 @@
 		5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E40F287824E60047E2F2 /* LoginViewModel.swift */; };
 		5224E412287C31390047E2F2 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E411287C31390047E2F2 /* Coordinator.swift */; };
 		5224E414287C3FAC0047E2F2 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E413287C3FAC0047E2F2 /* CoordinatorProtocol.swift */; };
-		5224E416287C5B2C0047E2F2 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E415287C5B2C0047E2F2 /* LoginUseCase.swift */; };
-		5224E418287C5B530047E2F2 /* LoginDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E417287C5B530047E2F2 /* LoginDataSource.swift */; };
 		5224E41A287C5BC20047E2F2 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E419287C5BC20047E2F2 /* LoginClient.swift */; };
 		5224E41C287C63660047E2F2 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E41B287C63660047E2F2 /* RequestError.swift */; };
 		5224E420287C6CD20047E2F2 /* LoginResponseClientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E41F287C6CD20047E2F2 /* LoginResponseClientModel.swift */; };
 		5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E421287D6BD10047E2F2 /* AppDependencies.swift */; };
-		5224E42A287D73970047E2F2 /* LoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E429287D73970047E2F2 /* LoginResponseModel.swift */; };
-		5224E42C287D73F30047E2F2 /* LoginResponseDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E42B287D73F30047E2F2 /* LoginResponseDataModel.swift */; };
 		5224E42F287DADC60047E2F2 /* SecurityStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E42E287DADC60047E2F2 /* SecurityStorage.swift */; };
 		5224E432287DB0CD0047E2F2 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 5224E431287DB0CD0047E2F2 /* KeychainAccess */; };
 		5224E439287DB39A0047E2F2 /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E438287DB39A0047E2F2 /* UserDataSource.swift */; };
+		5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E43B287DC3B60047E2F2 /* LoginDataSource.swift */; };
+		5224E43E287DC3CB0047E2F2 /* LoginResponseDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E43D287DC3CB0047E2F2 /* LoginResponseDataModel.swift */; };
+		5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E440287DC3E30047E2F2 /* LoginUseCase.swift */; };
 		5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */; };
 		526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */; };
 		526755242876D7FC00DFA655 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 526755232876D7FC00DFA655 /* SnapKit */; };
@@ -35,16 +34,15 @@
 		5224E40F287824E60047E2F2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		5224E411287C31390047E2F2 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		5224E413287C3FAC0047E2F2 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
-		5224E415287C5B2C0047E2F2 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
-		5224E417287C5B530047E2F2 /* LoginDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataSource.swift; sourceTree = "<group>"; };
 		5224E419287C5BC20047E2F2 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
 		5224E41B287C63660047E2F2 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		5224E41F287C6CD20047E2F2 /* LoginResponseClientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseClientModel.swift; sourceTree = "<group>"; };
 		5224E421287D6BD10047E2F2 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
-		5224E429287D73970047E2F2 /* LoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseModel.swift; sourceTree = "<group>"; };
-		5224E42B287D73F30047E2F2 /* LoginResponseDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseDataModel.swift; sourceTree = "<group>"; };
 		5224E42E287DADC60047E2F2 /* SecurityStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityStorage.swift; sourceTree = "<group>"; };
 		5224E438287DB39A0047E2F2 /* UserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSource.swift; sourceTree = "<group>"; };
+		5224E43B287DC3B60047E2F2 /* LoginDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginDataSource.swift; sourceTree = "<group>"; };
+		5224E43D287DC3CB0047E2F2 /* LoginResponseDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponseDataModel.swift; sourceTree = "<group>"; };
+		5224E440287DC3E30047E2F2 /* LoginUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldView.swift; sourceTree = "<group>"; };
 		526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		526755252876EEFF00DFA655 /* CustomInputFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldType.swift; sourceTree = "<group>"; };
@@ -134,8 +132,7 @@
 		5224E433287DB2BB0047E2F2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				5224E415287C5B2C0047E2F2 /* LoginUseCase.swift */,
-				5224E429287D73970047E2F2 /* LoginResponseModel.swift */,
+				5224E440287DC3E30047E2F2 /* LoginUseCase.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -143,8 +140,8 @@
 		5224E437287DB3810047E2F2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				5224E417287C5B530047E2F2 /* LoginDataSource.swift */,
-				5224E42B287D73F30047E2F2 /* LoginResponseDataModel.swift */,
+				5224E43D287DC3CB0047E2F2 /* LoginResponseDataModel.swift */,
+				5224E43B287DC3B60047E2F2 /* LoginDataSource.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -291,24 +288,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5224E42C287D73F30047E2F2 /* LoginResponseDataModel.swift in Sources */,
 				5224E41A287C5BC20047E2F2 /* LoginClient.swift in Sources */,
 				5224E412287C31390047E2F2 /* Coordinator.swift in Sources */,
 				526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */,
-				5224E418287C5B530047E2F2 /* LoginDataSource.swift in Sources */,
 				52E477372875999600884F2B /* LoginViewController.swift in Sources */,
 				526755262876EEFF00DFA655 /* CustomInputFieldType.swift in Sources */,
+				5224E43E287DC3CB0047E2F2 /* LoginResponseDataModel.swift in Sources */,
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
+				5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */,
 				5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */,
+				5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */,
 				5224E414287C3FAC0047E2F2 /* CoordinatorProtocol.swift in Sources */,
 				5224E439287DB39A0047E2F2 /* UserDataSource.swift in Sources */,
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
 				5224E41C287C63660047E2F2 /* RequestError.swift in Sources */,
 				5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */,
-				5224E42A287D73970047E2F2 /* LoginResponseModel.swift in Sources */,
 				5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */,
 				5224E42F287DADC60047E2F2 /* SecurityStorage.swift in Sources */,
-				5224E416287C5B2C0047E2F2 /* LoginUseCase.swift in Sources */,
 				5224E420287C6CD20047E2F2 /* LoginResponseClientModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
