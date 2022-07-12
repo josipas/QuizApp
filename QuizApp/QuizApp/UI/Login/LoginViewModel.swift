@@ -3,11 +3,17 @@ import UIKit
 
 class LoginViewModel {
 
+    private let loginUseCase: LoginUseCaseProtocol
+
     @Published var isButtonEnabled = false
     @Published var errorMessage = ""
 
     private var email = ""
     private var password = ""
+
+    init(loginUseCase: LoginUseCaseProtocol) {
+        self.loginUseCase = loginUseCase
+    }
 
     func onEmailChange(email: String) {
         self.email = email
@@ -25,8 +31,19 @@ class LoginViewModel {
         validate()
     }
 
+    @MainActor
     func onButtonClick() {
-        authorize()
+        errorMessage = ""
+        Task(priority: .background) {
+            do {
+                let response = try await loginUseCase.login(username: email, password: password)
+                print("token", response.accessToken)
+            } catch RequestError.unauthorized {
+                errorMessage = "Invalid credentials!"
+            } catch {
+                errorMessage = "General error!"
+            }
+        }
     }
 
     private func validateEmail() -> Bool {
@@ -35,7 +52,7 @@ class LoginViewModel {
     }
 
     private func validatePassword() -> Bool {
-        password.count >= 8
+        password.count >= 6
     }
 
     private func validate() {
@@ -43,10 +60,6 @@ class LoginViewModel {
         let isPasswordValid = validatePassword()
 
         isButtonEnabled = isEmailValid && isPasswordValid
-    }
-
-    private func authorize() {
-        errorMessage = "Please enter correct email and password"
     }
 
 }

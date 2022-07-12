@@ -61,6 +61,7 @@ class LoginViewController: UIViewController {
 
                 self.errorLabel.isHidden = errorMessage.isEmpty
                 self.errorLabel.text = errorMessage
+
             }
             .store(in: &cancellables)
     }
