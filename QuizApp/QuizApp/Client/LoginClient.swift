@@ -6,6 +6,13 @@ protocol LoginClientProtocol {
 
 }
 
+private struct LoginRequest: Codable {
+
+    let password: String
+    let username: String
+
+}
+
 class LoginClient: LoginClientProtocol {
 
     private let baseUrl: String
@@ -19,15 +26,10 @@ class LoginClient: LoginClientProtocol {
             throw RequestError.invalidUrl
         }
 
-        let body = [
-            "password": password,
-            "username": username
-        ]
-
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        request.httpBody = try? JSONEncoder().encode(body)
+        request.httpBody = try? JSONEncoder().encode(LoginRequest(password: password, username: username))
 
         guard let (data, response) = try? await URLSession.shared.data(for: request) else {
             throw RequestError.serverError

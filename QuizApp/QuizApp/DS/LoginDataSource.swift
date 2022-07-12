@@ -15,7 +15,11 @@ class LoginDataSource: LoginDataSourceProtocol {
     }
 
     func login(username: String, password: String) async throws -> LoginResponseDataModel {
-        LoginResponseDataModel.init(fromModel: try await loginClient.login(username: username, password: password))
+        LoginResponseDataModel(
+            accessToken: try await loginClient.login(
+                username: username,
+                password: password)
+            .accessToken)
     }
 
 }

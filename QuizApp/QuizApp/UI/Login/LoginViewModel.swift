@@ -41,7 +41,7 @@ class LoginViewModel {
             } catch RequestError.unauthorized {
                 errorMessage = "Invalid credentials!"
             } catch {
-                errorMessage = "General error! \(error)"
+                errorMessage = "General error!"
             }
         }
     }

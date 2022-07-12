@@ -12,9 +12,7 @@ class Coordinator: CoordinatorProtocol {
     func showLogIn() {
         let logInViewController = LoginViewController(
             viewModel: LoginViewModel(
-                loginUseCase: appDependencies.loginUseCase
-            )
-        )
+                loginUseCase: appDependencies.loginUseCase))
 
         navigationController.pushViewController(logInViewController, animated: true)
     }

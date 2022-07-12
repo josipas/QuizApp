@@ -1,4 +1,5 @@
 enum RequestError: Error {
+
     case invalidUrl
     case serverError
     case noDataError
@@ -9,4 +10,5 @@ enum RequestError: Error {
     case badRequest
     case responseError
     case unknownError
+
 }
