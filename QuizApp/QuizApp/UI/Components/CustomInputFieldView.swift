@@ -58,6 +58,8 @@ extension CustomInputFieldView: ConstructViewsProtocol {
         inputTextField.textColor = .white
         inputTextField.tintColor = .white
         inputTextField.font = .systemFont(ofSize: 16, weight: .bold)
+        inputTextField.autocorrectionType = .no
+        inputTextField.autocapitalizationType = .none
         inputTextField.attributedPlaceholder = NSAttributedString(
             string: type.description,
             attributes: [
