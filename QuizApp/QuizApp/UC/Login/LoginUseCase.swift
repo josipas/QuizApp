@@ -2,20 +2,22 @@ import Foundation
 
 protocol LoginUseCaseProtocol {
 
-    func login(username: String, password: String) async throws -> LoginResponseModel
+    func login(username: String, password: String) async throws
 
 }
 
 class LoginUseCase: LoginUseCaseProtocol {
 
     private let loginDataSource: LoginDataSourceProtocol
+    private let userDataSource: UserDataSourceProtocol
 
-    init(loginDataSource: LoginDataSourceProtocol) {
+    init(loginDataSource: LoginDataSourceProtocol, userDataSource: UserDataSourceProtocol) {
         self.loginDataSource = loginDataSource
+        self.userDataSource = userDataSource
     }
 
-    func login(username: String, password: String) async throws -> LoginResponseModel {
-        LoginResponseModel(
+    func login(username: String, password: String) async throws {
+        userDataSource.saveAccessToken(
             accessToken: try await loginDataSource.login(
                 username: username,
                 password: password)
