@@ -1,6 +1,6 @@
 protocol UserDataSourceProtocol {
 
-    func saveAccessToken(accessToken: String)
+    func save(accessToken: String)
 
     var accessToken: String? { get }
 
@@ -18,8 +18,8 @@ class UserDataSource: UserDataSourceProtocol {
         self.securityStorage = securityStorage
     }
 
-    func saveAccessToken(accessToken: String) {
-        securityStorage.saveAccessToken(accessToken: accessToken)
+    func save(accessToken: String) {
+        securityStorage.save(accessToken: accessToken)
     }
 
 }
