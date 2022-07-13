@@ -6,6 +6,10 @@ class AppDependencies {
         LoginUseCase(loginDataSource: loginDataSource, userDataSource: userDataSource)
     }()
 
+    lazy var tokenCheckDataSource: TokenCheckDataSourceProtocol = {
+        TokenCheckDataSource(securityStorage: securityStorage, tokenCheckClient: tokenCheckClient)
+    }()
+
     lazy var userDataSource: UserDataSourceProtocol = {
         UserDataSource(securityStorage: securityStorage)
     }()
@@ -16,6 +20,10 @@ class AppDependencies {
 
     lazy var loginClient: LoginClientProtocol = {
         LoginClient(baseUrl: baseUrl)
+    }()
+
+    lazy var tokenCheckClient: TokenCheckClientProtocol = {
+        TokenCheckClient(baseUrl: baseUrl)
     }()
 
     lazy var securityStorage: SecurityStorageProtocol = {

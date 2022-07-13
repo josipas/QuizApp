@@ -11,14 +11,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = scene as? UIWindowScene else { return }
 
+        let appDependencies = AppDependencies()
         let navigationController = UINavigationController()
-        let coordinator = Coordinator(navigationController: navigationController)
+        let coordinator = Coordinator(navigationController: navigationController, appDependencies: appDependencies)
 
-        coordinator.showLogIn()
+        Task(priority: .background) {
+            do {
+                let isTokenValid = try await appDependencies.tokenCheckDataSource.isAccessTokenValid()
 
-        window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+
+                    isTokenValid ? coordinator.showUserViewController() : coordinator.showLogIn()
+
+                    self.window = UIWindow(windowScene: windowScene)
+                    self.window?.rootViewController = navigationController
+                    self.window?.makeKeyAndVisible()
+                }
+            } catch {
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
