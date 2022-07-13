@@ -36,8 +36,7 @@ class LoginViewModel {
         errorMessage = ""
         Task(priority: .background) {
             do {
-                let response = try await loginUseCase.login(username: email, password: password)
-                print("token", response.accessToken)
+                try await loginUseCase.login(username: email, password: password)
             } catch RequestError.unauthorized {
                 errorMessage = "Invalid credentials!"
             } catch {
