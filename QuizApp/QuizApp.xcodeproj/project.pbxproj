@@ -22,7 +22,6 @@
 		5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E440287DC3E30047E2F2 /* LoginUseCase.swift */; };
 		5224E445287EB8BD0047E2F2 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E444287EB8BD0047E2F2 /* UserViewController.swift */; };
 		5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */; };
-		5224E44C287EF2EA0047E2F2 /* TokenCheckDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E44B287EF2EA0047E2F2 /* TokenCheckDataSource.swift */; };
 		5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */; };
 		526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */; };
 		526755242876D7FC00DFA655 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 526755232876D7FC00DFA655 /* SnapKit */; };
@@ -48,7 +47,6 @@
 		5224E440287DC3E30047E2F2 /* LoginUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		5224E444287EB8BD0047E2F2 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCheckClient.swift; sourceTree = "<group>"; };
-		5224E44B287EF2EA0047E2F2 /* TokenCheckDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCheckDataSource.swift; sourceTree = "<group>"; };
 		5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldView.swift; sourceTree = "<group>"; };
 		526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		526755252876EEFF00DFA655 /* CustomInputFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldType.swift; sourceTree = "<group>"; };
@@ -104,7 +102,6 @@
 		5224E426287D719D0047E2F2 /* DS */ = {
 			isa = PBXGroup;
 			children = (
-				5224E44A287EF2C50047E2F2 /* TokenCheck */,
 				5224E43A287DB39E0047E2F2 /* User */,
 				5224E437287DB3810047E2F2 /* Login */,
 			);
@@ -175,14 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */,
-			);
-			path = TokenCheck;
-			sourceTree = "<group>";
-		};
-		5224E44A287EF2C50047E2F2 /* TokenCheck */ = {
-			isa = PBXGroup;
-			children = (
-				5224E44B287EF2EA0047E2F2 /* TokenCheckDataSource.swift */,
 			);
 			path = TokenCheck;
 			sourceTree = "<group>";
@@ -328,7 +317,6 @@
 				526755262876EEFF00DFA655 /* CustomInputFieldType.swift in Sources */,
 				5224E43E287DC3CB0047E2F2 /* LoginResponseDataModel.swift in Sources */,
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
-				5224E44C287EF2EA0047E2F2 /* TokenCheckDataSource.swift in Sources */,
 				5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */,
 				5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */,
 				5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */,

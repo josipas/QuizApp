@@ -2,7 +2,17 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    let appDependencies = AppDependencies()
+    let navigationController = UINavigationController()
+
+    var coordinator: Coordinator!
     var window: UIWindow?
+
+    override init() {
+        super.init()
+
+        coordinator = Coordinator(navigationController: navigationController, appDependencies: appDependencies)
+    }
 
     func scene(
         _ scene: UIScene,
@@ -11,24 +21,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = scene as? UIWindowScene else { return }
 
-        let appDependencies = AppDependencies()
-        let navigationController = UINavigationController()
-        let coordinator = Coordinator(navigationController: navigationController, appDependencies: appDependencies)
+        navigationController.setNavigationBarHidden(true, animated: false)
+
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
 
         Task(priority: .background) {
             do {
-                let isTokenValid = try await appDependencies.tokenCheckDataSource.isAccessTokenValid()
+                try await appDependencies.tokenCheckClient.validateToken()
 
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
 
-                    isTokenValid ? coordinator.showUserViewController() : coordinator.showLogIn()
-
-                    self.window = UIWindow(windowScene: windowScene)
-                    self.window?.rootViewController = navigationController
-                    self.window?.makeKeyAndVisible()
+                    self.coordinator.showUserViewController()
                 }
             } catch {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+
+                    self.coordinator.showLogIn()
+                }
             }
         }
     }
