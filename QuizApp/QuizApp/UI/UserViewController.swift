@@ -17,8 +17,6 @@ extension UserViewController: ConstructViewsProtocol {
 
     func styleViews() {
         view.backgroundColor = .blue
-
-        navigationController?.isNavigationBarHidden = false
     }
 
     func defineLayoutForViews() {
