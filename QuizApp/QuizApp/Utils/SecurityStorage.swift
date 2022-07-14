@@ -6,6 +6,8 @@ protocol SecurityStorageProtocol {
 
     var accessToken: String? { get }
 
+    func clear()
+
 }
 
 class SecurityStorage: SecurityStorageProtocol {
@@ -19,6 +21,10 @@ class SecurityStorage: SecurityStorageProtocol {
 
     func save(accessToken: String) {
         keychain[accessTokenKey] = accessToken
+    }
+
+    func clear() {
+        keychain[accessTokenKey] = nil
     }
 
 }

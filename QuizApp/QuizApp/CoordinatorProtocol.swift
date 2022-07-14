@@ -4,4 +4,6 @@ protocol CoordinatorProtocol {
 
     func showUserViewController()
 
+    func logOut()
+
 }
