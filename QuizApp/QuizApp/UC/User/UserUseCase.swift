@@ -13,6 +13,6 @@ class UserUseCase: UserUseCaseProtocol {
     }
 
     func logOut() {
-        userDataSource.clear()
+        userDataSource.clearToken()
     }
 }
