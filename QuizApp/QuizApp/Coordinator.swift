@@ -22,7 +22,7 @@ class Coordinator: CoordinatorProtocol {
     func showUserViewController() {
         let userViewController = UserViewController()
 
-        navigationController.pushViewController(userViewController, animated: true)
+        navigationController.setViewControllers([userViewController], animated: true)
     }
 
 }
