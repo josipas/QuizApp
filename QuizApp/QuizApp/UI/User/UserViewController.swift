@@ -86,6 +86,8 @@ extension UserViewController: ConstructViewsProtocol {
 
         usernameTextField.font = .systemFont(ofSize: 20, weight: .bold)
         usernameTextField.textColor = .white
+        usernameTextField.autocorrectionType = .no
+        usernameTextField.autocapitalizationType = .none
         usernameTextField.placeholder = "Please enter your username"
 
         logoutButton.setTitle("Log out", for: .normal)
