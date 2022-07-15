@@ -10,5 +10,6 @@ enum RequestError: Error {
     case badRequest
     case responseError
     case unknownError
+    case invalidToken
 
 }

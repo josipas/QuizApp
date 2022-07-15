@@ -20,6 +20,8 @@
 		5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E43B287DC3B60047E2F2 /* LoginDataSource.swift */; };
 		5224E43E287DC3CB0047E2F2 /* LoginResponseDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E43D287DC3CB0047E2F2 /* LoginResponseDataModel.swift */; };
 		5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E440287DC3E30047E2F2 /* LoginUseCase.swift */; };
+		5224E445287EB8BD0047E2F2 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E444287EB8BD0047E2F2 /* UserViewController.swift */; };
+		5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */; };
 		5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */; };
 		526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */; };
 		526755242876D7FC00DFA655 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 526755232876D7FC00DFA655 /* SnapKit */; };
@@ -43,6 +45,8 @@
 		5224E43B287DC3B60047E2F2 /* LoginDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginDataSource.swift; sourceTree = "<group>"; };
 		5224E43D287DC3CB0047E2F2 /* LoginResponseDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginResponseDataModel.swift; sourceTree = "<group>"; };
 		5224E440287DC3E30047E2F2 /* LoginUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		5224E444287EB8BD0047E2F2 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCheckClient.swift; sourceTree = "<group>"; };
 		5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldView.swift; sourceTree = "<group>"; };
 		526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		526755252876EEFF00DFA655 /* CustomInputFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldType.swift; sourceTree = "<group>"; };
@@ -73,6 +77,7 @@
 				526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */,
 				5224E428287D723F0047E2F2 /* Components */,
 				5224E424287D71640047E2F2 /* Login */,
+				5224E444287EB8BD0047E2F2 /* UserViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -106,8 +111,8 @@
 		5224E427287D71B80047E2F2 /* Client */ = {
 			isa = PBXGroup;
 			children = (
-				5224E419287C5BC20047E2F2 /* LoginClient.swift */,
-				5224E41F287C6CD20047E2F2 /* LoginResponseClientModel.swift */,
+				5224E447287EF1660047E2F2 /* TokenCheck */,
+				5224E446287EF1580047E2F2 /* Login */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -152,6 +157,23 @@
 				5224E438287DB39A0047E2F2 /* UserDataSource.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		5224E446287EF1580047E2F2 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				5224E419287C5BC20047E2F2 /* LoginClient.swift */,
+				5224E41F287C6CD20047E2F2 /* LoginResponseClientModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		5224E447287EF1660047E2F2 /* TokenCheck */ = {
+			isa = PBXGroup;
+			children = (
+				5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */,
+			);
+			path = TokenCheck;
 			sourceTree = "<group>";
 		};
 		52E477262875999600884F2B = {
@@ -295,6 +317,7 @@
 				526755262876EEFF00DFA655 /* CustomInputFieldType.swift in Sources */,
 				5224E43E287DC3CB0047E2F2 /* LoginResponseDataModel.swift in Sources */,
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
+				5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */,
 				5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */,
 				5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */,
 				5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */,
@@ -306,6 +329,7 @@
 				5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */,
 				5224E42F287DADC60047E2F2 /* SecurityStorage.swift in Sources */,
 				5224E420287C6CD20047E2F2 /* LoginResponseClientModel.swift in Sources */,
+				5224E445287EB8BD0047E2F2 /* UserViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

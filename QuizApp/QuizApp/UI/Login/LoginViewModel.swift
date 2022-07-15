@@ -4,6 +4,7 @@ import UIKit
 class LoginViewModel {
 
     private let loginUseCase: LoginUseCaseProtocol
+    private let coordinator: CoordinatorProtocol
 
     @Published var isButtonEnabled = false
     @Published var errorMessage = ""
@@ -11,8 +12,9 @@ class LoginViewModel {
     private var email = ""
     private var password = ""
 
-    init(loginUseCase: LoginUseCaseProtocol) {
+    init(loginUseCase: LoginUseCaseProtocol, coordinator: CoordinatorProtocol) {
         self.loginUseCase = loginUseCase
+        self.coordinator = coordinator
     }
 
     func onEmailChange(email: String) {
@@ -34,9 +36,16 @@ class LoginViewModel {
     @MainActor
     func onButtonClick() {
         errorMessage = ""
+
         Task(priority: .background) {
             do {
                 try await loginUseCase.login(username: email, password: password)
+
+                DispatchQueue.main.async {  [weak self] in
+                    guard let self = self else { return }
+
+                    self.coordinator.showUserViewController()
+                }
             } catch RequestError.unauthorized {
                 errorMessage = "Invalid credentials!"
             } catch {

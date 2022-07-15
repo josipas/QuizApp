@@ -18,6 +18,10 @@ class AppDependencies {
         LoginClient(baseUrl: baseUrl)
     }()
 
+    lazy var tokenCheckClient: TokenCheckClientProtocol = {
+        TokenCheckClient(baseUrl: baseUrl, securityStorage: securityStorage)
+    }()
+
     lazy var securityStorage: SecurityStorageProtocol = {
         SecurityStorage()
     }()
