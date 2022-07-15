@@ -22,6 +22,9 @@
 		5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E440287DC3E30047E2F2 /* LoginUseCase.swift */; };
 		5224E445287EB8BD0047E2F2 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E444287EB8BD0047E2F2 /* UserViewController.swift */; };
 		5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */; };
+		5224E44E2880255F0047E2F2 /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E44D2880255F0047E2F2 /* QuizViewController.swift */; };
+		5224E45128804F280047E2F2 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E45028804F280047E2F2 /* UserViewModel.swift */; };
+		5224E454288069160047E2F2 /* UserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5224E453288069160047E2F2 /* UserUseCase.swift */; };
 		5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */; };
 		526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */; };
 		526755242876D7FC00DFA655 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 526755232876D7FC00DFA655 /* SnapKit */; };
@@ -47,6 +50,9 @@
 		5224E440287DC3E30047E2F2 /* LoginUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		5224E444287EB8BD0047E2F2 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCheckClient.swift; sourceTree = "<group>"; };
+		5224E44D2880255F0047E2F2 /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
+		5224E45028804F280047E2F2 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		5224E453288069160047E2F2 /* UserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUseCase.swift; sourceTree = "<group>"; };
 		5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldView.swift; sourceTree = "<group>"; };
 		526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		526755252876EEFF00DFA655 /* CustomInputFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldType.swift; sourceTree = "<group>"; };
@@ -77,7 +83,8 @@
 				526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */,
 				5224E428287D723F0047E2F2 /* Components */,
 				5224E424287D71640047E2F2 /* Login */,
-				5224E444287EB8BD0047E2F2 /* UserViewController.swift */,
+				5224E44F28804F0D0047E2F2 /* User */,
+				5224E44D2880255F0047E2F2 /* QuizViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -94,6 +101,7 @@
 		5224E425287D71860047E2F2 /* UC */ = {
 			isa = PBXGroup;
 			children = (
+				5224E452288069020047E2F2 /* User */,
 				5224E433287DB2BB0047E2F2 /* Login */,
 			);
 			path = UC;
@@ -174,6 +182,23 @@
 				5224E448287EF17D0047E2F2 /* TokenCheckClient.swift */,
 			);
 			path = TokenCheck;
+			sourceTree = "<group>";
+		};
+		5224E44F28804F0D0047E2F2 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				5224E444287EB8BD0047E2F2 /* UserViewController.swift */,
+				5224E45028804F280047E2F2 /* UserViewModel.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		5224E452288069020047E2F2 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				5224E453288069160047E2F2 /* UserUseCase.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		52E477262875999600884F2B = {
@@ -311,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5224E41A287C5BC20047E2F2 /* LoginClient.swift in Sources */,
+				5224E45128804F280047E2F2 /* UserViewModel.swift in Sources */,
 				5224E412287C31390047E2F2 /* Coordinator.swift in Sources */,
 				526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */,
 				52E477372875999600884F2B /* LoginViewController.swift in Sources */,
@@ -319,12 +345,14 @@
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
 				5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */,
 				5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */,
+				5224E454288069160047E2F2 /* UserUseCase.swift in Sources */,
 				5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */,
 				5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */,
 				5224E414287C3FAC0047E2F2 /* CoordinatorProtocol.swift in Sources */,
 				5224E439287DB39A0047E2F2 /* UserDataSource.swift in Sources */,
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
 				5224E41C287C63660047E2F2 /* RequestError.swift in Sources */,
+				5224E44E2880255F0047E2F2 /* QuizViewController.swift in Sources */,
 				5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */,
 				5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */,
 				5224E42F287DADC60047E2F2 /* SecurityStorage.swift in Sources */,
