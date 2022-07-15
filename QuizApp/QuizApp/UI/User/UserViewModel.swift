@@ -9,8 +9,11 @@ class UserViewModel {
     }
 
     func onButtonClick() {
-        userUseCase.logOut()
-        coordinator.logOut()
+        do {
+            try userUseCase.logOut()
+        } catch {
+        }
+        coordinator.showLogIn()
     }
 
 }

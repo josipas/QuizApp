@@ -6,7 +6,7 @@ protocol SecurityStorageProtocol {
 
     var accessToken: String? { get }
 
-    func clear()
+    func clearAccessToken() throws
 
 }
 
@@ -23,8 +23,8 @@ class SecurityStorage: SecurityStorageProtocol {
         keychain[accessTokenKey] = accessToken
     }
 
-    func clear() {
-        keychain[accessTokenKey] = nil
+    func clearAccessToken() throws {
+        try keychain.remove(accessTokenKey)
     }
 
 }

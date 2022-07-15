@@ -6,7 +6,6 @@ class UserViewController: UIViewController {
     private let gradient = CAGradientLayer()
 
     private var viewModel: UserViewModel!
-    private var stackView: UIStackView!
     private var usernameLabel: UILabel!
     private var usernameTextField: UITextField!
     private var logoutButton: UIButton!
@@ -63,23 +62,17 @@ class UserViewController: UIViewController {
 extension UserViewController: ConstructViewsProtocol {
 
     func createViews() {
-        stackView = UIStackView()
-        view.addSubview(stackView)
-
         usernameLabel = UILabel()
-        stackView.addArrangedSubview(usernameLabel)
+        view.addSubview(usernameLabel)
 
         usernameTextField = UITextField()
-        stackView.addArrangedSubview(usernameTextField)
+        view.addSubview(usernameTextField)
 
         logoutButton = UIButton()
         view.addSubview(logoutButton)
     }
 
     func styleViews() {
-        stackView.spacing = 10
-        stackView.axis = .vertical
-
         usernameLabel.text = "USERNAME"
         usernameLabel.textColor = .white
         usernameLabel.font = .systemFont(ofSize: 12, weight: .bold)
@@ -97,14 +90,19 @@ extension UserViewController: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
-        stackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
+        usernameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(110)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+
+        usernameTextField.snp.makeConstraints {
+            $0.top.equalTo(usernameLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
 
         logoutButton.snp.makeConstraints {
             $0.trailing.leading.equalToSuperview().inset(32)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-32)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(32)
             $0.height.equalTo(45)
         }
     }

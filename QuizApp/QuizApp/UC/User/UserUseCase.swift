@@ -1,6 +1,6 @@
 protocol UserUseCaseProtocol {
 
-    func logOut()
+    func logOut() throws
 
 }
 
@@ -12,8 +12,8 @@ class UserUseCase: UserUseCaseProtocol {
         self.userDataSource = userDataSource
     }
 
-    func logOut() {
-        userDataSource.clearToken()
+    func logOut() throws {
+        try userDataSource.clearAccessToken()
     }
 
 }

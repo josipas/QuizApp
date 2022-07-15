@@ -4,7 +4,7 @@ protocol UserDataSourceProtocol {
 
     var accessToken: String? { get }
 
-    func clearToken()
+    func clearAccessToken() throws
 
 }
 
@@ -24,8 +24,8 @@ class UserDataSource: UserDataSourceProtocol {
         securityStorage.save(accessToken: accessToken)
     }
 
-    func clearToken() {
-        securityStorage.clear()
+    func clearAccessToken() throws {
+        try securityStorage.clearAccessToken()
     }
 
 }

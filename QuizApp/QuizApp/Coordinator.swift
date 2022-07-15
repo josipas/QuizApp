@@ -11,38 +11,34 @@ class Coordinator: CoordinatorProtocol {
     }
 
     func showLogIn() {
-        navigationController.setViewControllers([createLoginViewController()], animated: true)
+        navigationController.setViewControllers([makeLoginViewController()], animated: true)
     }
 
-    func showUserViewController() {
-        navigationController.setViewControllers([setUpTabBar()], animated: true)
+    func showTabBarController() {
+        navigationController.setViewControllers([setUpTabBarController()], animated: true)
     }
 
-    func logOut() {
-        navigationController.setViewControllers([createLoginViewController()], animated: true)
-    }
-
-    private func createLoginViewController() -> UIViewController {
+    private func makeLoginViewController() -> UIViewController {
         LoginViewController(
             viewModel: LoginViewModel(
                 loginUseCase: appDependencies.loginUseCase,
                 coordinator: self))
     }
 
-    private func setUpTabBar() -> UITabBarController {
+    private func setUpTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
 
         tabBarController.tabBar.backgroundColor = .white
         tabBarController.tabBar.tintColor = UIColor(red: 0.387, green: 0.16, blue: 0.871, alpha: 1)
 
-        tabBarController.viewControllers =  [
-            createQuizViewController(),
-            createUserViewController()]
+        tabBarController.viewControllers = [
+            makeQuizViewController(),
+            makeUserViewController()]
 
         return tabBarController
     }
 
-    private func createQuizViewController() -> UINavigationController {
+    private func makeQuizViewController() -> UINavigationController {
         let quizViewController = QuizViewController()
         let quizNavigationController = UINavigationController(rootViewController: quizViewController)
 
@@ -54,7 +50,7 @@ class Coordinator: CoordinatorProtocol {
         return quizNavigationController
     }
 
-    private func createUserViewController() -> UINavigationController {
+    private func makeUserViewController() -> UINavigationController {
         let userViewController = UserViewController(
             viewModel: UserViewModel(
                 coordinator: self,
