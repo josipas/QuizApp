@@ -13,11 +13,11 @@ class Coordinator: CoordinatorProtocol {
     func showLogIn() {
         let logInViewController = createLoginViewController()
 
-        navigationController.pushViewController(logInViewController, animated: true)
+        navigationController.setViewControllers([logInViewController], animated: true)
     }
 
     func showUserViewController() {
-        navigationController.pushViewController(setUpTabBar(), animated: true)
+        navigationController.setViewControllers([setUpTabBar()], animated: true)
     }
 
     func logOut() {
