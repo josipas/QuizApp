@@ -11,9 +11,7 @@ class Coordinator: CoordinatorProtocol {
     }
 
     func showLogIn() {
-        let logInViewController = createLoginViewController()
-
-        navigationController.setViewControllers([logInViewController], animated: true)
+        navigationController.setViewControllers([createLoginViewController()], animated: true)
     }
 
     func showUserViewController() {
