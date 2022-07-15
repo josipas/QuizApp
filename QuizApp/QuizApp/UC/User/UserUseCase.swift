@@ -2,6 +2,10 @@ protocol UserUseCaseProtocol {
 
     func logOut() throws
 
+    func getData() async throws -> AccountModel
+
+    func updateData()
+
 }
 
 class UserUseCase: UserUseCaseProtocol {
@@ -14,6 +18,15 @@ class UserUseCase: UserUseCaseProtocol {
 
     func logOut() throws {
         try userDataSource.clearAccessToken()
+    }
+
+    func getData() async throws -> AccountModel {
+        let accountModel = try await userDataSource.getData()
+        return AccountModel(from: accountModel)
+    }
+
+    func updateData() {
+
     }
 
 }

@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import SnapKit
 
@@ -8,7 +9,10 @@ class UserViewController: UIViewController {
     private var viewModel: UserViewModel!
     private var usernameLabel: UILabel!
     private var usernameTextField: UITextField!
+    private var nameLabel: UILabel!
+    private var nameTextField: UITextField!
     private var logoutButton: UIButton!
+    private var cancellables = Set<AnyCancellable>()
 
     init(viewModel: UserViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -27,6 +31,13 @@ class UserViewController: UIViewController {
         styleViews()
         defineLayoutForViews()
         addActions()
+        bindViewModel()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        getData()
     }
 
     override func viewDidLayoutSubviews() {
@@ -57,6 +68,22 @@ class UserViewController: UIViewController {
         viewModel.onButtonClick()
     }
 
+    private func getData() {
+        viewModel.getData()
+    }
+
+    private func bindViewModel() {
+        viewModel
+            .$account
+            .sink { [weak self] account in
+                guard let self = self else { return }
+
+                self.usernameTextField.text = account?.email
+                self.nameTextField.text = account?.name
+            }
+            .store(in: &cancellables)
+    }
+
 }
 
 extension UserViewController: ConstructViewsProtocol {
@@ -67,6 +94,12 @@ extension UserViewController: ConstructViewsProtocol {
 
         usernameTextField = UITextField()
         view.addSubview(usernameTextField)
+
+        nameLabel = UILabel()
+        view.addSubview(nameLabel)
+
+        nameTextField = UITextField()
+        view.addSubview(nameTextField)
 
         logoutButton = UIButton()
         view.addSubview(logoutButton)
@@ -79,9 +112,16 @@ extension UserViewController: ConstructViewsProtocol {
 
         usernameTextField.font = .systemFont(ofSize: 20, weight: .bold)
         usernameTextField.textColor = .white
-        usernameTextField.autocorrectionType = .no
-        usernameTextField.autocapitalizationType = .none
-        usernameTextField.placeholder = "Please enter your username"
+        usernameTextField.isEnabled = false
+
+        nameLabel.text = "NAME"
+        nameLabel.textColor = .white
+        nameLabel.font = .systemFont(ofSize: 12, weight: .bold)
+
+        nameTextField.font = .systemFont(ofSize: 20, weight: .bold)
+        nameTextField.textColor = .white
+        nameTextField.autocorrectionType = .no
+        nameTextField.autocapitalizationType = .none
 
         logoutButton.setTitle("Log out", for: .normal)
         logoutButton.setTitleColor(UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1), for: .normal)
@@ -97,6 +137,16 @@ extension UserViewController: ConstructViewsProtocol {
 
         usernameTextField.snp.makeConstraints {
             $0.top.equalTo(usernameLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(usernameTextField.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+
+        nameTextField.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
 

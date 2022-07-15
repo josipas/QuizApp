@@ -29,6 +29,10 @@
 		526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */; };
 		526755242876D7FC00DFA655 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 526755232876D7FC00DFA655 /* SnapKit */; };
 		526755262876EEFF00DFA655 /* CustomInputFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526755252876EEFF00DFA655 /* CustomInputFieldType.swift */; };
+		527487B828817D6200124594 /* AccountClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487B728817D6200124594 /* AccountClient.swift */; };
+		527487BA28817E7800124594 /* AccountResponseClientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487B928817E7800124594 /* AccountResponseClientModel.swift */; };
+		527487BE28818E4F00124594 /* AccountResponseDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487BD28818E4F00124594 /* AccountResponseDataModel.swift */; };
+		527487C028819B8700124594 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487BF28819B8700124594 /* AccountModel.swift */; };
 		52E477332875999600884F2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477322875999600884F2B /* AppDelegate.swift */; };
 		52E477352875999600884F2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477342875999600884F2B /* SceneDelegate.swift */; };
 		52E477372875999600884F2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* LoginViewController.swift */; };
@@ -56,6 +60,10 @@
 		5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldView.swift; sourceTree = "<group>"; };
 		526755202876D04D00DFA655 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		526755252876EEFF00DFA655 /* CustomInputFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputFieldType.swift; sourceTree = "<group>"; };
+		527487B728817D6200124594 /* AccountClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountClient.swift; sourceTree = "<group>"; };
+		527487B928817E7800124594 /* AccountResponseClientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountResponseClientModel.swift; sourceTree = "<group>"; };
+		527487BD28818E4F00124594 /* AccountResponseDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountResponseDataModel.swift; sourceTree = "<group>"; };
+		527487BF28819B8700124594 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		52E4772F2875999600884F2B /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E477322875999600884F2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E477342875999600884F2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +127,7 @@
 		5224E427287D71B80047E2F2 /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				527487B628817D4C00124594 /* Account */,
 				5224E447287EF1660047E2F2 /* TokenCheck */,
 				5224E446287EF1580047E2F2 /* Login */,
 			);
@@ -163,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				5224E438287DB39A0047E2F2 /* UserDataSource.swift */,
+				527487BD28818E4F00124594 /* AccountResponseDataModel.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -197,8 +207,18 @@
 			isa = PBXGroup;
 			children = (
 				5224E453288069160047E2F2 /* UserUseCase.swift */,
+				527487BF28819B8700124594 /* AccountModel.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		527487B628817D4C00124594 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				527487B728817D6200124594 /* AccountClient.swift */,
+				527487B928817E7800124594 /* AccountResponseClientModel.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		52E477262875999600884F2B = {
@@ -335,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				527487BA28817E7800124594 /* AccountResponseClientModel.swift in Sources */,
 				5224E41A287C5BC20047E2F2 /* LoginClient.swift in Sources */,
 				5224E45128804F280047E2F2 /* UserViewModel.swift in Sources */,
 				5224E412287C31390047E2F2 /* Coordinator.swift in Sources */,
@@ -345,6 +366,7 @@
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
 				5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */,
 				5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */,
+				527487BE28818E4F00124594 /* AccountResponseDataModel.swift in Sources */,
 				5224E454288069160047E2F2 /* UserUseCase.swift in Sources */,
 				5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */,
 				5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */,
@@ -352,7 +374,9 @@
 				5224E439287DB39A0047E2F2 /* UserDataSource.swift in Sources */,
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
 				5224E41C287C63660047E2F2 /* RequestError.swift in Sources */,
+				527487C028819B8700124594 /* AccountModel.swift in Sources */,
 				5224E44E2880255F0047E2F2 /* QuizViewController.swift in Sources */,
+				527487B828817D6200124594 /* AccountClient.swift in Sources */,
 				5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */,
 				5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */,
 				5224E42F287DADC60047E2F2 /* SecurityStorage.swift in Sources */,

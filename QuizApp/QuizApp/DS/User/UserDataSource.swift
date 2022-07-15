@@ -6,18 +6,24 @@ protocol UserDataSourceProtocol {
 
     func clearAccessToken() throws
 
+    func getData() async throws -> AccountResponseDataModel
+
+    func updateData()
+
 }
 
 class UserDataSource: UserDataSourceProtocol {
 
     private let securityStorage: SecurityStorageProtocol
+    private let accountClient: AccountClientProtocol
 
     var accessToken: String? {
         securityStorage.accessToken
     }
 
-    init(securityStorage: SecurityStorageProtocol) {
+    init(securityStorage: SecurityStorageProtocol, accountClient: AccountClientProtocol) {
         self.securityStorage = securityStorage
+        self.accountClient = accountClient
     }
 
     func save(accessToken: String) {
@@ -26,6 +32,15 @@ class UserDataSource: UserDataSourceProtocol {
 
     func clearAccessToken() throws {
         try securityStorage.clearAccessToken()
+    }
+
+    func getData() async throws -> AccountResponseDataModel {
+        let accountModel = try await accountClient.getData()
+        return AccountResponseDataModel(from: accountModel)
+    }
+
+    func updateData() {
+
     }
 
 }
