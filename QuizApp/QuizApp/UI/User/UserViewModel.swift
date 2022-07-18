@@ -12,12 +12,21 @@ class UserViewModel {
         self.userUseCase = userUseCase
     }
 
-    func onButtonClick() {
+    func onLogoutButtonClick() {
         do {
             try userUseCase.logOut()
         } catch {
         }
         coordinator.showLogIn()
+    }
+
+    func onSaveButtonClick(name: String) {
+        Task(priority: .background) {
+            do {
+                try await userUseCase.updateData(name: name)
+            } catch {
+            }
+        }
     }
 
     @MainActor
@@ -28,6 +37,15 @@ class UserViewModel {
             do {
                 let account = try await userUseCase.getData()
                 self.account = account
+            } catch {
+            }
+        }
+    }
+
+    func updateData(name: String) {
+        Task(priority: .background) {
+            do {
+                try await userUseCase.updateData(name: name)
             } catch {
             }
         }

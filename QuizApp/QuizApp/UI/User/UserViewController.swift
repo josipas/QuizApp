@@ -11,6 +11,7 @@ class UserViewController: UIViewController {
     private var usernameTextField: UITextField!
     private var nameLabel: UILabel!
     private var nameTextField: UITextField!
+    private var saveButton: UIButton!
     private var logoutButton: UIButton!
     private var cancellables = Set<AnyCancellable>()
 
@@ -40,10 +41,17 @@ class UserViewController: UIViewController {
         getData()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        nameTextField.resignFirstResponder()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         logoutButton.layer.cornerRadius = logoutButton.bounds.height / 2
+        saveButton.layer.cornerRadius = saveButton.bounds.height / 2
 
         configureGradient()
     }
@@ -62,10 +70,19 @@ class UserViewController: UIViewController {
 
     private func addActions() {
         logoutButton.addTarget(self, action: #selector(tappedLogoutButton), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(tappedSaveButton), for: .touchUpInside)
     }
 
     @objc private func tappedLogoutButton() {
-        viewModel.onButtonClick()
+        viewModel.onLogoutButtonClick()
+    }
+
+    @objc private func tappedSaveButton() {
+        nameTextField.resignFirstResponder()
+
+        guard let text = nameTextField.text else { return }
+
+        viewModel.onSaveButtonClick(name: text)
     }
 
     private func getData() {
@@ -101,6 +118,9 @@ extension UserViewController: ConstructViewsProtocol {
         nameTextField = UITextField()
         view.addSubview(nameTextField)
 
+        saveButton = UIButton()
+        view.addSubview(saveButton)
+
         logoutButton = UIButton()
         view.addSubview(logoutButton)
     }
@@ -122,6 +142,11 @@ extension UserViewController: ConstructViewsProtocol {
         nameTextField.textColor = .white
         nameTextField.autocorrectionType = .no
         nameTextField.autocapitalizationType = .none
+
+        saveButton.setTitle("SAVE", for: .normal)
+        saveButton.setTitleColor(UIColor(red: 0.387, green: 0.16, blue: 0.871, alpha: 1), for: .normal)
+        saveButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
+        saveButton.backgroundColor = .white
 
         logoutButton.setTitle("Log out", for: .normal)
         logoutButton.setTitleColor(UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1), for: .normal)
@@ -147,7 +172,14 @@ extension UserViewController: ConstructViewsProtocol {
 
         nameTextField.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(20)
+        }
+
+        saveButton.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.leading.equalTo(nameTextField.snp.trailing).offset(10)
+            $0.width.equalTo(80)
         }
 
         logoutButton.snp.makeConstraints {

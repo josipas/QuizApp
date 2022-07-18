@@ -4,7 +4,7 @@ protocol AccountClientProtocol {
 
     func getData() async throws -> AccountResponseClientModel
 
-    func updateData() async throws
+    func updateData(name: String) async throws
 
 }
 
@@ -64,7 +64,7 @@ class AccountClient: AccountClientProtocol {
         return value
     }
 
-    func updateData() async throws {
+    func updateData(name: String) async throws {
         guard let token = securityStorage.accessToken else {
             throw RequestError.invalidToken
         }
@@ -77,7 +77,7 @@ class AccountClient: AccountClientProtocol {
         request.httpMethod = "PATCH"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.httpBody = try? JSONEncoder().encode(AccountRequestClientModel(name: "Josipa Šupe"))
+        request.httpBody = try? JSONEncoder().encode(AccountRequestClientModel(name: name))
 
         guard let (_, response) = try? await URLSession.shared.data(for: request) else {
             throw RequestError.serverError

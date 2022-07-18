@@ -8,7 +8,7 @@ protocol UserDataSourceProtocol {
 
     func getData() async throws -> AccountResponseDataModel
 
-    func updateData()
+    func updateData(name: String) async throws
 
 }
 
@@ -39,8 +39,8 @@ class UserDataSource: UserDataSourceProtocol {
         return AccountResponseDataModel(from: accountModel)
     }
 
-    func updateData() {
-
+    func updateData(name: String) async throws {
+        try await accountClient.updateData(name: name)
     }
 
 }

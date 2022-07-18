@@ -4,7 +4,7 @@ protocol UserUseCaseProtocol {
 
     func getData() async throws -> AccountModel
 
-    func updateData()
+    func updateData(name: String) async throws
 
 }
 
@@ -25,8 +25,8 @@ class UserUseCase: UserUseCaseProtocol {
         return AccountModel(from: accountModel)
     }
 
-    func updateData() {
-
+    func updateData(name: String) async throws {
+        try await userDataSource.updateData(name: name)
     }
 
 }
