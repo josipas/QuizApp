@@ -11,5 +11,6 @@ enum RequestError: Error {
     case responseError
     case unknownError
     case invalidToken
+    case noContent
 
 }
