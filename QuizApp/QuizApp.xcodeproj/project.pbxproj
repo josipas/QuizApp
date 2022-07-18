@@ -33,6 +33,8 @@
 		527487BA28817E7800124594 /* AccountResponseClientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487B928817E7800124594 /* AccountResponseClientModel.swift */; };
 		527487BE28818E4F00124594 /* AccountResponseDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487BD28818E4F00124594 /* AccountResponseDataModel.swift */; };
 		527487C028819B8700124594 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487BF28819B8700124594 /* AccountModel.swift */; };
+		527487C328857E9500124594 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487C228857E9500124594 /* CustomSegmentedControl.swift */; };
+		527487C52885817900124594 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487C42885817900124594 /* SegmentView.swift */; };
 		52E477332875999600884F2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477322875999600884F2B /* AppDelegate.swift */; };
 		52E477352875999600884F2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477342875999600884F2B /* SceneDelegate.swift */; };
 		52E477372875999600884F2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* LoginViewController.swift */; };
@@ -64,6 +66,8 @@
 		527487B928817E7800124594 /* AccountResponseClientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountResponseClientModel.swift; sourceTree = "<group>"; };
 		527487BD28818E4F00124594 /* AccountResponseDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountResponseDataModel.swift; sourceTree = "<group>"; };
 		527487BF28819B8700124594 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		527487C228857E9500124594 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		527487C42885817900124594 /* SegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
 		52E4772F2875999600884F2B /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E477322875999600884F2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E477342875999600884F2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,7 +96,7 @@
 				5224E428287D723F0047E2F2 /* Components */,
 				5224E424287D71640047E2F2 /* Login */,
 				5224E44F28804F0D0047E2F2 /* User */,
-				5224E44D2880255F0047E2F2 /* QuizViewController.swift */,
+				527487C128857E3C00124594 /* Quiz */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -139,6 +143,8 @@
 			children = (
 				5267551E2876CF9F00DFA655 /* CustomInputFieldView.swift */,
 				526755252876EEFF00DFA655 /* CustomInputFieldType.swift */,
+				527487C228857E9500124594 /* CustomSegmentedControl.swift */,
+				527487C42885817900124594 /* SegmentView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -219,6 +225,14 @@
 				527487B928817E7800124594 /* AccountResponseClientModel.swift */,
 			);
 			path = Account;
+			sourceTree = "<group>";
+		};
+		527487C128857E3C00124594 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				5224E44D2880255F0047E2F2 /* QuizViewController.swift */,
+			);
+			path = Quiz;
 			sourceTree = "<group>";
 		};
 		52E477262875999600884F2B = {
@@ -362,6 +376,7 @@
 				526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */,
 				52E477372875999600884F2B /* LoginViewController.swift in Sources */,
 				526755262876EEFF00DFA655 /* CustomInputFieldType.swift in Sources */,
+				527487C328857E9500124594 /* CustomSegmentedControl.swift in Sources */,
 				5224E43E287DC3CB0047E2F2 /* LoginResponseDataModel.swift in Sources */,
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
 				5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */,
@@ -370,6 +385,7 @@
 				5224E454288069160047E2F2 /* UserUseCase.swift in Sources */,
 				5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */,
 				5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */,
+				527487C52885817900124594 /* SegmentView.swift in Sources */,
 				5224E414287C3FAC0047E2F2 /* CoordinatorProtocol.swift in Sources */,
 				5224E439287DB39A0047E2F2 /* UserDataSource.swift in Sources */,
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
