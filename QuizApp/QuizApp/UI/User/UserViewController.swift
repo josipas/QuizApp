@@ -95,8 +95,10 @@ class UserViewController: UIViewController {
             .sink { [weak self] account in
                 guard let self = self else { return }
 
-                self.usernameTextField.text = account?.email
-                self.nameTextField.text = account?.name
+                DispatchQueue.main.async {
+                    self.usernameTextField.text = account.email
+                    self.nameTextField.text = account.name
+                }
             }
             .store(in: &cancellables)
     }
