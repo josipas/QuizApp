@@ -37,8 +37,7 @@ class UserViewModel {
             guard let self = self else { return }
 
             do {
-                let account = try await userUseCase.data
-                self.account = account
+                self.account = try await userUseCase.data
             } catch {
             }
         }

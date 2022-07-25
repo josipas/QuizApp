@@ -14,12 +14,6 @@ protocol NetworkClientProtocol {
 
 }
 
-private struct AccountRequestClientModel: Codable {
-
-    let name: String
-
-}
-
 class NetworkClient: NetworkClientProtocol {
 
     private let baseUrl: String
