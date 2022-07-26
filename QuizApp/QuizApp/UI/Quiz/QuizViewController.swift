@@ -6,17 +6,37 @@ class QuizViewController: UIViewController {
 
     private var titleLabel: UILabel!
     private var selectionView: CustomSegmentedControl!
+    private var viewModel: QuizViewModel!
+
+    @Published var categories: [String] = []
+
+    init(viewModel: QuizViewModel) {
+        super.init(nibName: nil, bundle: nil)
+
+        self.viewModel = viewModel
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         createViews()
         styleViews()
         defineLayoutForViews()
+        getData()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         configureGradient()
+    }
+
+    private func getData() {
+        categories = viewModel.getQuizCategories().map {
+            $0.description
+        }
     }
 
     private func configureGradient() {
