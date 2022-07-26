@@ -120,7 +120,7 @@ class NetworkClient: NetworkClientProtocol {
         case .patch, .post, .put:
             request.httpBody = try? JSONEncoder().encode(body)
         default:
-            ()
+            break
         }
 
         return request
