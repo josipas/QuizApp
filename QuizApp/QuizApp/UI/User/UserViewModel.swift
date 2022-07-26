@@ -20,6 +20,7 @@ class UserViewModel {
         }
     }
 
+    @MainActor
     func onSaveButtonClick(name: String) {
         Task(priority: .background) { [weak self] in
             guard let self = self else { return }

@@ -27,7 +27,7 @@ class UserUseCase: UserUseCaseProtocol {
     }
 
     func updateData(name: String) async throws -> AccountModel {
-        return AccountModel(from: try await userDataSource.updateData(name: name))
+        AccountModel(from: try await userDataSource.updateData(name: name))
     }
 
 }

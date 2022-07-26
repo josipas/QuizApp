@@ -41,7 +41,7 @@ class UserDataSource: UserDataSourceProtocol {
     }
 
     func updateData(name: String) async throws -> AccountResponseDataModel {
-        return AccountResponseDataModel(from: try await accountClient.updateData(name: name))
+        AccountResponseDataModel(from: try await accountClient.updateData(name: name))
     }
 
 }

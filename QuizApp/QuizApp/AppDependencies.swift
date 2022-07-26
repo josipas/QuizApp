@@ -19,7 +19,7 @@ class AppDependencies {
     }()
 
     lazy var networkClient: NetworkClientProtocol = {
-        NetworkClient(baseUrl: baseUrl)
+        NetworkClient(baseUrl: baseUrl, securityStorage: securityStorage)
     }()
 
     lazy var loginClient: LoginClientProtocol = {
@@ -27,11 +27,11 @@ class AppDependencies {
     }()
 
     lazy var tokenCheckClient: TokenCheckClientProtocol = {
-        TokenCheckClient(securityStorage: securityStorage, networkClient: networkClient)
+        TokenCheckClient(networkClient: networkClient)
     }()
 
     lazy var accountClient: AccountClientProtocol = {
-        AccountClient(securityStorage: securityStorage, networkClient: networkClient)
+        AccountClient(networkClient: networkClient)
     }()
 
     lazy var securityStorage: SecurityStorageProtocol = {

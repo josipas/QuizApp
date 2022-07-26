@@ -17,37 +17,22 @@ private struct AccountRequestClientModel: Codable {
 class AccountClient: AccountClientProtocol {
 
     private let path = "/v1/account"
-    private let securityStorage: SecurityStorageProtocol
     private let networkClient: NetworkClientProtocol
 
     var data: AccountResponseClientModel {
         get async throws {
-            guard let token = securityStorage.accessToken else {
-                throw RequestError.invalidToken
-            }
-
-            return try await networkClient.executeRequest(
-                path: path,
-                method: .get,
-                header: ["Authorization": "Bearer \(token)"])
+            try await networkClient.executeRequest(path: path, method: .get)
         }
     }
 
-    init(securityStorage: SecurityStorageProtocol, networkClient: NetworkClientProtocol) {
-        self.securityStorage = securityStorage
+    init(networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient
     }
 
     func updateData(name: String) async throws -> AccountResponseClientModel {
-        guard let token = securityStorage.accessToken else {
-            throw RequestError.invalidToken
-        }
-
-        return try await networkClient.executeRequest(
+        try await networkClient.executeRequest(
                 path: path,
                 method: .patch,
-                header: ["Content-Type": "application/json",
-                         "Authorization": "Bearer \(token)"],
                 body: AccountRequestClientModel(name: name))
     }
 

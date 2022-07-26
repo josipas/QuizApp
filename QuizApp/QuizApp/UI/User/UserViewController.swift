@@ -95,10 +95,8 @@ class UserViewController: UIViewController {
             .sink { [weak self] account in
                 guard let self = self else { return }
 
-                DispatchQueue.main.async {
-                    self.usernameTextField.text = account.email
-                    self.nameTextField.text = account.name
-                }
+                self.usernameTextField.text = account.email
+                self.nameTextField.text = account.name
             }
             .store(in: &cancellables)
     }
@@ -175,12 +173,13 @@ extension UserViewController: ConstructViewsProtocol {
         nameTextField.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().inset(20)
+            $0.trailing.greaterThanOrEqualTo(saveButton.snp.leading).offset(-10)
         }
 
         saveButton.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(10)
             $0.trailing.equalToSuperview().inset(20)
-            $0.leading.equalTo(nameTextField.snp.trailing).offset(10)
+            $0.leading.greaterThanOrEqualTo(nameTextField.snp.trailing).offset(10)
             $0.width.equalTo(80)
         }
 

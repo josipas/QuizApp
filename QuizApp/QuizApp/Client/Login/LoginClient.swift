@@ -23,7 +23,7 @@ class LoginClient: LoginClientProtocol {
     }
 
     func login(username: String, password: String) async throws -> LoginResponseClientModel {
-        return try await networkClient.executeRequest(
+        try await networkClient.executeRequest(
             path: path,
             method: .post,
             header: ["Content-Type": "application/json"],
