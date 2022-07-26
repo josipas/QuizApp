@@ -11,19 +11,27 @@ class AppDependencies {
     }()
 
     lazy var userDataSource: UserDataSourceProtocol = {
-        UserDataSource(securityStorage: securityStorage)
+        UserDataSource(securityStorage: securityStorage, accountClient: accountClient)
     }()
 
     lazy var loginDataSource: LoginDataSourceProtocol = {
         LoginDataSource(loginClient: loginClient)
     }()
 
+    lazy var networkClient: NetworkClientProtocol = {
+        NetworkClient(baseUrl: baseUrl, securityStorage: securityStorage)
+    }()
+
     lazy var loginClient: LoginClientProtocol = {
-        LoginClient(baseUrl: baseUrl)
+        LoginClient(networkClient: networkClient)
     }()
 
     lazy var tokenCheckClient: TokenCheckClientProtocol = {
-        TokenCheckClient(baseUrl: baseUrl, securityStorage: securityStorage)
+        TokenCheckClient(networkClient: networkClient)
+    }()
+
+    lazy var accountClient: AccountClientProtocol = {
+        AccountClient(networkClient: networkClient)
     }()
 
     lazy var securityStorage: SecurityStorageProtocol = {

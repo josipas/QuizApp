@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import SnapKit
 
@@ -8,7 +9,11 @@ class UserViewController: UIViewController {
     private var viewModel: UserViewModel!
     private var usernameLabel: UILabel!
     private var usernameTextField: UITextField!
+    private var nameLabel: UILabel!
+    private var nameTextField: UITextField!
+    private var saveButton: UIButton!
     private var logoutButton: UIButton!
+    private var cancellables = Set<AnyCancellable>()
 
     init(viewModel: UserViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -27,12 +32,26 @@ class UserViewController: UIViewController {
         styleViews()
         defineLayoutForViews()
         addActions()
+        bindViewModel()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        getData()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        nameTextField.resignFirstResponder()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         logoutButton.layer.cornerRadius = logoutButton.bounds.height / 2
+        saveButton.layer.cornerRadius = saveButton.bounds.height / 2
 
         configureGradient()
     }
@@ -51,10 +70,35 @@ class UserViewController: UIViewController {
 
     private func addActions() {
         logoutButton.addTarget(self, action: #selector(tappedLogoutButton), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(tappedSaveButton), for: .touchUpInside)
     }
 
     @objc private func tappedLogoutButton() {
-        viewModel.onButtonClick()
+        viewModel.onLogoutButtonClick()
+    }
+
+    @objc private func tappedSaveButton() {
+        nameTextField.resignFirstResponder()
+
+        guard let text = nameTextField.text else { return }
+
+        viewModel.onSaveButtonClick(name: text)
+    }
+
+    private func getData() {
+        viewModel.getData()
+    }
+
+    private func bindViewModel() {
+        viewModel
+            .$account
+            .sink { [weak self] account in
+                guard let self = self else { return }
+
+                self.usernameTextField.text = account.email
+                self.nameTextField.text = account.name
+            }
+            .store(in: &cancellables)
     }
 
 }
@@ -68,6 +112,15 @@ extension UserViewController: ConstructViewsProtocol {
         usernameTextField = UITextField()
         view.addSubview(usernameTextField)
 
+        nameLabel = UILabel()
+        view.addSubview(nameLabel)
+
+        nameTextField = UITextField()
+        view.addSubview(nameTextField)
+
+        saveButton = UIButton()
+        view.addSubview(saveButton)
+
         logoutButton = UIButton()
         view.addSubview(logoutButton)
     }
@@ -79,9 +132,21 @@ extension UserViewController: ConstructViewsProtocol {
 
         usernameTextField.font = .systemFont(ofSize: 20, weight: .bold)
         usernameTextField.textColor = .white
-        usernameTextField.autocorrectionType = .no
-        usernameTextField.autocapitalizationType = .none
-        usernameTextField.placeholder = "Please enter your username"
+        usernameTextField.isEnabled = false
+
+        nameLabel.text = "NAME"
+        nameLabel.textColor = .white
+        nameLabel.font = .systemFont(ofSize: 12, weight: .bold)
+
+        nameTextField.font = .systemFont(ofSize: 20, weight: .bold)
+        nameTextField.textColor = .white
+        nameTextField.autocorrectionType = .no
+        nameTextField.autocapitalizationType = .none
+
+        saveButton.setTitle("SAVE", for: .normal)
+        saveButton.setTitleColor(UIColor(red: 0.387, green: 0.16, blue: 0.871, alpha: 1), for: .normal)
+        saveButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
+        saveButton.backgroundColor = .white
 
         logoutButton.setTitle("Log out", for: .normal)
         logoutButton.setTitleColor(UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1), for: .normal)
@@ -98,6 +163,24 @@ extension UserViewController: ConstructViewsProtocol {
         usernameTextField.snp.makeConstraints {
             $0.top.equalTo(usernameLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
+        }
+
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(usernameTextField.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+
+        nameTextField.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().inset(20)
+            $0.trailing.greaterThanOrEqualTo(saveButton.snp.leading).offset(-10)
+        }
+
+        saveButton.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.leading.greaterThanOrEqualTo(nameTextField.snp.trailing).offset(10)
+            $0.width.equalTo(80)
         }
 
         logoutButton.snp.makeConstraints {
