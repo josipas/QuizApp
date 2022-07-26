@@ -22,14 +22,16 @@ class NetworkClient: NetworkClientProtocol {
     private let baseUrl: String
     private let securityStorage: SecurityStorageProtocol
 
+    private var token: String {
+        securityStorage.accessToken ?? ""
+    }
+
     init(baseUrl: String, securityStorage: SecurityStorageProtocol) {
         self.baseUrl = baseUrl
         self.securityStorage = securityStorage
     }
 
     func executeRequest(path: String) async throws {
-        let token = getToken()
-
         let header = ["Authorization": "Bearer \(token)"]
 
         let request = try await createRequest(path: path, method: .get, header: header)
@@ -63,8 +65,6 @@ class NetworkClient: NetworkClientProtocol {
     }
 
     func executeRequest<T: Decodable, E: Encodable>(path: String, method: RequestMethod, body: E) async throws -> T {
-        let token = getToken()
-
         let header = [
             "Content-Type": "application/json",
             "Authorization": "Bearer \(token)"]
@@ -85,8 +85,6 @@ class NetworkClient: NetworkClientProtocol {
     }
 
     func executeRequest<T: Decodable>(path: String, method: RequestMethod) async throws -> T {
-        let token = getToken()
-
         let header = ["Authorization": "Bearer \(token)"]
 
         let request = try await createRequest(path: path, method: method, header: header)
@@ -165,12 +163,6 @@ class NetworkClient: NetworkClientProtocol {
                 throw RequestError.unknownError
             }
         }
-    }
-
-    private func getToken() -> String {
-        guard let token = securityStorage.accessToken else { return "" }
-
-        return token
     }
 
 }
