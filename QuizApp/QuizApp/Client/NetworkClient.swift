@@ -8,7 +8,8 @@ protocol NetworkClientProtocol {
         path: String,
         method: RequestMethod,
         header: [String: String]?,
-        body: E) async throws -> T
+        body: E
+    ) async throws -> T
 
     func executeRequest<T: Decodable, E: Encodable>(path: String, method: RequestMethod, body: E) async throws -> T
 
@@ -27,9 +28,7 @@ class NetworkClient: NetworkClientProtocol {
     }
 
     func executeRequest(path: String) async throws {
-        guard let token = securityStorage.accessToken else {
-            throw RequestError.invalidToken
-        }
+        let token = getToken()
 
         let header = ["Authorization": "Bearer \(token)"]
 
@@ -46,26 +45,25 @@ class NetworkClient: NetworkClientProtocol {
         path: String,
         method: RequestMethod,
         header: [String: String]?,
-        body: E) async throws -> T {
-            let request = try await createRequest(path: path, method: method, header: header, body: body)
+        body: E
+    ) async throws -> T {
+        let request = try await createRequest(path: path, method: method, header: header, body: body)
 
-            guard let (data, response) = try? await URLSession.shared.data(for: request) else {
-                throw RequestError.serverError
-            }
-
-            try handleErrors(response: response)
-
-            guard let value = try? JSONDecoder().decode(T.self, from: data) else {
-                throw RequestError.dataDecodingError
-            }
-
-            return value
+        guard let (data, response) = try? await URLSession.shared.data(for: request) else {
+            throw RequestError.serverError
         }
+
+        try handleErrors(response: response)
+
+        guard let value = try? JSONDecoder().decode(T.self, from: data) else {
+            throw RequestError.dataDecodingError
+        }
+
+        return value
+    }
 
     func executeRequest<T: Decodable, E: Encodable>(path: String, method: RequestMethod, body: E) async throws -> T {
-        guard let token = securityStorage.accessToken else {
-            throw RequestError.invalidToken
-        }
+        let token = getToken()
 
         let header = [
             "Content-Type": "application/json",
@@ -87,9 +85,7 @@ class NetworkClient: NetworkClientProtocol {
     }
 
     func executeRequest<T: Decodable>(path: String, method: RequestMethod) async throws -> T {
-        guard let token = securityStorage.accessToken else {
-            throw RequestError.invalidToken
-        }
+        let token = getToken()
 
         let header = ["Authorization": "Bearer \(token)"]
 
@@ -112,39 +108,41 @@ class NetworkClient: NetworkClientProtocol {
         path: String,
         method: RequestMethod,
         header: [String: String]?,
-        body: E) async throws -> URLRequest {
-            guard let url = URL(string: "\(baseUrl)\(path)") else {
-                throw RequestError.invalidUrl
-            }
-
-            var request = URLRequest(url: url)
-            request.httpMethod = method.rawValue
-            request.allHTTPHeaderFields = header
-
-            switch method {
-            case .patch, .post, .put:
-                request.httpBody = try? JSONEncoder().encode(body)
-            default:
-                ()
-            }
-
-            return request
+        body: E
+    ) async throws -> URLRequest {
+        guard let url = URL(string: "\(baseUrl)\(path)") else {
+            throw RequestError.invalidUrl
         }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        request.allHTTPHeaderFields = header
+
+        switch method {
+        case .patch, .post, .put:
+            request.httpBody = try? JSONEncoder().encode(body)
+        default:
+            ()
+        }
+
+        return request
+    }
 
     private func createRequest(
         path: String,
         method: RequestMethod,
-        header: [String: String]?) async throws -> URLRequest {
-            guard let url = URL(string: "\(baseUrl)\(path)") else {
-                throw RequestError.invalidUrl
-            }
-
-            var request = URLRequest(url: url)
-            request.httpMethod = method.rawValue
-            request.allHTTPHeaderFields = header
-
-            return request
+        header: [String: String]?
+    ) async throws -> URLRequest {
+        guard let url = URL(string: "\(baseUrl)\(path)") else {
+            throw RequestError.invalidUrl
         }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        request.allHTTPHeaderFields = header
+
+        return request
+    }
 
     private func handleErrors(response: URLResponse) throws {
         guard let response = response as? HTTPURLResponse else {
@@ -167,6 +165,12 @@ class NetworkClient: NetworkClientProtocol {
                 throw RequestError.unknownError
             }
         }
+    }
+
+    private func getToken() -> String {
+        guard let token = securityStorage.accessToken else { return "" }
+
+        return token
     }
 
 }
