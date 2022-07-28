@@ -2,15 +2,21 @@ protocol UserUseCaseProtocol {
 
     func logOut() throws
 
-    func getData() async throws -> AccountModel
+    var data: AccountModel { get async throws }
 
-    func updateData(name: String) async throws
+    func updateData(name: String) async throws -> AccountModel
 
 }
 
 class UserUseCase: UserUseCaseProtocol {
 
     private let userDataSource: UserDataSourceProtocol
+
+    var data: AccountModel {
+        get async throws {
+            AccountModel(from: try await userDataSource.data)
+        }
+    }
 
     init(userDataSource: UserDataSourceProtocol) {
         self.userDataSource = userDataSource
@@ -20,13 +26,8 @@ class UserUseCase: UserUseCaseProtocol {
         try userDataSource.clearAccessToken()
     }
 
-    func getData() async throws -> AccountModel {
-        let accountModel = try await userDataSource.getData()
-        return AccountModel(from: accountModel)
-    }
-
-    func updateData(name: String) async throws {
-        try await userDataSource.updateData(name: name)
+    func updateData(name: String) async throws -> AccountModel {
+        AccountModel(from: try await userDataSource.updateData(name: name))
     }
 
 }

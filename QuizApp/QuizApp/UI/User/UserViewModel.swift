@@ -5,7 +5,7 @@ class UserViewModel {
     private let coordinator: CoordinatorProtocol
     private let userUseCase: UserUseCaseProtocol
 
-    @Published var account: AccountModel!
+    @Published var account = AccountModel(email: "", id: 0, name: "")
 
     init(coordinator: CoordinatorProtocol, userUseCase: UserUseCaseProtocol) {
         self.coordinator = coordinator
@@ -15,15 +15,18 @@ class UserViewModel {
     func onLogoutButtonClick() {
         do {
             try userUseCase.logOut()
+            coordinator.showLogIn()
         } catch {
         }
-        coordinator.showLogIn()
     }
 
+    @MainActor
     func onSaveButtonClick(name: String) {
-        Task(priority: .background) {
+        Task(priority: .background) { [weak self] in
+            guard let self = self else { return }
+
             do {
-                try await userUseCase.updateData(name: name)
+                self.account = try await userUseCase.updateData(name: name)
             } catch {
             }
         }
@@ -35,17 +38,7 @@ class UserViewModel {
             guard let self = self else { return }
 
             do {
-                let account = try await userUseCase.getData()
-                self.account = account
-            } catch {
-            }
-        }
-    }
-
-    func updateData(name: String) {
-        Task(priority: .background) {
-            do {
-                try await userUseCase.updateData(name: name)
+                self.account = try await userUseCase.data
             } catch {
             }
         }

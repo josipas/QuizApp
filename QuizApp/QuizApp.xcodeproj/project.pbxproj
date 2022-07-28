@@ -39,6 +39,8 @@
 		528A0297289009F9001706B2 /* QuizDifficultyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528A0296289009F9001706B2 /* QuizDifficultyLevel.swift */; };
 		528A029928900A67001706B2 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528A029828900A67001706B2 /* QuizViewModel.swift */; };
 		52DD12BC28902B6E0022AA31 /* QuizCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DD12BB28902B6E0022AA31 /* QuizCollectionViewCell.swift */; };
+		527487C728858B2A00124594 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487C628858B2A00124594 /* NetworkClient.swift */; };
+		527487C928859CBA00124594 /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527487C828859CBA00124594 /* RequestMethod.swift */; };
 		52E477332875999600884F2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477322875999600884F2B /* AppDelegate.swift */; };
 		52E477352875999600884F2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477342875999600884F2B /* SceneDelegate.swift */; };
 		52E477372875999600884F2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* LoginViewController.swift */; };
@@ -76,6 +78,8 @@
 		528A0296289009F9001706B2 /* QuizDifficultyLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDifficultyLevel.swift; sourceTree = "<group>"; };
 		528A029828900A67001706B2 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
 		52DD12BB28902B6E0022AA31 /* QuizCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCollectionViewCell.swift; sourceTree = "<group>"; };
+		527487C628858B2A00124594 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		527487C828859CBA00124594 /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		52E4772F2875999600884F2B /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E477322875999600884F2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E477342875999600884F2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +143,9 @@
 		5224E427287D71B80047E2F2 /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				527487C628858B2A00124594 /* NetworkClient.swift */,
+				527487C828859CBA00124594 /* RequestMethod.swift */,
+				5224E41B287C63660047E2F2 /* RequestError.swift */,
 				527487B628817D4C00124594 /* Account */,
 				5224E447287EF1660047E2F2 /* TokenCheck */,
 				5224E446287EF1580047E2F2 /* Login */,
@@ -272,7 +279,6 @@
 				5224E413287C3FAC0047E2F2 /* CoordinatorProtocol.swift */,
 				5224E411287C31390047E2F2 /* Coordinator.swift */,
 				5224E421287D6BD10047E2F2 /* AppDependencies.swift */,
-				5224E41B287C63660047E2F2 /* RequestError.swift */,
 				5224E423287D715B0047E2F2 /* UI */,
 				5224E425287D71860047E2F2 /* UC */,
 				5224E426287D719D0047E2F2 /* DS */,
@@ -396,12 +402,14 @@
 				5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */,
 				5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */,
 				528A0297289009F9001706B2 /* QuizDifficultyLevel.swift in Sources */,
+				527487C728858B2A00124594 /* NetworkClient.swift in Sources */,
 				527487BE28818E4F00124594 /* AccountResponseDataModel.swift in Sources */,
 				5224E454288069160047E2F2 /* UserUseCase.swift in Sources */,
 				5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */,
 				5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */,
 				527487C52885817900124594 /* SegmentView.swift in Sources */,
 				5224E414287C3FAC0047E2F2 /* CoordinatorProtocol.swift in Sources */,
+				527487C928859CBA00124594 /* RequestMethod.swift in Sources */,
 				5224E439287DB39A0047E2F2 /* UserDataSource.swift in Sources */,
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
 				528A029528900897001706B2 /* QuizCategory.swift in Sources */,
