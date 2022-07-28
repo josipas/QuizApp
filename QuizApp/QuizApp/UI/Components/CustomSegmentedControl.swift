@@ -1,7 +1,18 @@
 import UIKit
 
 protocol CustomSegmentedControlDelegate: AnyObject {
-    func segmentTapped(view: SegmentView)
+
+    func segmentTapped(id: Any)
+
+}
+
+struct CustomSegmentedControlModel {
+
+    let id: Any
+    let title: String
+    let color: UIColor
+    let isActive: Bool
+
 }
 
 class CustomSegmentedControl: UIView {
@@ -9,7 +20,7 @@ class CustomSegmentedControl: UIView {
     private var scrollView: UIScrollView!
     private var stackView: UIStackView!
 
-    weak var delegate: CustomSegmentedControlDelegate!
+    weak var delegate: CustomSegmentedControlDelegate?
 
     init() {
         super.init(frame: .zero)
@@ -23,30 +34,56 @@ class CustomSegmentedControl: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func loadData(data: [(String, UIColor)]) {
-        for element in data {
-            let segment = SegmentView(title: element.0, color: element.1)
-            segment.delegate = self
+    func set(data: [CustomSegmentedControlModel]) {
+        clear()
 
-            if stackView.arrangedSubviews.count == 0 {
-                segment.reloadData(state: true)
-            }
+        for model in data {
+            let label = makeLabel(model: model)
 
-            stackView.addArrangedSubview(segment)
+            stackView.addArrangedSubview(label)
         }
     }
 
-    func reloadData(view: SegmentView) {
+    private func clear() {
         let views = stackView.arrangedSubviews
-        view.reloadData(state: true)
 
-        views.forEach { currentView in
-            if currentView != view {
-                let segment = currentView as? SegmentView
-                segment?.reloadData(state: false)
-            }
+        for view in views {
+            view.removeFromSuperview()
         }
     }
+
+    private func makeLabel(model: CustomSegmentedControlModel) -> UILabel {
+        let label = UILabel()
+
+        label.text = model.title
+        label.textColor = model.color
+        label.isUserInteractionEnabled = true
+
+        switch model.isActive {
+        case true:
+            label.font = .systemFont(ofSize: 20, weight: .bold)
+        case false:
+            label.font = .systemFont(ofSize: 20)
+        }
+
+        let recognizer = CustomTapGestureRecognizer(target: self, action: #selector(segmentTapped(sender:)))
+        recognizer.id = model.id
+        label.addGestureRecognizer(recognizer)
+
+        return label
+    }
+
+    @objc private func segmentTapped(sender: CustomTapGestureRecognizer) {
+        guard let id = sender.id else { return }
+
+        delegate?.segmentTapped(id: id)
+    }
+
+}
+
+private class CustomTapGestureRecognizer: UITapGestureRecognizer {
+
+    var id: Any?
 
 }
 
@@ -66,6 +103,8 @@ extension CustomSegmentedControl: ConstructViewsProtocol {
 
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.canCancelContentTouches = true
+        scrollView.delaysContentTouches = true
     }
 
     func defineLayoutForViews() {
@@ -77,14 +116,6 @@ extension CustomSegmentedControl: ConstructViewsProtocol {
             $0.edges.equalToSuperview()
             $0.height.equalToSuperview()
         }
-    }
-
-}
-
-extension CustomSegmentedControl: SegmentDelegate {
-
-    func segmentTapped(view: SegmentView) {
-        delegate.segmentTapped(view: view)
     }
 
 }

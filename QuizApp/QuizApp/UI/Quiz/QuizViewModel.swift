@@ -2,6 +2,7 @@ import Combine
 import UIKit
 
 struct Quiz {
+
     let id: Int
     let name: String
     let description: String
@@ -9,25 +10,27 @@ struct Quiz {
     let imageUrl: String
     let numberOfQuestions: Int
     let difficulty: QuizDifficultyLevel
+
 }
 
 class QuizViewModel {
 
     private let coordinator: CoordinatorProtocol
 
-    @Published var categories: [QuizCategory] = []
+    @Published var categories: [CustomSegmentedControlModel] = []
     @Published var quizes: [Quiz] = []
 
     init(coordinator: CoordinatorProtocol) {
         self.coordinator = coordinator
     }
 
-    func getData() {
-        categories = QuizCategory.allCases
-        getQuizes(for: categories[0])
+    func loadData() {
+        let firstCategory =  QuizCategory.allCases[0]
+        loadQuizes(for: firstCategory)
+        loadCategories(active: firstCategory)
     }
 
-    func getQuizes(for category: QuizCategory) {
+    func loadQuizes(for category: QuizCategory) {
         switch category {
         case .sport:
             quizes = [
@@ -69,4 +72,17 @@ class QuizViewModel {
             quizes = []
         }
     }
+
+    func loadCategories(active: QuizCategory) {
+        categories = QuizCategory.allCases.compactMap {
+            let isActive = active == $0
+            return CustomSegmentedControlModel(id: $0.self, title: $0.description, color: $0.color, isActive: isActive)
+        }
+    }
+
+    func onCategorySelected(_ category: QuizCategory) {
+        loadQuizes(for: category)
+        loadCategories(active: category)
+    }
+
 }

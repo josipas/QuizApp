@@ -1,6 +1,7 @@
 import UIKit
 
 enum QuizCategory: CaseIterable {
+
     case movies
     case music
     case sport
@@ -31,4 +32,5 @@ enum QuizCategory: CaseIterable {
             return UIColor(red: 0.949, green: 0.788, blue: 0.298, alpha: 1)
         }
     }
+
 }

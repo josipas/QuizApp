@@ -11,7 +11,6 @@ class QuizViewController: UIViewController {
     private var viewModel: QuizViewModel!
     private var cancellables = Set<AnyCancellable>()
     private var quizes: [Quiz] = []
-    private var categories: [QuizCategory] = []
 
     init(viewModel: QuizViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -27,7 +26,7 @@ class QuizViewController: UIViewController {
         createViews()
         styleViews()
         defineLayoutForViews()
-        getData()
+        loadData()
         bindViewModel()
     }
 
@@ -43,13 +42,8 @@ class QuizViewController: UIViewController {
             .sink { [weak self] categories in
                 guard let self = self else { return }
 
-                self.categories = categories
-                let categories = categories.map {
-                    ($0.description, $0.color)
-                }
-
-                self.selectionView.loadData(data: categories)
-                self.collectionView.reloadData()
+                print(categories)
+                self.selectionView.set(data: categories)
             }
             .store(in: &cancellables)
 
@@ -64,8 +58,8 @@ class QuizViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    private func getData() {
-        viewModel.getData()
+    private func loadData() {
+        viewModel.loadData()
     }
 
     private func configureGradient() {
@@ -123,7 +117,6 @@ extension QuizViewController: ConstructViewsProtocol {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(80)
             $0.trailing.leading.equalToSuperview().inset(30)
-            $0.bottom.equalTo(selectionView.snp.top).offset(-20)
         }
 
         selectionView.snp.makeConstraints {
@@ -136,7 +129,7 @@ extension QuizViewController: ConstructViewsProtocol {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(selectionView.snp.bottom).offset(35)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
 
@@ -163,7 +156,8 @@ extension QuizViewController: UICollectionViewDataSource {
             fatalError()
         }
 
-        cell.set(title: quizes[indexPath.row].name, description: quizes[indexPath.row].description)
+        let quiz = quizes[indexPath.row]
+        cell.set(title: quiz.name, description: quiz.description)
 
         return cell
     }
@@ -175,22 +169,23 @@ extension QuizViewController: UICollectionViewDelegate {
 }
 
 extension QuizViewController: UICollectionViewDelegateFlowLayout {
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: view.bounds.width - 40, height: 140)
+        CGSize(width: view.bounds.width - 40, height: 140)
     }
+
 }
 
 extension QuizViewController: CustomSegmentedControlDelegate {
 
-    func segmentTapped(view: SegmentView) {
-        for category in categories where category.description == view.title {
-            viewModel.getQuizes(for: category)
-        }
+    func segmentTapped(id: Any) {
+        guard let category = id as? QuizCategory else { return }
 
-        selectionView.reloadData(view: view)
+        viewModel.onCategorySelected(category)
     }
+
 }
