@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 
 class QuizViewController: UIViewController {
@@ -6,9 +7,11 @@ class QuizViewController: UIViewController {
 
     private var titleLabel: UILabel!
     private var selectionView: CustomSegmentedControl!
+    private var collectionView: UICollectionView!
     private var viewModel: QuizViewModel!
-
-    @Published var categories: [String] = []
+    private var cancellables = Set<AnyCancellable>()
+    private var quizes: [Quiz] = []
+    private var categories: [QuizCategory] = []
 
     init(viewModel: QuizViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -25,6 +28,7 @@ class QuizViewController: UIViewController {
         styleViews()
         defineLayoutForViews()
         getData()
+        bindViewModel()
     }
 
     override func viewDidLayoutSubviews() {
@@ -33,10 +37,35 @@ class QuizViewController: UIViewController {
         configureGradient()
     }
 
+    private func bindViewModel() {
+        viewModel
+            .$categories
+            .sink { [weak self] categories in
+                guard let self = self else { return }
+
+                self.categories = categories
+                let categories = categories.map {
+                    ($0.description, $0.color)
+                }
+
+                self.selectionView.loadData(data: categories)
+                self.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
+
+        viewModel
+            .$quizes
+            .sink { [weak self] quizes in
+                guard let self = self else { return }
+
+                self.quizes = quizes
+                self.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+
     private func getData() {
-        categories = viewModel.getQuizCategories().map {
-            $0.description
-        }
+        viewModel.getData()
     }
 
     private func configureGradient() {
@@ -51,6 +80,14 @@ class QuizViewController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
 
+    private func makeCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 10
+        layout.scrollDirection = .vertical
+
+        return layout
+    }
+
 }
 
 extension QuizViewController: ConstructViewsProtocol {
@@ -61,6 +98,9 @@ extension QuizViewController: ConstructViewsProtocol {
 
         selectionView = CustomSegmentedControl()
         view.addSubview(selectionView)
+
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
+        view.addSubview(collectionView)
     }
 
     func styleViews() {
@@ -68,20 +108,89 @@ extension QuizViewController: ConstructViewsProtocol {
         titleLabel.font = .systemFont(ofSize: 32, weight: .bold)
         titleLabel.textAlignment = .center
         titleLabel.text = "PopQuiz"
+
+        selectionView.delegate = self
+
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(
+            QuizCollectionViewCell.self,
+            forCellWithReuseIdentifier: QuizCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = UIColor.clear
     }
 
     func defineLayoutForViews() {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(80)
             $0.trailing.leading.equalToSuperview().inset(30)
+            $0.bottom.equalTo(selectionView.snp.top).offset(-20)
         }
 
         selectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.trailing.equalToSuperview().inset(12)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.height.equalTo(30)
+        }
+
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(selectionView.snp.bottom).offset(35)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
         }
     }
 
+}
+
+extension QuizViewController: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        quizes.count
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: QuizCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? QuizCollectionViewCell
+        else {
+            fatalError()
+        }
+
+        cell.set(title: quizes[indexPath.row].name, description: quizes[indexPath.row].description)
+
+        return cell
+    }
+
+}
+
+extension QuizViewController: UICollectionViewDelegate {
+
+}
+
+extension QuizViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: view.bounds.width - 40, height: 140)
+    }
+}
+
+extension QuizViewController: CustomSegmentedControlDelegate {
+
+    func segmentTapped(view: SegmentView) {
+        for category in categories where category.description == view.title {
+            viewModel.getQuizes(for: category)
+        }
+
+        selectionView.reloadData(view: view)
+    }
 }
