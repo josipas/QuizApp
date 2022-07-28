@@ -42,7 +42,6 @@ class QuizViewController: UIViewController {
             .sink { [weak self] categories in
                 guard let self = self else { return }
 
-                print(categories)
                 self.selectionView.set(data: categories)
             }
             .store(in: &cancellables)
