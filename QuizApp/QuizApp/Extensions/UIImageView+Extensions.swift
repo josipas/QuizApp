@@ -1,6 +1,7 @@
 import UIKit
 
 extension UIImageView {
+
     func load(imageUrl: String) {
         let url = URL(string: imageUrl)
 
@@ -12,4 +13,5 @@ extension UIImageView {
             self.image = UIImage(data: data)
         }
     }
+
 }
