@@ -21,7 +21,7 @@ class QuizDifficultyLevelView: UIView {
 
         for view in stackView.arrangedSubviews {
             view.tintColor = elements > 0 ? color : UIColor(red: 1, green: 1, blue: 1, alpha: 0.2)
-            elements-=1
+            elements -= 1
         }
     }
 
