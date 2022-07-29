@@ -1,6 +1,6 @@
 import UIKit
 
-enum QuizCategory: String, CaseIterable, Codable {
+enum QuizCategoryModel: String, CaseIterable, Codable {
 
     case movies
     case music

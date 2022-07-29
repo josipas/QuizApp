@@ -16,11 +16,11 @@ class QuizViewModel {
 
     @MainActor
     func loadData() {
-        onCategorySelected(QuizCategory.allCases[0])
+        onCategorySelected(QuizCategoryModel.allCases[0])
     }
 
     @MainActor
-    func loadQuizes(for category: QuizCategory) {
+    func loadQuizes(for category: QuizCategoryModel) {
         Task(priority: .background) {
             do {
                 self.quizes = try await quizUseCase.getQuizes(for: category)
@@ -29,8 +29,8 @@ class QuizViewModel {
         }
     }
 
-    func loadCategories(active: QuizCategory) {
-        categories = QuizCategory.allCases.compactMap {
+    func loadCategories(active: QuizCategoryModel) {
+        categories = QuizCategoryModel.allCases.compactMap {
             let isActive = active == $0
             return CustomSegmentedControlModel(
                 id: $0.self,
@@ -41,7 +41,7 @@ class QuizViewModel {
     }
 
     @MainActor
-    func onCategorySelected(_ category: QuizCategory) {
+    func onCategorySelected(_ category: QuizCategoryModel) {
         loadQuizes(for: category)
         loadCategories(active: category)
     }

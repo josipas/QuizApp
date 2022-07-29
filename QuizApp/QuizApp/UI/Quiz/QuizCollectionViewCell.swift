@@ -21,7 +21,13 @@ class QuizCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(title: String, description: String, color: UIColor, difficulty: QuizDifficultyLevel, imageUrl: String) {
+    func set(
+        title: String,
+        description: String,
+        color: UIColor,
+        difficulty: QuizDifficultyLevelModel,
+        imageUrl: String
+    ) {
         titleLabel.text = title
         textDescription.text = description
         imageView.load(imageUrl: imageUrl)

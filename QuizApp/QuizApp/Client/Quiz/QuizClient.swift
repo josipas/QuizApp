@@ -1,6 +1,6 @@
 protocol QuizClientProtocol {
 
-    func getQuizes(for category: QuizCategory) async throws -> [QuizResponseClientModel]
+    func getQuizes(for category: QuizCategoryClientModel) async throws -> [QuizResponseClientModel]
 
 }
 
@@ -13,11 +13,11 @@ class QuizClient: QuizClientProtocol {
         self.networkClient = networkClient
     }
 
-    func getQuizes(for category: QuizCategory) async throws -> [QuizResponseClientModel] {
+    func getQuizes(for category: QuizCategoryClientModel) async throws -> [QuizResponseClientModel] {
         try await networkClient.executeRequest(
             path: path,
             method: .get,
-            parameters: ["category": category.rawValue])
+            parameters: ["category": category.category])
     }
 
 }

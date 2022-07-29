@@ -195,7 +195,7 @@ extension QuizViewController: UICollectionViewDelegateFlowLayout {
 extension QuizViewController: CustomSegmentedControlDelegate {
 
     func segmentTapped(id: Any) {
-        guard let category = id as? QuizCategory else { return }
+        guard let category = id as? QuizCategoryModel else { return }
 
         viewModel.onCategorySelected(category)
     }
