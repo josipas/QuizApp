@@ -35,20 +35,12 @@ class CustomSegmentedControl: UIView {
     }
 
     func set(data: [CustomSegmentedControlModel]) {
-        clear()
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
         for model in data {
             let label = makeLabel(model: model)
 
             stackView.addArrangedSubview(label)
-        }
-    }
-
-    private func clear() {
-        let views = stackView.arrangedSubviews
-
-        for view in views {
-            view.removeFromSuperview()
         }
     }
 
