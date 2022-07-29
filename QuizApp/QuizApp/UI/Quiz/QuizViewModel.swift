@@ -1,7 +1,7 @@
 import Combine
 import UIKit
 
-struct Quiz {
+struct Quiz: Codable {
 
     let id: Int
     let name: String
@@ -16,16 +16,28 @@ struct Quiz {
 class QuizViewModel {
 
     private let coordinator: CoordinatorProtocol
+    private let quizUseCase: QuizUseCaseProtocol
 
     @Published var categories: [CustomSegmentedControlModel] = []
     @Published var quizes: [Quiz] = []
 
-    init(coordinator: CoordinatorProtocol) {
+    init(coordinator: CoordinatorProtocol, quizUseCase: QuizUseCaseProtocol) {
         self.coordinator = coordinator
+        self.quizUseCase = quizUseCase
     }
 
     func loadData() {
         onCategorySelected(QuizCategory.allCases[0])
+
+        Task(priority: .background) {
+            do {
+                let quizzes = try await quizUseCase.getQuizes(for: .sport)
+
+                print(quizzes)
+            } catch {
+                print("error")
+            }
+        }
     }
 
     func loadQuizes(for category: QuizCategory) {

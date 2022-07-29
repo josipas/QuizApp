@@ -16,7 +16,7 @@ class TokenCheckClient: TokenCheckClientProtocol {
     }
 
     func validateToken() async throws {
-        try await networkClient.executeRequest(path: path, parameters: nil)
+        try await networkClient.executeRequest(path: path)
     }
 
 }

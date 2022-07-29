@@ -1,4 +1,4 @@
-enum QuizDifficultyLevel: CaseIterable {
+enum QuizDifficultyLevel: String, CaseIterable, Codable {
 
     case easy
     case normal

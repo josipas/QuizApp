@@ -21,7 +21,7 @@ class AccountClient: AccountClientProtocol {
 
     var data: AccountResponseClientModel {
         get async throws {
-            try await networkClient.executeRequest(path: path, method: .get)
+            try await networkClient.executeRequest(path: path, method: .get, parameters: nil)
         }
     }
 

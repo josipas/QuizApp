@@ -45,6 +45,12 @@
 		52E477352875999600884F2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477342875999600884F2B /* SceneDelegate.swift */; };
 		52E477372875999600884F2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477362875999600884F2B /* LoginViewController.swift */; };
 		52E4773C2875999900884F2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E4773B2875999900884F2B /* Assets.xcassets */; };
+		52F621A92893DEEE008DAC33 /* QuizClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621A82893DEEE008DAC33 /* QuizClient.swift */; };
+		52F621AB2893F074008DAC33 /* QuizResponseClientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621AA2893F074008DAC33 /* QuizResponseClientModel.swift */; };
+		52F621AE2893F0C6008DAC33 /* QuizResponseDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621AD2893F0C6008DAC33 /* QuizResponseDataModel.swift */; };
+		52F621B02893F155008DAC33 /* QuizDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621AF2893F155008DAC33 /* QuizDataSource.swift */; };
+		52F621B32893F371008DAC33 /* QuizUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621B22893F371008DAC33 /* QuizUseCase.swift */; };
+		52F621B52893F3AD008DAC33 /* QuizModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621B42893F3AD008DAC33 /* QuizModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +92,12 @@
 		52E477362875999600884F2B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		52E4773B2875999900884F2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52E477402875999900884F2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52F621A82893DEEE008DAC33 /* QuizClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizClient.swift; sourceTree = "<group>"; };
+		52F621AA2893F074008DAC33 /* QuizResponseClientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResponseClientModel.swift; sourceTree = "<group>"; };
+		52F621AD2893F0C6008DAC33 /* QuizResponseDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResponseDataModel.swift; sourceTree = "<group>"; };
+		52F621AF2893F155008DAC33 /* QuizDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDataSource.swift; sourceTree = "<group>"; };
+		52F621B22893F371008DAC33 /* QuizUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUseCase.swift; sourceTree = "<group>"; };
+		52F621B42893F3AD008DAC33 /* QuizModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +137,7 @@
 		5224E425287D71860047E2F2 /* UC */ = {
 			isa = PBXGroup;
 			children = (
+				52F621B12893F363008DAC33 /* Quiz */,
 				5224E452288069020047E2F2 /* User */,
 				5224E433287DB2BB0047E2F2 /* Login */,
 			);
@@ -134,6 +147,7 @@
 		5224E426287D719D0047E2F2 /* DS */ = {
 			isa = PBXGroup;
 			children = (
+				52F621AC2893F0AD008DAC33 /* Quiz */,
 				5224E43A287DB39E0047E2F2 /* User */,
 				5224E437287DB3810047E2F2 /* Login */,
 			);
@@ -149,6 +163,7 @@
 				527487B628817D4C00124594 /* Account */,
 				5224E447287EF1660047E2F2 /* TokenCheck */,
 				5224E446287EF1580047E2F2 /* Login */,
+				52F621A72893DEC7008DAC33 /* Quiz */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -289,6 +304,33 @@
 			path = QuizApp;
 			sourceTree = "<group>";
 		};
+		52F621A72893DEC7008DAC33 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				52F621A82893DEEE008DAC33 /* QuizClient.swift */,
+				52F621AA2893F074008DAC33 /* QuizResponseClientModel.swift */,
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
+		52F621AC2893F0AD008DAC33 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				52F621AD2893F0C6008DAC33 /* QuizResponseDataModel.swift */,
+				52F621AF2893F155008DAC33 /* QuizDataSource.swift */,
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
+		52F621B12893F363008DAC33 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				52F621B22893F371008DAC33 /* QuizUseCase.swift */,
+				52F621B42893F3AD008DAC33 /* QuizModel.swift */,
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -392,6 +434,7 @@
 				52DD12C32892DF7D0022AA31 /* QuizDifficultyLevelView.swift in Sources */,
 				5224E45128804F280047E2F2 /* UserViewModel.swift in Sources */,
 				528A029928900A67001706B2 /* QuizViewModel.swift in Sources */,
+				52F621AE2893F0C6008DAC33 /* QuizResponseDataModel.swift in Sources */,
 				5224E412287C31390047E2F2 /* Coordinator.swift in Sources */,
 				526755212876D04D00DFA655 /* ConstructViewsProtocol.swift in Sources */,
 				52E477372875999600884F2B /* LoginViewController.swift in Sources */,
@@ -401,11 +444,14 @@
 				5224E43E287DC3CB0047E2F2 /* LoginResponseDataModel.swift in Sources */,
 				52E477332875999600884F2B /* AppDelegate.swift in Sources */,
 				5224E449287EF17D0047E2F2 /* TokenCheckClient.swift in Sources */,
+				52F621B52893F3AD008DAC33 /* QuizModel.swift in Sources */,
 				5224E43C287DC3B60047E2F2 /* LoginDataSource.swift in Sources */,
 				528A0297289009F9001706B2 /* QuizDifficultyLevel.swift in Sources */,
 				527487C728858B2A00124594 /* NetworkClient.swift in Sources */,
 				527487BE28818E4F00124594 /* AccountResponseDataModel.swift in Sources */,
+				52F621B02893F155008DAC33 /* QuizDataSource.swift in Sources */,
 				5224E454288069160047E2F2 /* UserUseCase.swift in Sources */,
+				52F621A92893DEEE008DAC33 /* QuizClient.swift in Sources */,
 				5224E422287D6BD10047E2F2 /* AppDependencies.swift in Sources */,
 				5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */,
 				5224E414287C3FAC0047E2F2 /* CoordinatorProtocol.swift in Sources */,
@@ -414,12 +460,14 @@
 				52E477352875999600884F2B /* SceneDelegate.swift in Sources */,
 				528A029528900897001706B2 /* QuizCategory.swift in Sources */,
 				5224E41C287C63660047E2F2 /* RequestError.swift in Sources */,
+				52F621B32893F371008DAC33 /* QuizUseCase.swift in Sources */,
 				527487C028819B8700124594 /* AccountModel.swift in Sources */,
 				5224E44E2880255F0047E2F2 /* QuizViewController.swift in Sources */,
 				527487B828817D6200124594 /* AccountClient.swift in Sources */,
 				5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */,
 				5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */,
 				5224E42F287DADC60047E2F2 /* SecurityStorage.swift in Sources */,
+				52F621AB2893F074008DAC33 /* QuizResponseClientModel.swift in Sources */,
 				5224E420287C6CD20047E2F2 /* LoginResponseClientModel.swift in Sources */,
 				5224E445287EB8BD0047E2F2 /* UserViewController.swift in Sources */,
 			);

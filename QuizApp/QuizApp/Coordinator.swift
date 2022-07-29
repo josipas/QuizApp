@@ -39,7 +39,10 @@ class Coordinator: CoordinatorProtocol {
     }
 
     private func makeQuizViewController() -> UINavigationController {
-        let quizViewController = QuizViewController(viewModel: QuizViewModel(coordinator: self))
+        let quizViewController = QuizViewController(
+            viewModel: QuizViewModel(
+                coordinator: self,
+                quizUseCase: appDependencies.quizUseCase))
         let quizNavigationController = UINavigationController(rootViewController: quizViewController)
 
         quizNavigationController.tabBarItem = UITabBarItem(
