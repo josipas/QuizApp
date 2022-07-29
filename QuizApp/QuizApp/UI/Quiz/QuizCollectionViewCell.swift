@@ -21,10 +21,10 @@ class QuizCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(title: String, description: String, color: UIColor, difficulty: QuizDifficultyLevel) {
+    func set(title: String, description: String, color: UIColor, difficulty: QuizDifficultyLevel, imageUrl: String) {
         titleLabel.text = title
         textDescription.text = description
-        imageView.backgroundColor = color
+        imageView.load(imageUrl: imageUrl)
         difficultyView.set(color: color, difficulty: difficulty)
     }
 
@@ -57,7 +57,9 @@ extension QuizCollectionViewCell: ConstructViewsProtocol {
         textDescription.textColor = .white
         textDescription.font = .systemFont(ofSize: 14)
 
-        imageView?.layer.cornerRadius = 10
+        imageView.contentMode = .scaleToFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
     }
 
     func defineLayoutForViews() {

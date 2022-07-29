@@ -51,6 +51,7 @@
 		52F621B02893F155008DAC33 /* QuizDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621AF2893F155008DAC33 /* QuizDataSource.swift */; };
 		52F621B32893F371008DAC33 /* QuizUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621B22893F371008DAC33 /* QuizUseCase.swift */; };
 		52F621B52893F3AD008DAC33 /* QuizModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621B42893F3AD008DAC33 /* QuizModel.swift */; };
+		52F621B82893FF2E008DAC33 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F621B72893FF2E008DAC33 /* UIImageView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +99,7 @@
 		52F621AF2893F155008DAC33 /* QuizDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDataSource.swift; sourceTree = "<group>"; };
 		52F621B22893F371008DAC33 /* QuizUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUseCase.swift; sourceTree = "<group>"; };
 		52F621B42893F3AD008DAC33 /* QuizModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModel.swift; sourceTree = "<group>"; };
+		52F621B72893FF2E008DAC33 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +290,7 @@
 		52E477312875999600884F2B /* QuizApp */ = {
 			isa = PBXGroup;
 			children = (
+				52F621B62893FF19008DAC33 /* Extensions */,
 				5224E42D287DAD6B0047E2F2 /* Utils */,
 				52E477322875999600884F2B /* AppDelegate.swift */,
 				52E477342875999600884F2B /* SceneDelegate.swift */,
@@ -329,6 +332,14 @@
 				52F621B42893F3AD008DAC33 /* QuizModel.swift */,
 			);
 			path = Quiz;
+			sourceTree = "<group>";
+		};
+		52F621B62893FF19008DAC33 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				52F621B72893FF2E008DAC33 /* UIImageView+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -465,6 +476,7 @@
 				5224E44E2880255F0047E2F2 /* QuizViewController.swift in Sources */,
 				527487B828817D6200124594 /* AccountClient.swift in Sources */,
 				5267551F2876CF9F00DFA655 /* CustomInputFieldView.swift in Sources */,
+				52F621B82893FF2E008DAC33 /* UIImageView+Extensions.swift in Sources */,
 				5224E410287824E60047E2F2 /* LoginViewModel.swift in Sources */,
 				5224E42F287DADC60047E2F2 /* SecurityStorage.swift in Sources */,
 				52F621AB2893F074008DAC33 /* QuizResponseClientModel.swift in Sources */,

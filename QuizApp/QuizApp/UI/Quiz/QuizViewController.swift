@@ -10,7 +10,7 @@ class QuizViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var viewModel: QuizViewModel!
     private var cancellables = Set<AnyCancellable>()
-    private var quizes: [Quiz] = []
+    private var quizes: [QuizModel] = []
 
     init(viewModel: QuizViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -157,11 +157,19 @@ extension QuizViewController: UICollectionViewDataSource {
 
         let quiz = quizes[indexPath.row]
 
+        guard
+            let color = quiz.category?.color,
+            let difficulty = quiz.difficulty
+        else {
+            return cell
+        }
+
         cell.set(
             title: quiz.name,
             description: quiz.description,
-            color: quiz.category.color,
-            difficulty: quiz.difficulty)
+            color: color,
+            difficulty: difficulty,
+            imageUrl: quiz.imageUrl)
 
         return cell
     }

@@ -17,7 +17,7 @@ class QuizClient: QuizClientProtocol {
         try await networkClient.executeRequest(
             path: path,
             method: .get,
-            parameters: ["category": category.description.lowercased()])
+            parameters: ["category": category.rawValue])
     }
 
 }
