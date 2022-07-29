@@ -25,9 +25,7 @@ class QuizViewModel {
     }
 
     func loadData() {
-        let firstCategory =  QuizCategory.allCases[0]
-        loadQuizes(for: firstCategory)
-        loadCategories(active: firstCategory)
+        onCategorySelected(QuizCategory.allCases[0])
     }
 
     func loadQuizes(for category: QuizCategory) {
