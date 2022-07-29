@@ -7,6 +7,7 @@ class QuizCollectionViewCell: UICollectionViewCell {
     private var titleLabel: UILabel!
     private var textDescription: UILabel!
     private var imageView: UIImageView!
+    private var difficultyView: QuizDifficultyLevelView!
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -20,9 +21,11 @@ class QuizCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(title: String, description: String) {
+    func set(title: String, description: String, color: UIColor, difficulty: QuizDifficultyLevel) {
         titleLabel.text = title
         textDescription.text = description
+        imageView.backgroundColor = color
+        difficultyView.set(color: color, difficulty: difficulty)
     }
 
 }
@@ -38,6 +41,9 @@ extension QuizCollectionViewCell: ConstructViewsProtocol {
 
         imageView = UIImageView()
         addSubview(imageView)
+
+        difficultyView = QuizDifficultyLevelView()
+        addSubview(difficultyView)
     }
 
     func styleViews() {
@@ -51,7 +57,6 @@ extension QuizCollectionViewCell: ConstructViewsProtocol {
         textDescription.textColor = .white
         textDescription.font = .systemFont(ofSize: 14)
 
-        imageView.backgroundColor = .yellow
         imageView?.layer.cornerRadius = 10
     }
 
@@ -74,6 +79,11 @@ extension QuizCollectionViewCell: ConstructViewsProtocol {
             $0.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(titleLabel.snp.bottom).offset(12)
             $0.bottom.equalToSuperview().inset(20)
+        }
+
+        difficultyView.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview().inset(15)
+            $0.height.equalTo(10)
         }
     }
 

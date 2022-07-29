@@ -156,7 +156,12 @@ extension QuizViewController: UICollectionViewDataSource {
         }
 
         let quiz = quizes[indexPath.row]
-        cell.set(title: quiz.name, description: quiz.description)
+
+        cell.set(
+            title: quiz.name,
+            description: quiz.description,
+            color: quiz.category.color,
+            difficulty: quiz.difficulty)
 
         return cell
     }
