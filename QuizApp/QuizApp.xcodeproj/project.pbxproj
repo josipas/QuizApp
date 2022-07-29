@@ -262,8 +262,6 @@
 			isa = PBXGroup;
 			children = (
 				5224E44D2880255F0047E2F2 /* QuizViewController.swift */,
-				528A029428900897001706B2 /* QuizCategory.swift */,
-				528A0296289009F9001706B2 /* QuizDifficultyLevel.swift */,
 				528A029828900A67001706B2 /* QuizViewModel.swift */,
 				52DD12BB28902B6E0022AA31 /* QuizCollectionViewCell.swift */,
 				52DD12C22892DF7D0022AA31 /* QuizDifficultyLevelView.swift */,
@@ -330,6 +328,8 @@
 			children = (
 				52F621B22893F371008DAC33 /* QuizUseCase.swift */,
 				52F621B42893F3AD008DAC33 /* QuizModel.swift */,
+				528A029428900897001706B2 /* QuizCategory.swift */,
+				528A0296289009F9001706B2 /* QuizDifficultyLevel.swift */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
