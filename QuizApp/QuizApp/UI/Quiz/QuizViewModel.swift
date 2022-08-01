@@ -24,7 +24,8 @@ class QuizViewModel {
         Task(priority: .background) {
             do {
                 self.quizes = try await quizUseCase
-                    .getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!).map {
+                    .getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!)
+                    .map {
                         Quiz(from: $0)
                     }
             } catch {
