@@ -10,7 +10,7 @@ class QuizViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var viewModel: QuizViewModel!
     private var cancellables = Set<AnyCancellable>()
-    private var quizes: [QuizModel] = []
+    private var quizes: [Quiz] = []
 
     init(viewModel: QuizViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -157,18 +157,11 @@ extension QuizViewController: UICollectionViewDataSource {
 
         let quiz = quizes[indexPath.row]
 
-        guard
-            let color = quiz.category?.color,
-            let difficulty = quiz.difficulty
-        else {
-            return cell
-        }
-
         cell.set(
             title: quiz.name,
             description: quiz.description,
-            color: color,
-            difficulty: difficulty,
+            color: quiz.category.color,
+            difficulty: quiz.difficulty,
             imageUrl: quiz.imageUrl)
 
         return cell
@@ -195,7 +188,7 @@ extension QuizViewController: UICollectionViewDelegateFlowLayout {
 extension QuizViewController: CustomSegmentedControlDelegate {
 
     func segmentTapped(id: Any) {
-        guard let category = id as? QuizCategoryModel else { return }
+        guard let category = id as? QuizCategory else { return }
 
         viewModel.onCategorySelected(category)
     }

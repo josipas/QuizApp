@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 class QuizCollectionViewCell: UICollectionViewCell {
 
@@ -25,12 +26,12 @@ class QuizCollectionViewCell: UICollectionViewCell {
         title: String,
         description: String,
         color: UIColor,
-        difficulty: QuizDifficultyLevelModel,
+        difficulty: QuizDifficultyLevel,
         imageUrl: String
     ) {
         titleLabel.text = title
         textDescription.text = description
-        imageView.load(imageUrl: imageUrl)
+        imageView.kf.setImage(with: URL(string: imageUrl))
         difficultyView.set(color: color, difficulty: difficulty)
     }
 

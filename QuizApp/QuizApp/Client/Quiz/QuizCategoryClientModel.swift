@@ -1,13 +1,8 @@
-struct QuizCategoryClientModel {
+enum QuizCategoryClientModel: String, CaseIterable, Codable {
 
-    let category: String
-
-}
-
-extension QuizCategoryClientModel {
-
-    init(from model: QuizCategoryDataModel) {
-        self.category = model.category
-    }
+    case movies
+    case music
+    case sport
+    case geography
 
 }

@@ -16,7 +16,7 @@ class QuizDifficultyLevelView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(color: UIColor, difficulty: QuizDifficultyLevelModel) {
+    func set(color: UIColor, difficulty: QuizDifficultyLevel) {
         var elements = difficulty.elements
 
         for view in stackView.arrangedSubviews {
@@ -43,7 +43,7 @@ extension QuizDifficultyLevelView: ConstructViewsProtocol {
     func createViews() {
         stackView = UIStackView()
 
-        for _ in QuizDifficultyLevelModel.allCases {
+        for _ in QuizDifficultyLevel.allCases {
             stackView.addArrangedSubview(makeImage())
         }
 

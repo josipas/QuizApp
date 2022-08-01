@@ -1,13 +1,8 @@
-struct QuizCategoryDataModel {
+enum QuizCategoryDataModel: String, Codable {
 
-    let category: String
-
-}
-
-extension QuizCategoryDataModel {
-
-    init(from model: QuizCategoryModel) {
-        category = model.rawValue
-    }
+    case movies
+    case music
+    case sport
+    case geography
 
 }

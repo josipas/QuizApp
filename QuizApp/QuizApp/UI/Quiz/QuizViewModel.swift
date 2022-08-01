@@ -7,7 +7,7 @@ class QuizViewModel {
     private let quizUseCase: QuizUseCaseProtocol
 
     @Published var categories: [CustomSegmentedControlModel] = []
-    @Published var quizes: [QuizModel] = []
+    @Published var quizes: [Quiz] = []
 
     init(coordinator: CoordinatorProtocol, quizUseCase: QuizUseCaseProtocol) {
         self.coordinator = coordinator
@@ -16,21 +16,24 @@ class QuizViewModel {
 
     @MainActor
     func loadData() {
-        onCategorySelected(QuizCategoryModel.allCases[0])
+        onCategorySelected(QuizCategory.allCases[0])
     }
 
     @MainActor
-    func loadQuizes(for category: QuizCategoryModel) {
+    func loadQuizes(for category: QuizCategory) {
         Task(priority: .background) {
             do {
-                self.quizes = try await quizUseCase.getQuizes(for: category)
+                self.quizes = try await quizUseCase
+                    .getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!).map {
+                        Quiz(from: $0)
+                    }
             } catch {
             }
         }
     }
 
-    func loadCategories(active: QuizCategoryModel) {
-        categories = QuizCategoryModel.allCases.compactMap {
+    func loadCategories(active: QuizCategory) {
+        categories = QuizCategory.allCases.compactMap {
             let isActive = active == $0
             return CustomSegmentedControlModel(
                 id: $0.self,
@@ -41,7 +44,7 @@ class QuizViewModel {
     }
 
     @MainActor
-    func onCategorySelected(_ category: QuizCategoryModel) {
+    func onCategorySelected(_ category: QuizCategory) {
         loadQuizes(for: category)
         loadCategories(active: category)
     }
