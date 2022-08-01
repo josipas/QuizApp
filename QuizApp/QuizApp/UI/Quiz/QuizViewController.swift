@@ -10,9 +10,7 @@ class QuizViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var viewModel: QuizViewModel!
     private var cancellables = Set<AnyCancellable>()
-    private var quizes: [Quiz] = []
-    private var allquizes: [QuizCategory: [Quiz]] = [:]
-    private var allSelected = false
+    private var quizes: [QuizCategory: [Quiz]] = [:]
 
     init(viewModel: QuizViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -54,22 +52,7 @@ class QuizViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.quizes = quizes
-                self.allquizes = quizes.reduce([QuizCategory: [Quiz]]()) { (dict, quiz) -> [QuizCategory: [Quiz]] in
-                    var dict = dict
-                    dict[quiz.category] == nil ? dict[quiz.category] = [quiz] : dict[quiz.category]?.append(quiz)
-                    return dict
-                }
-
                 self.collectionView.reloadData()
-            }
-            .store(in: &cancellables)
-
-        viewModel
-            .$allSelected
-            .sink { [weak self] allSelected in
-                guard let self = self else { return }
-
-                self.allSelected = allSelected
             }
             .store(in: &cancellables)
     }
@@ -126,6 +109,14 @@ extension QuizViewController: ConstructViewsProtocol {
         collectionView.register(
             QuizCollectionViewCell.self,
             forCellWithReuseIdentifier: QuizCollectionViewCell.reuseIdentifier)
+        collectionView.register(
+            QuizCollectionViewHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: QuizCollectionViewHeader.reuseIdentifier)
+        collectionView.register(
+            QuizCollectionViewFooter.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: QuizCollectionViewFooter.reuseIdentifier)
         collectionView.backgroundColor = UIColor.clear
     }
 
@@ -154,23 +145,28 @@ extension QuizViewController: ConstructViewsProtocol {
 extension QuizViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        allquizes.keys.count
+        quizes.keys.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        2
+        guard let quizes = quizes[Array(quizes.keys)[section]] else { return 0 }
+
+        return quizes.count
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: QuizCollectionViewCell.reuseIdentifier,
-            for: indexPath) as? QuizCollectionViewCell
-        else {
-            fatalError()
-        }
+        guard
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: QuizCollectionViewCell.reuseIdentifier,
+                for: indexPath) as? QuizCollectionViewCell
+        else { fatalError() }
+
+        let category = Array(quizes.keys)[indexPath.section]
+
+        guard let quizes = quizes[category] else { return cell }
 
         let quiz = quizes[indexPath.row]
 
@@ -182,6 +178,53 @@ extension QuizViewController: UICollectionViewDataSource {
             imageUrl: quiz.imageUrl)
 
         return cell
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        quizes.keys.count < 2 ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: 40)
+
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
+        quizes.keys.count < 2 ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: 35)
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard
+                let cell = collectionView
+                    .dequeueReusableSupplementaryView(
+                        ofKind: UICollectionView.elementKindSectionHeader,
+                        withReuseIdentifier: QuizCollectionViewHeader.reuseIdentifier,
+                        for: indexPath) as? QuizCollectionViewHeader
+            else { fatalError() }
+
+            cell.set(category: Array(quizes.keys)[indexPath.section])
+
+            return cell
+        } else {
+            guard
+                let cell = collectionView
+                    .dequeueReusableSupplementaryView(
+                        ofKind: UICollectionView.elementKindSectionFooter,
+                        withReuseIdentifier: QuizCollectionViewFooter.reuseIdentifier,
+                        for: indexPath) as? QuizCollectionViewFooter
+            else { fatalError() }
+
+            return cell
+        }
     }
 
 }

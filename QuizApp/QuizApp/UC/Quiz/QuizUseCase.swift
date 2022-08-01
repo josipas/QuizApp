@@ -23,9 +23,7 @@ class QuizUseCase: QuizUseCaseProtocol {
     }
 
     func getQuizes() async throws -> [QuizModel] {
-        try await quizDataSource.getQuizes().map {
-            QuizModel(from: $0)
-        }
+        try await quizDataSource.getQuizes().map { QuizModel(from: $0) }
     }
 
 }
