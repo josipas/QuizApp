@@ -1,4 +1,4 @@
-enum QuizDifficultyLevelModel: String, Codable {
+enum QuizDifficultyLevelClientModel: String, Codable {
 
     case easy = "EASY"
     case normal = "NORMAL"
