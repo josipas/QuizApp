@@ -16,10 +16,10 @@ extension QuizResponseDataModel {
         self.id = model.id
         self.name = model.name
         self.description = model.description
-        self.category = QuizCategoryDataModel(rawValue: model.category.lowercased())!
+        self.category = QuizCategoryDataModel(rawValue: model.category.rawValue)!
         self.imageUrl = model.imageUrl
         self.numberOfQuestions = model.numberOfQuestions
-        self.difficulty = QuizDifficultyLevelDataModel(rawValue: model.difficulty.lowercased())!
+        self.difficulty = QuizDifficultyLevelDataModel(rawValue: model.difficulty.rawValue)!
     }
 
 }

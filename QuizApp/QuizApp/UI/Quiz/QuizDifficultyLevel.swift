@@ -1,8 +1,8 @@
 enum QuizDifficultyLevel: String, CaseIterable {
 
-    case easy
-    case normal
-    case hard
+    case easy = "EASY"
+    case normal = "NORMAL"
+    case hard = "HARD"
 
     var elements: Int {
         switch self {

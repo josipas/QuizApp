@@ -37,7 +37,7 @@ class QuizViewModel {
             let isActive = active == $0
             return CustomSegmentedControlModel(
                 id: $0.self,
-                title: $0.rawValue.uppercased(),
+                title: $0.rawValue,
                 color: $0.color,
                 isActive: isActive)
         }
