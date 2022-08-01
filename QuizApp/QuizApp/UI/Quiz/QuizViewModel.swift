@@ -1,83 +1,50 @@
 import Combine
 import UIKit
 
-struct Quiz {
-
-    let id: Int
-    let name: String
-    let description: String
-    let category: QuizCategory
-    let imageUrl: String
-    let numberOfQuestions: Int
-    let difficulty: QuizDifficultyLevel
-
-}
-
 class QuizViewModel {
 
     private let coordinator: CoordinatorProtocol
+    private let quizUseCase: QuizUseCaseProtocol
 
     @Published var categories: [CustomSegmentedControlModel] = []
     @Published var quizes: [Quiz] = []
 
-    init(coordinator: CoordinatorProtocol) {
+    init(coordinator: CoordinatorProtocol, quizUseCase: QuizUseCaseProtocol) {
         self.coordinator = coordinator
+        self.quizUseCase = quizUseCase
     }
 
+    @MainActor
     func loadData() {
         onCategorySelected(QuizCategory.allCases[0])
     }
 
+    @MainActor
     func loadQuizes(for category: QuizCategory) {
-        switch category {
-        case .sport:
-            quizes = [
-                Quiz(
-                    id: 1,
-                    name: "Football quiz",
-                    description: "Test your basic knowledge of football",
-                    category: .sport,
-                    imageUrl: "",
-                    numberOfQuestions: 5,
-                    difficulty: .easy),
-                Quiz(
-                    id: 2,
-                    name: "Tennis quiz",
-                    description: "Test your knowledge of tennis world",
-                    category: .sport,
-                    imageUrl: "",
-                    numberOfQuestions: 5,
-                    difficulty: .normal)]
-        case .movies:
-            quizes = [
-                Quiz(
-                    id: 3,
-                    name: "Oscars quiz",
-                    description: "The most prestige awards!",
-                    category: .movies,
-                    imageUrl: "",
-                    numberOfQuestions: 5,
-                    difficulty: .normal),
-                Quiz(
-                    id: 4,
-                    name: "Stars quiz",
-                    description: "Young & famous!",
-                    category: .movies,
-                    imageUrl: "",
-                    numberOfQuestions: 5,
-                    difficulty: .easy)]
-        default:
-            quizes = []
+        Task(priority: .background) {
+            do {
+                self.quizes = try await quizUseCase
+                    .getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!)
+                    .map {
+                        Quiz(from: $0)
+                    }
+            } catch {
+            }
         }
     }
 
     func loadCategories(active: QuizCategory) {
         categories = QuizCategory.allCases.compactMap {
             let isActive = active == $0
-            return CustomSegmentedControlModel(id: $0.self, title: $0.description, color: $0.color, isActive: isActive)
+            return CustomSegmentedControlModel(
+                id: $0.self,
+                title: $0.rawValue,
+                color: $0.color,
+                isActive: isActive)
         }
     }
 
+    @MainActor
     func onCategorySelected(_ category: QuizCategory) {
         loadQuizes(for: category)
         loadCategories(active: category)

@@ -161,7 +161,8 @@ extension QuizViewController: UICollectionViewDataSource {
             title: quiz.name,
             description: quiz.description,
             color: quiz.category.color,
-            difficulty: quiz.difficulty)
+            difficulty: quiz.difficulty,
+            imageUrl: quiz.imageUrl)
 
         return cell
     }

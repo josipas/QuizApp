@@ -1,24 +1,11 @@
 import UIKit
 
-enum QuizCategory: CaseIterable {
+enum QuizCategory: String, CaseIterable {
 
-    case movies
-    case music
-    case sport
-    case geography
-
-    var description: String {
-        switch self {
-        case .geography:
-            return "GEOGRAPHY"
-        case .movies:
-            return "MOVIES"
-        case .music:
-            return "MUSIC"
-        case .sport:
-            return "SPORT"
-        }
-    }
+    case movies = "MOVIES"
+    case music = "MUSIC"
+    case sport = "SPORT"
+    case geography = "GEOGRAPHY"
 
     var color: UIColor {
         switch self {

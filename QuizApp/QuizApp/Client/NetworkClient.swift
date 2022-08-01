@@ -13,7 +13,11 @@ protocol NetworkClientProtocol {
 
     func executeRequest<T: Decodable, E: Encodable>(path: String, method: RequestMethod, body: E) async throws -> T
 
-    func executeRequest<T: Decodable>(path: String, method: RequestMethod) async throws -> T
+    func executeRequest<T: Decodable>(
+        path: String,
+        method: RequestMethod,
+        parameters: [String: String]?
+    ) async throws -> T
 
 }
 
@@ -34,7 +38,7 @@ class NetworkClient: NetworkClientProtocol {
     func executeRequest(path: String) async throws {
         let header = ["Authorization": "Bearer \(token)"]
 
-        let request = try await createRequest(path: path, method: .get, header: header)
+        let request = try await createRequest(path: path, parameters: nil, method: .get, header: header)
 
         guard let (_, response) = try? await URLSession.shared.data(for: request) else {
             throw RequestError.serverError
@@ -84,10 +88,14 @@ class NetworkClient: NetworkClientProtocol {
         return value
     }
 
-    func executeRequest<T: Decodable>(path: String, method: RequestMethod) async throws -> T {
+    func executeRequest<T: Decodable>(
+        path: String,
+        method: RequestMethod,
+        parameters: [String: String]?
+    ) async throws -> T {
         let header = ["Authorization": "Bearer \(token)"]
 
-        let request = try await createRequest(path: path, method: method, header: header)
+        let request = try await createRequest(path: path, parameters: parameters, method: method, header: header)
 
         guard let (data, response) = try? await URLSession.shared.data(for: request) else {
             throw RequestError.serverError
@@ -128,10 +136,23 @@ class NetworkClient: NetworkClientProtocol {
 
     private func createRequest(
         path: String,
+        parameters: [String: String]?,
         method: RequestMethod,
         header: [String: String]?
     ) async throws -> URLRequest {
-        guard let url = URL(string: "\(baseUrl)\(path)") else {
+        var components = URLComponents(string: "\(baseUrl)\(path)")
+
+        if let parameters = parameters {
+            var items = [URLQueryItem]()
+
+            for (key, value) in parameters {
+                items.append(URLQueryItem(name: key, value: value))
+            }
+
+            components?.queryItems = items
+        }
+
+        guard let url = components?.url else {
             throw RequestError.invalidUrl
         }
 
