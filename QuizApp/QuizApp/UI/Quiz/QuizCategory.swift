@@ -6,6 +6,7 @@ enum QuizCategory: String, CaseIterable {
     case music
     case sport
     case geography
+    case all
 
     var color: UIColor {
         switch self {
@@ -17,6 +18,8 @@ enum QuizCategory: String, CaseIterable {
             return UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1)
         case .sport:
             return UIColor(red: 0.949, green: 0.788, blue: 0.298, alpha: 1)
+        case .all:
+            return .white
         }
     }
 

@@ -8,6 +8,7 @@ class QuizViewModel {
 
     @Published var categories: [CustomSegmentedControlModel] = []
     @Published var quizes: [Quiz] = []
+    @Published var allSelected = false
 
     init(coordinator: CoordinatorProtocol, quizUseCase: QuizUseCaseProtocol) {
         self.coordinator = coordinator
@@ -23,10 +24,17 @@ class QuizViewModel {
     func loadQuizes(for category: QuizCategory) {
         Task(priority: .background) {
             do {
-                self.quizes = try await quizUseCase
-                    .getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!).map {
+                if category != .all {
+                    self.quizes = try await quizUseCase
+                        .getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!).map {
+                            Quiz(from: $0)
+                        }
+                } else {
+                    self.allSelected = true
+                    self.quizes = try await quizUseCase.getQuizes().map {
                         Quiz(from: $0)
                     }
+                }
             } catch {
             }
         }
