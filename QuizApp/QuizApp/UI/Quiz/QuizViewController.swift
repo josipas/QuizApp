@@ -11,6 +11,7 @@ class QuizViewController: UIViewController {
     private var viewModel: QuizViewModel!
     private var cancellables = Set<AnyCancellable>()
     private var quizes: [Quiz] = []
+    private var allquizes: [QuizCategory: [Quiz]] = [:]
     private var allSelected = false
 
     init(viewModel: QuizViewModel) {
@@ -53,6 +54,12 @@ class QuizViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.quizes = quizes
+                self.allquizes = quizes.reduce([QuizCategory: [Quiz]]()) { (dict, quiz) -> [QuizCategory: [Quiz]] in
+                    var dict = dict
+                    dict[quiz.category] == nil ? dict[quiz.category] = [quiz] : dict[quiz.category]?.append(quiz)
+                    return dict
+                }
+
                 self.collectionView.reloadData()
             }
             .store(in: &cancellables)
@@ -147,12 +154,11 @@ extension QuizViewController: ConstructViewsProtocol {
 extension QuizViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        allSelected ? QuizCategory.allCases.count - 1 : 1
+        allquizes.keys.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let currentCategory = QuizCategory.allCases[section]
-        return allSelected ? quizes.filter { $0.category == currentCategory}.count : quizes.count
+        2
     }
 
     func collectionView(
