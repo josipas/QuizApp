@@ -186,7 +186,6 @@ extension QuizViewController: UICollectionViewDataSource {
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
         quizes.keys.count < 2 ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: 40)
-
     }
 
     func collectionView(

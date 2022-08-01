@@ -23,9 +23,7 @@ class QuizDataSource: QuizDataSourceProtocol {
     }
 
     func getQuizes() async throws -> [QuizResponseDataModel] {
-        try await quizClient.getQuizes().map {
-            QuizResponseDataModel(from: $0)
-        }
+        try await quizClient.getQuizes().map { QuizResponseDataModel(from: $0) }
     }
 
 }
