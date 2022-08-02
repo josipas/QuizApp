@@ -8,6 +8,8 @@ class QuizViewController: UIViewController {
     private var titleLabel: UILabel!
     private var selectionView: CustomSegmentedControl!
     private var collectionView: UICollectionView!
+    private var errorView: ErrorView!
+    private var infoLabel: UILabel!
     private var viewModel: QuizViewModel!
     private var cancellables = Set<AnyCancellable>()
     private var quizes: [QuizCategory: [Quiz]] = [:]
@@ -51,8 +53,20 @@ class QuizViewController: UIViewController {
             .sink { [weak self] quizes in
                 guard let self = self else { return }
 
+                self.infoLabel.isHidden = !quizes.isEmpty
                 self.quizes = quizes
                 self.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
+
+        viewModel
+            .$hasErrorOcurred
+            .sink { [weak self] hasErrorOcurred in
+                guard let self = self else { return }
+
+                self.infoLabel.isHidden = true
+                self.errorView.isHidden = !hasErrorOcurred
+                self.collectionView.isHidden = hasErrorOcurred
             }
             .store(in: &cancellables)
     }
@@ -94,6 +108,12 @@ extension QuizViewController: ConstructViewsProtocol {
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         view.addSubview(collectionView)
+
+        errorView = ErrorView()
+        view.addSubview(errorView)
+
+        infoLabel = UILabel()
+        view.addSubview(infoLabel)
     }
 
     func styleViews() {
@@ -114,6 +134,14 @@ extension QuizViewController: ConstructViewsProtocol {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: QuizCollectionViewHeader.reuseIdentifier)
         collectionView.backgroundColor = UIColor.clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+
+        infoLabel.text = "Sorry! There are no quizzes for this category. 😞"
+        infoLabel.numberOfLines = 0
+        infoLabel.textColor = .white
+        infoLabel.textAlignment = .center
+        infoLabel.font = .systemFont(ofSize: 16)
     }
 
     func defineLayoutForViews() {
@@ -133,6 +161,16 @@ extension QuizViewController: ConstructViewsProtocol {
             $0.top.equalTo(selectionView.snp.bottom).offset(25)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+
+        errorView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(90)
+        }
+
+        infoLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(90)
         }
     }
 

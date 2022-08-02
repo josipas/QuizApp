@@ -8,6 +8,7 @@ class QuizViewModel {
 
     @Published var categories: [CustomSegmentedControlModel] = []
     @Published var quizes: [QuizCategory: [Quiz]] = [:]
+    @Published var hasErrorOcurred: Bool = false
 
     init(coordinator: CoordinatorProtocol, quizUseCase: QuizUseCaseProtocol) {
         self.coordinator = coordinator
@@ -31,8 +32,10 @@ class QuizViewModel {
                     quizes = try await quizUseCase.quizes
                 }
 
+                self.hasErrorOcurred = false
                 self.quizes = Dictionary(grouping: quizes.map { Quiz(from: $0) }, by: { $0.category })
             } catch {
+                self.hasErrorOcurred = true
             }
         }
     }
