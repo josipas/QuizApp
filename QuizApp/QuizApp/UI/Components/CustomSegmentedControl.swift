@@ -50,13 +50,7 @@ class CustomSegmentedControl: UIView {
         label.text = model.title
         label.textColor = model.color
         label.isUserInteractionEnabled = true
-
-        switch model.isActive {
-        case true:
-            label.font = .systemFont(ofSize: 20, weight: .bold)
-        case false:
-            label.font = .systemFont(ofSize: 20)
-        }
+        label.font = model.isActive ? .systemFont(ofSize: 22, weight: .bold) : .systemFont(ofSize: 20)
 
         let recognizer = CustomTapGestureRecognizer(target: self, action: #selector(segmentTapped(sender:)))
         recognizer.id = model.id

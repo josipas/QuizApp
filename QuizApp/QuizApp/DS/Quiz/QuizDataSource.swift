@@ -1,5 +1,7 @@
 protocol QuizDataSourceProtocol {
 
+    var quizes: [QuizResponseDataModel] { get async throws }
+
     func getQuizes(for category: QuizCategoryDataModel) async throws -> [QuizResponseDataModel]
 
 }
@@ -10,6 +12,12 @@ class QuizDataSource: QuizDataSourceProtocol {
 
     init(quizClient: QuizClientProtocol) {
         self.quizClient = quizClient
+    }
+
+    var quizes: [QuizResponseDataModel] {
+        get async throws {
+            try await quizClient.quizes.map { QuizResponseDataModel(from: $0) }
+        }
     }
 
     func getQuizes(for category: QuizCategoryDataModel) async throws -> [QuizResponseDataModel] {
