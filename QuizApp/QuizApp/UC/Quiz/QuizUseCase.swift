@@ -1,8 +1,8 @@
 protocol QuizUseCaseProtocol {
 
-    func getQuizes(for category: QuizCategoryModel) async throws -> [QuizModel]
+    var quizes: [QuizModel] { get async throws }
 
-    func getQuizes() async throws -> [QuizModel]
+    func getQuizes(for category: QuizCategoryModel) async throws -> [QuizModel]
 
 }
 
@@ -14,16 +14,18 @@ class QuizUseCase: QuizUseCaseProtocol {
         self.quizDataSource = quizDataSource
     }
 
+    var quizes: [QuizModel] {
+        get async throws {
+            try await quizDataSource.quizes.map { QuizModel(from: $0) }
+        }
+    }
+
     func getQuizes(for category: QuizCategoryModel) async throws -> [QuizModel] {
         try await quizDataSource
             .getQuizes(for: QuizCategoryDataModel(rawValue: category.rawValue)!)
             .map {
                 QuizModel(from: $0)
             }
-    }
-
-    func getQuizes() async throws -> [QuizModel] {
-        try await quizDataSource.getQuizes().map { QuizModel(from: $0) }
     }
 
 }

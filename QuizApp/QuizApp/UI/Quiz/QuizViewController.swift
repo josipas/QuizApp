@@ -113,10 +113,6 @@ extension QuizViewController: ConstructViewsProtocol {
             QuizCollectionViewHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: QuizCollectionViewHeader.reuseIdentifier)
-        collectionView.register(
-            QuizCollectionViewFooter.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: QuizCollectionViewFooter.reuseIdentifier)
         collectionView.backgroundColor = UIColor.clear
     }
 
@@ -134,7 +130,7 @@ extension QuizViewController: ConstructViewsProtocol {
         }
 
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(selectionView.snp.bottom).offset(35)
+            $0.top.equalTo(selectionView.snp.bottom).offset(25)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
@@ -185,15 +181,7 @@ extension QuizViewController: UICollectionViewDataSource {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        quizes.keys.count < 2 ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: 40)
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForFooterInSection section: Int
-    ) -> CGSize {
-        quizes.keys.count < 2 ? CGSize(width: 0, height: 0) : CGSize(width: 0, height: 35)
+        quizes.keys.count < 2 ? .zero : CGSize(width: 0, height: 50)
     }
 
     func collectionView(
@@ -201,7 +189,8 @@ extension QuizViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
             guard
                 let cell = collectionView
                     .dequeueReusableSupplementaryView(
@@ -213,16 +202,8 @@ extension QuizViewController: UICollectionViewDataSource {
             cell.set(category: Array(quizes.keys)[indexPath.section])
 
             return cell
-        } else {
-            guard
-                let cell = collectionView
-                    .dequeueReusableSupplementaryView(
-                        ofKind: UICollectionView.elementKindSectionFooter,
-                        withReuseIdentifier: QuizCollectionViewFooter.reuseIdentifier,
-                        for: indexPath) as? QuizCollectionViewFooter
-            else { fatalError() }
-
-            return cell
+        default:
+            fatalError()
         }
     }
 

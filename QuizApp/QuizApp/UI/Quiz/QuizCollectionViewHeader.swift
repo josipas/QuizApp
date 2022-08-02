@@ -2,7 +2,7 @@ import UIKit
 
 class QuizCollectionViewHeader: UICollectionReusableView {
 
-    static let reuseIdentifier = String(describing: QuizCollectionViewCell.self)
+    static let reuseIdentifier = String(describing: QuizCollectionViewHeader.self)
 
     private var label: UILabel!
 
@@ -19,7 +19,7 @@ class QuizCollectionViewHeader: UICollectionReusableView {
     }
 
     func set(category: QuizCategory) {
-        label.text = category.rawValue.capitalized
+        label.text = category.name
         label.textColor = category.color
     }
 }
@@ -37,7 +37,8 @@ extension QuizCollectionViewHeader: ConstructViewsProtocol {
 
     func defineLayoutForViews() {
         label.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(5)
+            $0.leading.trailing.equalToSuperview().inset(5)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
 

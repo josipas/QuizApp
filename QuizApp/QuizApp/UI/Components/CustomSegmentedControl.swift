@@ -53,7 +53,7 @@ class CustomSegmentedControl: UIView {
 
         switch model.isActive {
         case true:
-            label.font = .systemFont(ofSize: 20, weight: .bold)
+            label.font = .systemFont(ofSize: 22, weight: .bold)
         case false:
             label.font = .systemFont(ofSize: 20)
         }
