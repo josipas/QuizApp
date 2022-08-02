@@ -41,6 +41,7 @@ extension ErrorView: ConstructViewsProtocol {
         titleLabel.text = "Error"
         titleLabel.textColor = .white
         titleLabel.font = .systemFont(ofSize: 28, weight: .bold)
+        titleLabel.textAlignment = .center
 
         descriptionLabel.text = "Data can't be reached. Please try again."
         descriptionLabel.numberOfLines = 0
@@ -58,7 +59,7 @@ extension ErrorView: ConstructViewsProtocol {
 
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(15)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
 
         descriptionLabel.snp.makeConstraints {

@@ -60,13 +60,13 @@ class QuizViewController: UIViewController {
             .store(in: &cancellables)
 
         viewModel
-            .$isErrorOcurred
-            .sink { [weak self] isErrorOcurred in
+            .$hasErrorOcurred
+            .sink { [weak self] hasErrorOcurred in
                 guard let self = self else { return }
 
                 self.infoLabel.isHidden = true
-                self.errorView.isHidden = !isErrorOcurred
-                self.collectionView.isHidden = isErrorOcurred
+                self.errorView.isHidden = !hasErrorOcurred
+                self.collectionView.isHidden = hasErrorOcurred
             }
             .store(in: &cancellables)
     }
@@ -137,7 +137,7 @@ extension QuizViewController: ConstructViewsProtocol {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
 
-        infoLabel.text = "Sorry! There is no quizzes for this category. 😞"
+        infoLabel.text = "Sorry! There are no quizzes for this category. 😞"
         infoLabel.numberOfLines = 0
         infoLabel.textColor = .white
         infoLabel.textAlignment = .center
