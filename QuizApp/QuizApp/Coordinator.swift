@@ -1,28 +1,20 @@
 import UIKit
+import Factory
 
 class Coordinator: CoordinatorProtocol {
 
-    private let appDependencies: AppDependencies
     private let navigationController: UINavigationController
 
-    init(navigationController: UINavigationController, appDependencies: AppDependencies) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.appDependencies = appDependencies
     }
 
     func showLogIn() {
-        navigationController.setViewControllers([makeLoginViewController()], animated: true)
+        navigationController.setViewControllers([Container.loginViewController()], animated: true)
     }
 
     func showTabBarController() {
         navigationController.setViewControllers([setUpTabBarController()], animated: true)
-    }
-
-    private func makeLoginViewController() -> UIViewController {
-        LoginViewController(
-            viewModel: LoginViewModel(
-                loginUseCase: appDependencies.loginUseCase,
-                coordinator: self))
     }
 
     private func setUpTabBarController() -> UITabBarController {
@@ -39,10 +31,7 @@ class Coordinator: CoordinatorProtocol {
     }
 
     private func makeQuizViewController() -> UINavigationController {
-        let quizViewController = QuizViewController(
-            viewModel: QuizViewModel(
-                coordinator: self,
-                quizUseCase: appDependencies.quizUseCase))
+        let quizViewController = Container.quizViewController()
         let quizNavigationController = UINavigationController(rootViewController: quizViewController)
 
         quizNavigationController.tabBarItem = UITabBarItem(
@@ -54,10 +43,7 @@ class Coordinator: CoordinatorProtocol {
     }
 
     private func makeUserViewController() -> UINavigationController {
-        let userViewController = UserViewController(
-            viewModel: UserViewModel(
-                coordinator: self,
-                userUseCase: appDependencies.userUseCase))
+        let userViewController = Container.userViewController()
         let userNavigationController = UINavigationController(rootViewController: userViewController)
 
         userNavigationController.tabBarItem = UITabBarItem(
