@@ -4,7 +4,8 @@ import Factory
 // MARK: Util
 extension Container {
 
-    static let baseUrl = Factory(scope: .singleton) { "https://five-ios-quiz-app.herokuapp.com/api"
+    static let baseUrl = Factory(scope: .singleton) {
+        "https://five-ios-quiz-app.herokuapp.com/api"
     }
 
     static let navigationController = Factory(scope: .singleton) {
