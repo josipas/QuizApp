@@ -1,28 +1,20 @@
 import UIKit
+import Factory
 
 class Coordinator: CoordinatorProtocol {
 
-    private let appDependencies: AppDependencies
     private let navigationController: UINavigationController
 
-    init(navigationController: UINavigationController, appDependencies: AppDependencies) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.appDependencies = appDependencies
     }
 
     func showLogIn() {
-        navigationController.setViewControllers([makeLoginViewController()], animated: true)
+        navigationController.setViewControllers([Container.loginViewController()], animated: true)
     }
 
     func showTabBarController() {
         navigationController.setViewControllers([setUpTabBarController()], animated: true)
-    }
-
-    private func makeLoginViewController() -> UIViewController {
-        LoginViewController(
-            viewModel: LoginViewModel(
-                loginUseCase: appDependencies.loginUseCase,
-                coordinator: self))
     }
 
     private func setUpTabBarController() -> UITabBarController {
@@ -38,34 +30,26 @@ class Coordinator: CoordinatorProtocol {
         return tabBarController
     }
 
-    private func makeQuizViewController() -> UINavigationController {
-        let quizViewController = QuizViewController(
-            viewModel: QuizViewModel(
-                coordinator: self,
-                quizUseCase: appDependencies.quizUseCase))
-        let quizNavigationController = UINavigationController(rootViewController: quizViewController)
+    private func makeQuizViewController() -> UIViewController {
+        let quizViewController = Container.quizViewController()
 
-        quizNavigationController.tabBarItem = UITabBarItem(
+        quizViewController.tabBarItem = UITabBarItem(
             title: "Quiz",
             image: UIImage(named: "Quiz"),
             tag: 0)
 
-        return quizNavigationController
+        return quizViewController
     }
 
-    private func makeUserViewController() -> UINavigationController {
-        let userViewController = UserViewController(
-            viewModel: UserViewModel(
-                coordinator: self,
-                userUseCase: appDependencies.userUseCase))
-        let userNavigationController = UINavigationController(rootViewController: userViewController)
+    private func makeUserViewController() -> UIViewController {
+        let userViewController = Container.userViewController()
 
-        userNavigationController.tabBarItem = UITabBarItem(
+        userViewController.tabBarItem = UITabBarItem(
             title: "Settings",
             image: UIImage(named: "Settings"),
             tag: 1)
 
-        return userNavigationController
+        return userViewController
     }
 
 }

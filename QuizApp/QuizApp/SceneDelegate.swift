@@ -1,18 +1,12 @@
 import UIKit
+import Factory
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
-    let appDependencies = AppDependencies()
-    let navigationController = UINavigationController()
+    let navigationController = Container.navigationController()
+    let coordinator = Container.coordinator()
 
-    var coordinator: Coordinator!
     var window: UIWindow?
-
-    override init() {
-        super.init()
-
-        coordinator = Coordinator(navigationController: navigationController, appDependencies: appDependencies)
-    }
 
     func scene(
         _ scene: UIScene,
@@ -29,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         Task(priority: .background) {
             do {
-                try await appDependencies.tokenCheckClient.validateToken()
+                try await Container.tokenCheckClient().validateToken()
 
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
