@@ -8,7 +8,7 @@ class QuizDetailsViewController: UIViewController {
     private var quiz: Quiz!
     private var viewModel: QuizDetailsViewModel!
     private var titleLabel: UILabel!
-    private var image: UIImage!
+    private var backButtonImage: UIImage!
     private var leaderboardButton: UIButton!
     private var quizDetailsView: QuizDetailsView!
 
@@ -45,8 +45,8 @@ class QuizDetailsViewController: UIViewController {
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
         navigationItem.titleView = titleLabel
 
-        image = UIImage(named: "backButton")
-        let backItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(backButtonTapped))
+        backButtonImage = UIImage(named: "backButton")
+        let backItem = UIBarButtonItem(image: backButtonImage, style: .plain, target: self, action: #selector(backButtonTapped))
         navigationController?.navigationBar.tintColor = .white
         navigationItem.leftBarButtonItem = backItem
         navigationController?.isNavigationBarHidden = false
