@@ -30,28 +30,26 @@ class Coordinator: CoordinatorProtocol {
         return tabBarController
     }
 
-    private func makeQuizViewController() -> UINavigationController {
+    private func makeQuizViewController() -> UIViewController {
         let quizViewController = Container.quizViewController()
-        let quizNavigationController = UINavigationController(rootViewController: quizViewController)
 
-        quizNavigationController.tabBarItem = UITabBarItem(
+        quizViewController.tabBarItem = UITabBarItem(
             title: "Quiz",
             image: UIImage(named: "Quiz"),
             tag: 0)
 
-        return quizNavigationController
+        return quizViewController
     }
 
-    private func makeUserViewController() -> UINavigationController {
+    private func makeUserViewController() -> UIViewController {
         let userViewController = Container.userViewController()
-        let userNavigationController = UINavigationController(rootViewController: userViewController)
 
-        userNavigationController.tabBarItem = UITabBarItem(
+        userViewController.tabBarItem = UITabBarItem(
             title: "Settings",
             image: UIImage(named: "Settings"),
             tag: 1)
 
-        return userNavigationController
+        return userViewController
     }
 
 }
