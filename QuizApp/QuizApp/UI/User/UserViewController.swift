@@ -185,7 +185,7 @@ extension UserViewController: ConstructViewsProtocol {
 
         logoutButton.snp.makeConstraints {
             $0.trailing.leading.equalToSuperview().inset(32)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(32)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(32)
             $0.height.equalTo(45)
         }
     }

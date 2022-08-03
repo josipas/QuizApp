@@ -4,4 +4,8 @@ protocol CoordinatorProtocol {
 
     func showTabBarController()
 
+    func showQuizDetailsController(_ quiz: Quiz)
+
+    func back()
+
 }
