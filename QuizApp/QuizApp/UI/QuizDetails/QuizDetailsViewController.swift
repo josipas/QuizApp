@@ -46,7 +46,11 @@ class QuizDetailsViewController: UIViewController {
         navigationItem.titleView = titleLabel
 
         backButtonImage = UIImage(named: "backButton")
-        let backItem = UIBarButtonItem(image: backButtonImage, style: .plain, target: self, action: #selector(backButtonTapped))
+        let backItem = UIBarButtonItem(
+            image: backButtonImage,
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped))
         navigationController?.navigationBar.tintColor = .white
         navigationItem.leftBarButtonItem = backItem
         navigationController?.isNavigationBarHidden = false
