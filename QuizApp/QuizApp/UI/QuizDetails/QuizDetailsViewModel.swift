@@ -9,14 +9,14 @@ class QuizDetailsViewModel {
         self.coordinator = coordinator
     }
 
-    func onBackButtonTap() {
+    func onBackButtonClick() {
         coordinator.back()
     }
 
-    func onStartQuizButtonTap(quizId: Int) {
+    func onStartQuizButtonClick(quizId: Int) {
     }
 
-    func onLeaderboardButtonTap(quizId: Int) {
+    func onLeaderboardButtonClick(quizId: Int) {
     }
 
 }

@@ -38,6 +38,7 @@ class QuizDetailsView: UIView {
     @objc func startQuizButtonTapped() {
         delegate?.startQuizButtonTapped()
     }
+
 }
 
 extension QuizDetailsView: ConstructViewsProtocol {

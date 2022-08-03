@@ -53,11 +53,11 @@ class QuizDetailsViewController: UIViewController {
     }
 
     @objc func backButtonTapped() {
-        viewModel.onBackButtonTap()
+        viewModel.onBackButtonClick()
     }
 
     @objc func leaderboardButtonTapped() {
-        viewModel.onLeaderboardButtonTap(quizId: quiz.id)
+        viewModel.onLeaderboardButtonClick(quizId: quiz.id)
     }
 
     private func configureGradient() {
@@ -114,7 +114,7 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
 extension QuizDetailsViewController: QuizDetailsViewDelegate {
 
     func startQuizButtonTapped() {
-        viewModel.onStartQuizButtonTap(quizId: quiz.id)
+        viewModel.onStartQuizButtonClick(quizId: quiz.id)
     }
 
 }
