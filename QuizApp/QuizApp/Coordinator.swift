@@ -17,7 +17,7 @@ class Coordinator: CoordinatorProtocol {
         navigationController.setViewControllers([setUpTabBarController()], animated: true)
     }
 
-    func showQuizDetailsController(of quiz: Quiz) {
+    func showQuizDetails(of quiz: Quiz) {
         navigationController.pushViewController(Container.quizDetailsViewController(quiz), animated: true)
     }
 

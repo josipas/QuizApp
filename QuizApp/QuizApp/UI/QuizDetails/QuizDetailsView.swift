@@ -12,14 +12,12 @@ class QuizDetailsView: UIView {
     private var descriptionLabel: UILabel!
     private var imageView: UIImageView!
     private var startQuizButton: UIButton!
-    private var quiz: Quiz!
 
     weak var delegate: QuizDetailsViewDelegate?
 
-    init(quiz: Quiz) {
+    init() {
         super.init(frame: .zero)
 
-        self.quiz = quiz
         createViews()
         styleViews()
         defineLayoutForViews()
@@ -27,6 +25,12 @@ class QuizDetailsView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func set(quiz: Quiz) {
+        titleLabel.text = quiz.name
+        descriptionLabel.text = quiz.description
+        imageView.kf.setImage(with: URL(string: quiz.imageUrl))
     }
 
     override func layoutSubviews() {
@@ -61,18 +65,15 @@ extension QuizDetailsView: ConstructViewsProtocol {
         backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3)
         layer.cornerRadius = 10
 
-        titleLabel.text = quiz.name
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
         titleLabel.font = .systemFont(ofSize: 32, weight: .bold)
 
-        descriptionLabel.text = quiz.description
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = .white
         descriptionLabel.textAlignment = .center
         descriptionLabel.font = .systemFont(ofSize: 18, weight: .bold)
 
-        imageView.kf.setImage(with: URL(string: quiz.imageUrl))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10

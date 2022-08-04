@@ -16,10 +16,10 @@ class QuizDetailsViewModel {
         coordinator.goBack()
     }
 
-    func onStartQuizButtonClick(quizId: Int) {
+    func onStartQuizButtonClick() {
     }
 
-    func onLeaderboardButtonClick(quizId: Int) {
+    func onLeaderboardButtonClick() {
     }
 
 }

@@ -11,14 +11,6 @@ class QuizDetailsViewController: UIViewController {
     private var leaderboardButton: UIButton!
     private var quizDetailsView: QuizDetailsView!
     private var cancellables = Set<AnyCancellable>()
-    private var quiz: Quiz = Quiz(
-        id: 0,
-        name: "",
-        description: "",
-        category: .sport,
-        imageUrl: "",
-        numberOfQuestions: 0,
-        difficulty: .easy)
 
     init(viewModel: QuizDetailsViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -33,8 +25,11 @@ class QuizDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bindViewModel()
         setUpNavBar()
+        createViews()
+        styleViews()
+        defineLayoutForViews()
+        bindViewModel()
     }
 
     override func viewDidLayoutSubviews() {
@@ -49,10 +44,7 @@ class QuizDetailsViewController: UIViewController {
             .sink { [weak self] quiz in
                 guard let self = self else { return }
 
-                self.quiz = quiz
-                self.createViews()
-                self.styleViews()
-                self.defineLayoutForViews()
+                self.quizDetailsView.set(quiz: quiz)
             }
             .store(in: &cancellables)
     }
@@ -80,7 +72,7 @@ class QuizDetailsViewController: UIViewController {
     }
 
     @objc func leaderboardButtonTapped() {
-        viewModel.onLeaderboardButtonClick(quizId: quiz.id)
+        viewModel.onLeaderboardButtonClick()
     }
 
     private func configureGradient() {
@@ -103,7 +95,7 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         leaderboardButton = UIButton()
         view.addSubview(leaderboardButton)
 
-        quizDetailsView = QuizDetailsView(quiz: quiz)
+        quizDetailsView = QuizDetailsView()
         view.addSubview(quizDetailsView)
     }
 
@@ -137,7 +129,7 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
 extension QuizDetailsViewController: QuizDetailsViewDelegate {
 
     func startQuizButtonTapped() {
-        viewModel.onStartQuizButtonClick(quizId: quiz.id)
+        viewModel.onStartQuizButtonClick()
     }
 
 }
