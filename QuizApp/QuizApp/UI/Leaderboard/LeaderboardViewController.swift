@@ -12,9 +12,10 @@ class LeaderboardViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     private var quizId: Int!
     private var leaderboard: [Leaderboard] = [
-        Leaderboard(name: "Josipa", points: 123),
+        Leaderboard(name: "Lorena", points: 346),
         Leaderboard(name: "Marin", points: 300),
-        Leaderboard(name: "Lorena", points: 346)]
+        Leaderboard(name: "Josipa", points: 123)
+        ]
 
     init(viewModel: LeaderboardViewModel, quizId: Int) {
         super.init(nibName: nil, bundle: nil)
@@ -129,6 +130,10 @@ extension LeaderboardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
         return label
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        60
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
