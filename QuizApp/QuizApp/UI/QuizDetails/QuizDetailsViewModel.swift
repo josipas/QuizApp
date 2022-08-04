@@ -5,12 +5,15 @@ class QuizDetailsViewModel {
 
     private let coordinator: CoordinatorProtocol
 
-    init(coordinator: CoordinatorProtocol) {
+    @Published var quiz: Quiz
+
+    init(coordinator: CoordinatorProtocol, quiz: Quiz) {
         self.coordinator = coordinator
+        self.quiz = quiz
     }
 
     func onBackButtonClick() {
-        coordinator.back()
+        coordinator.goBack()
     }
 
     func onStartQuizButtonClick(quizId: Int) {

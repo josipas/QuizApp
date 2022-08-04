@@ -96,8 +96,8 @@ extension Container {
         QuizViewModel(coordinator: coordinator(), quizUseCase: quizUseCase())
     }
 
-    static let quizDetailsViewModel = Factory {
-        QuizDetailsViewModel(coordinator: coordinator())
+    static let quizDetailsViewModel = ParameterFactory<Quiz, QuizDetailsViewModel> { quiz in
+        QuizDetailsViewModel(coordinator: coordinator(), quiz: quiz)
     }
 
 }
@@ -118,7 +118,7 @@ extension Container {
     }
 
     static let quizDetailsViewController = ParameterFactory<Quiz, QuizDetailsViewController> { quiz in
-        QuizDetailsViewController(viewModel: quizDetailsViewModel(), quiz: quiz)
+        QuizDetailsViewController(viewModel: quizDetailsViewModel(quiz))
     }
 
 }

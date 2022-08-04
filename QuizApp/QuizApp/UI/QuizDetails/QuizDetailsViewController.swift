@@ -5,18 +5,25 @@ class QuizDetailsViewController: UIViewController {
 
     private let gradient = CAGradientLayer()
 
-    private var quiz: Quiz!
     private var viewModel: QuizDetailsViewModel!
     private var titleLabel: UILabel!
     private var backButtonImage: UIImage!
     private var leaderboardButton: UIButton!
     private var quizDetailsView: QuizDetailsView!
+    private var cancellables = Set<AnyCancellable>()
+    private var quiz: Quiz = Quiz(
+        id: 0,
+        name: "",
+        description: "",
+        category: .sport,
+        imageUrl: "",
+        numberOfQuestions: 0,
+        difficulty: .easy)
 
-    init(viewModel: QuizDetailsViewModel, quiz: Quiz) {
+    init(viewModel: QuizDetailsViewModel) {
         super.init(nibName: nil, bundle: nil)
 
         self.viewModel = viewModel
-        self.quiz = quiz
     }
 
     required init?(coder: NSCoder) {
@@ -26,16 +33,28 @@ class QuizDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        bindViewModel()
         setUpNavBar()
-        createViews()
-        styleViews()
-        defineLayoutForViews()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         configureGradient()
+    }
+
+    private func bindViewModel() {
+        viewModel
+            .$quiz
+            .sink { [weak self] quiz in
+                guard let self = self else { return }
+
+                self.quiz = quiz
+                self.createViews()
+                self.styleViews()
+                self.defineLayoutForViews()
+            }
+            .store(in: &cancellables)
     }
 
     private func setUpNavBar() {
