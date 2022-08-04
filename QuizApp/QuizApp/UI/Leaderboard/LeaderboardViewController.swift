@@ -99,7 +99,8 @@ extension LeaderboardViewController: ConstructViewsProtocol {
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .white
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.separatorInset = .zero
+        tableView.layoutMargins = .zero
     }
 
     func defineLayoutForViews() {
@@ -127,7 +128,6 @@ extension LeaderboardViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
-        label.text = "Opaaaa"
         return label
     }
 
@@ -145,6 +145,8 @@ extension LeaderboardViewController: UITableViewDataSource {
             fatalError()
         }
 
+        cell.separatorInset = .zero
+        cell.layoutMargins = .zero
         cell.set(rank: indexPath.row, name: leaderboard[indexPath.row].name, points: leaderboard[indexPath.row].points)
 
         return cell
