@@ -25,6 +25,14 @@ class Coordinator: CoordinatorProtocol {
         navigationController.popViewController(animated: true)
     }
 
+    func dismiss() {
+        navigationController.dismiss(animated: true)
+    }
+
+    func showLeaderboardViewController(_ quizId: Int) {
+        navigationController.present(Container.leaderboardViewController(quizId), animated: true)
+    }
+
     private func setUpTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
 

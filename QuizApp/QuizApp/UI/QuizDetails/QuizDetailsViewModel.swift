@@ -17,6 +17,7 @@ class QuizDetailsViewModel {
     }
 
     func onLeaderboardButtonClick(quizId: Int) {
+        coordinator.showLeaderboardViewController(quizId)
     }
 
 }

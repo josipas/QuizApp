@@ -8,4 +8,8 @@ protocol CoordinatorProtocol {
 
     func back()
 
+    func showLeaderboardViewController(_ quizId: Int)
+
+    func dismiss()
+
 }
