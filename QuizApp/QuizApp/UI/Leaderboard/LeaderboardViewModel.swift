@@ -17,7 +17,7 @@ class LeaderboardViewModel {
     }
 
     @MainActor
-    func getData(quizId: Int) {
+    func loadData(quizId: Int) {
         Task(priority: .background) {
             do {
                 leaderboardList = try await quizUseCase.getLeaderboard(for: quizId).map { QuizLeaderboard(from: $0) }

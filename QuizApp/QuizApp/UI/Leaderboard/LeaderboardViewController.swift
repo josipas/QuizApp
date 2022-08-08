@@ -65,7 +65,7 @@ class LeaderboardViewController: UIViewController {
     }
 
     private func loadData() {
-        viewModel.getData(quizId: quizId)
+        viewModel.loadData(quizId: quizId)
     }
 
 }
