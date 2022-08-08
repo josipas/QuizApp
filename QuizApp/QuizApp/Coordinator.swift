@@ -13,7 +13,7 @@ class Coordinator: CoordinatorProtocol {
         navigationController.setViewControllers([Container.loginViewController()], animated: true)
     }
 
-    func showTabBarController() {
+    func showTabBar() {
         navigationController.setViewControllers([setUpTabBarController()], animated: true)
     }
 
@@ -21,7 +21,7 @@ class Coordinator: CoordinatorProtocol {
         navigationController.dismiss(animated: true)
     }
 
-    func showLeaderboardViewController(_ quizId: Int) {
+    func showLeaderboard(_ quizId: Int) {
         navigationController.present(Container.leaderboardViewController(quizId), animated: true)
     }
 

@@ -44,7 +44,7 @@ class LoginViewModel {
                 DispatchQueue.main.async {  [weak self] in
                     guard let self = self else { return }
 
-                    self.coordinator.showTabBarController()
+                    self.coordinator.showTabBar()
                 }
             } catch RequestError.unauthorized {
                 errorMessage = "Invalid credentials!"

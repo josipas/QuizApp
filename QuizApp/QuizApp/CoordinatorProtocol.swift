@@ -2,9 +2,9 @@ protocol CoordinatorProtocol {
 
     func showLogIn()
 
-    func showTabBarController()
+    func showTabBar()
 
-    func showLeaderboardViewController(_ quizId: Int)
+    func showLeaderboard(_ quizId: Int)
 
     func dismiss()
 
