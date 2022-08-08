@@ -85,7 +85,7 @@ extension Container {
 extension Container {
 
     static let loginViewModel = Factory {
-        LoginViewModel(loginUseCase: loginUseCase(), coordinator: coordinator())
+        LoginViewModel(coordinator: coordinator(), loginUseCase: loginUseCase())
     }
 
     static let userViewModel = Factory {
@@ -94,6 +94,10 @@ extension Container {
 
     static let quizViewModel = Factory {
         QuizViewModel(coordinator: coordinator(), quizUseCase: quizUseCase())
+    }
+
+    static let quizDetailsViewModel = ParameterFactory<Quiz, QuizDetailsViewModel> { quiz in
+        QuizDetailsViewModel(coordinator: coordinator(), quiz: quiz)
     }
 
 }
@@ -111,6 +115,10 @@ extension Container {
 
     static let quizViewController = Factory {
         QuizViewController(viewModel: quizViewModel())
+    }
+
+    static let quizDetailsViewController = ParameterFactory<Quiz, QuizDetailsViewController> { quiz in
+        QuizDetailsViewController(viewModel: quizDetailsViewModel(quiz))
     }
 
 }

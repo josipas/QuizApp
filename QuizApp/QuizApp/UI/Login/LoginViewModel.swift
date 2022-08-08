@@ -3,8 +3,8 @@ import UIKit
 
 class LoginViewModel {
 
-    private let loginUseCase: LoginUseCaseProtocol
     private let coordinator: CoordinatorProtocol
+    private let loginUseCase: LoginUseCaseProtocol
 
     @Published var isButtonEnabled = false
     @Published var errorMessage = ""
@@ -12,9 +12,9 @@ class LoginViewModel {
     private var email = ""
     private var password = ""
 
-    init(loginUseCase: LoginUseCaseProtocol, coordinator: CoordinatorProtocol) {
-        self.loginUseCase = loginUseCase
+    init(coordinator: CoordinatorProtocol, loginUseCase: LoginUseCaseProtocol) {
         self.coordinator = coordinator
+        self.loginUseCase = loginUseCase
     }
 
     func onEmailChange(email: String) {

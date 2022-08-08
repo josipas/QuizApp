@@ -57,4 +57,8 @@ class QuizViewModel {
         loadCategories(active: category)
     }
 
+    func onQuizSelected(_ quiz: Quiz) {
+        coordinator.showQuizDetails(of: quiz)
+    }
+
 }

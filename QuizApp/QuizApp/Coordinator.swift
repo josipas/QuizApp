@@ -17,6 +17,14 @@ class Coordinator: CoordinatorProtocol {
         navigationController.setViewControllers([setUpTabBarController()], animated: true)
     }
 
+    func showQuizDetails(of quiz: Quiz) {
+        navigationController.pushViewController(Container.quizDetailsViewController(quiz), animated: true)
+    }
+
+    func goBack() {
+        navigationController.popViewController(animated: true)
+    }
+
     private func setUpTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
 

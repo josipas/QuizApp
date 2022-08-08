@@ -249,6 +249,16 @@ extension QuizViewController: UICollectionViewDataSource {
 
 extension QuizViewController: UICollectionViewDelegate {
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let category = Array(quizes.keys)[indexPath.section]
+
+        guard let quizes = quizes[category] else { return }
+
+        let quiz = quizes[indexPath.row]
+
+        viewModel.onQuizSelected(quiz)
+    }
+
 }
 
 extension QuizViewController: UICollectionViewDelegateFlowLayout {
