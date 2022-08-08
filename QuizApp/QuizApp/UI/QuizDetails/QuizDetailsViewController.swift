@@ -5,18 +5,17 @@ class QuizDetailsViewController: UIViewController {
 
     private let gradient = CAGradientLayer()
 
-    private var quiz: Quiz!
     private var viewModel: QuizDetailsViewModel!
     private var titleLabel: UILabel!
     private var backButtonImage: UIImage!
     private var leaderboardButton: UIButton!
     private var quizDetailsView: QuizDetailsView!
+    private var cancellables = Set<AnyCancellable>()
 
-    init(viewModel: QuizDetailsViewModel, quiz: Quiz) {
+    init(viewModel: QuizDetailsViewModel) {
         super.init(nibName: nil, bundle: nil)
 
         self.viewModel = viewModel
-        self.quiz = quiz
     }
 
     required init?(coder: NSCoder) {
@@ -30,12 +29,24 @@ class QuizDetailsViewController: UIViewController {
         createViews()
         styleViews()
         defineLayoutForViews()
+        bindViewModel()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         configureGradient()
+    }
+
+    private func bindViewModel() {
+        viewModel
+            .$quiz
+            .sink { [weak self] quiz in
+                guard let self = self else { return }
+
+                self.quizDetailsView.set(quiz: quiz)
+            }
+            .store(in: &cancellables)
     }
 
     private func setUpNavBar() {
@@ -61,7 +72,7 @@ class QuizDetailsViewController: UIViewController {
     }
 
     @objc func leaderboardButtonTapped() {
-        viewModel.onLeaderboardButtonClick(quizId: quiz.id)
+        viewModel.onLeaderboardButtonClick()
     }
 
     private func configureGradient() {
@@ -84,7 +95,7 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         leaderboardButton = UIButton()
         view.addSubview(leaderboardButton)
 
-        quizDetailsView = QuizDetailsView(quiz: quiz)
+        quizDetailsView = QuizDetailsView()
         view.addSubview(quizDetailsView)
     }
 
@@ -118,7 +129,7 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
 extension QuizDetailsViewController: QuizDetailsViewDelegate {
 
     func startQuizButtonTapped() {
-        viewModel.onStartQuizButtonClick(quizId: quiz.id)
+        viewModel.onStartQuizButtonClick()
     }
 
 }

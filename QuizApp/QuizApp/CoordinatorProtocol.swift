@@ -4,12 +4,12 @@ protocol CoordinatorProtocol {
 
     func showTabBarController()
 
-    func showQuizDetailsController(_ quiz: Quiz)
-
-    func back()
-
     func showLeaderboardViewController(_ quizId: Int)
 
     func dismiss()
+
+    func showQuizDetails(of quiz: Quiz)
+
+    func goBack()
 
 }

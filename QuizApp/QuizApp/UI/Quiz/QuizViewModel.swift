@@ -58,7 +58,7 @@ class QuizViewModel {
     }
 
     func onQuizSelected(_ quiz: Quiz) {
-        coordinator.showQuizDetailsController(quiz)
+        coordinator.showQuizDetails(of: quiz)
     }
 
 }
