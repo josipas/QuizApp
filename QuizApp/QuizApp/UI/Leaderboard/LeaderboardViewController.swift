@@ -79,7 +79,7 @@ extension LeaderboardViewController: ConstructViewsProtocol {
         xButton = UIButton()
         view.addSubview(xButton)
 
-        tableView = UITableView()
+        tableView = UITableView(frame: .zero, style: .grouped)
         view.addSubview(tableView)
 
         headerView = LeaderboardHeader()
