@@ -101,7 +101,7 @@ extension Container {
     }
 
     static let leaderboardViewModel = Factory {
-        LeaderboardViewModel(coordinator: coordinator())
+        LeaderboardViewModel(coordinator: coordinator(), quizUseCase: quizUseCase())
     }
 
 }

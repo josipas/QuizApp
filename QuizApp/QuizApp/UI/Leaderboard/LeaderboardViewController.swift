@@ -9,13 +9,10 @@ class LeaderboardViewController: UIViewController {
     private var titleLabel: UILabel!
     private var xButton: UIButton!
     private var tableView: UITableView!
+    private var headerView: LeaderboardHeader!
     private var cancellables = Set<AnyCancellable>()
     private var quizId: Int!
-    private var leaderboard: [Leaderboard] = [
-        Leaderboard(name: "Lorena", points: 346),
-        Leaderboard(name: "Marin", points: 300),
-        Leaderboard(name: "Josipa", points: 123)
-        ]
+    private var leaderboard: [QuizLeaderboard] = []
 
     init(viewModel: LeaderboardViewModel, quizId: Int) {
         super.init(nibName: nil, bundle: nil)
@@ -31,12 +28,12 @@ class LeaderboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bindViewModel()
         configureGradient()
         createViews()
         styleViews()
         defineLayoutForViews()
         loadData()
+        bindViewModel()
     }
 
     @objc func xButtonTapped() {
@@ -58,8 +55,11 @@ class LeaderboardViewController: UIViewController {
     private func bindViewModel() {
         viewModel
             .$leaderboardList
-            .sink { leaderboardList in
-                print(leaderboardList)
+            .sink { [weak self] leaderboardList in
+                guard let self = self else { return }
+
+                self.leaderboard = leaderboardList
+                self.tableView.reloadData()
             }
             .store(in: &cancellables)
     }
@@ -81,6 +81,9 @@ extension LeaderboardViewController: ConstructViewsProtocol {
 
         tableView = UITableView()
         view.addSubview(tableView)
+
+        headerView = LeaderboardHeader()
+        view.addSubview(headerView)
     }
 
     func styleViews() {
@@ -96,6 +99,9 @@ extension LeaderboardViewController: ConstructViewsProtocol {
         tableView.register(
             LeaderboardTableViewCell.self,
             forCellReuseIdentifier: LeaderboardTableViewCell.reuseIdentifier)
+        tableView.register(
+            LeaderboardHeader.self,
+            forHeaderFooterViewReuseIdentifier: LeaderboardHeader.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
@@ -117,7 +123,7 @@ extension LeaderboardViewController: ConstructViewsProtocol {
         }
 
         tableView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(60)
+            $0.top.equalTo(titleLabel.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(80)
         }
@@ -128,8 +134,20 @@ extension LeaderboardViewController: ConstructViewsProtocol {
 extension LeaderboardViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel()
-        return label
+        guard
+            let cell = tableView
+                .dequeueReusableHeaderFooterView(
+                    withIdentifier: LeaderboardHeader.reuseIdentifier)
+                as? LeaderboardHeader
+        else {
+            fatalError()
+        }
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        80
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -150,6 +168,7 @@ extension LeaderboardViewController: UITableViewDataSource {
             fatalError()
         }
 
+        cell.selectionStyle = .none
         cell.separatorInset = .zero
         cell.layoutMargins = .zero
         cell.set(rank: indexPath.row, name: leaderboard[indexPath.row].name, points: leaderboard[indexPath.row].points)
