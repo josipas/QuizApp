@@ -3,15 +3,15 @@ import Combine
 class LeaderboardViewModel {
 
     private let coordinator: CoordinatorProtocol
-    private let quizUseCase: QuizUseCaseProtocol
+    private let useCase: QuizUseCaseProtocol
 
-    private var quizId: Int
+    private let quizId: Int
 
     @Published var leaderboardList: [QuizLeaderboard] = []
 
-    init(coordinator: CoordinatorProtocol, quizUseCase: QuizUseCaseProtocol, quizId: Int) {
+    init(coordinator: CoordinatorProtocol, useCase: QuizUseCaseProtocol, quizId: Int) {
         self.coordinator = coordinator
-        self.quizUseCase = quizUseCase
+        self.useCase = useCase
         self.quizId = quizId
     }
 
@@ -23,7 +23,7 @@ class LeaderboardViewModel {
     func loadData() {
         Task(priority: .background) {
             do {
-                leaderboardList = try await quizUseCase.getLeaderboard(for: quizId).map { QuizLeaderboard(from: $0) }
+                leaderboardList = try await useCase.getLeaderboard(for: quizId).map { QuizLeaderboard(from: $0) }
             } catch {
             }
         }

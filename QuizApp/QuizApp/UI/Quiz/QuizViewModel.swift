@@ -4,15 +4,15 @@ import UIKit
 class QuizViewModel {
 
     private let coordinator: CoordinatorProtocol
-    private let quizUseCase: QuizUseCaseProtocol
+    private let useCase: QuizUseCaseProtocol
 
     @Published var categories: [CustomSegmentedControlModel] = []
     @Published var quizes: [QuizCategory: [Quiz]] = [:]
     @Published var hasErrorOcurred: Bool = false
 
-    init(coordinator: CoordinatorProtocol, quizUseCase: QuizUseCaseProtocol) {
+    init(coordinator: CoordinatorProtocol, useCase: QuizUseCaseProtocol) {
         self.coordinator = coordinator
-        self.quizUseCase = quizUseCase
+        self.useCase = useCase
     }
 
     @MainActor
@@ -27,9 +27,9 @@ class QuizViewModel {
                 var quizes: [QuizModel] = []
 
                 if category != .all {
-                    quizes = try await quizUseCase.getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!)
+                    quizes = try await useCase.getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!)
                 } else {
-                    quizes = try await quizUseCase.quizes
+                    quizes = try await useCase.quizes
                 }
 
                 self.hasErrorOcurred = false

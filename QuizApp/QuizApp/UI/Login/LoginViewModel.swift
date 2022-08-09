@@ -4,7 +4,7 @@ import UIKit
 class LoginViewModel {
 
     private let coordinator: CoordinatorProtocol
-    private let loginUseCase: LoginUseCaseProtocol
+    private let useCase: LoginUseCaseProtocol
 
     @Published var isButtonEnabled = false
     @Published var errorMessage = ""
@@ -12,9 +12,9 @@ class LoginViewModel {
     private var email = ""
     private var password = ""
 
-    init(coordinator: CoordinatorProtocol, loginUseCase: LoginUseCaseProtocol) {
+    init(coordinator: CoordinatorProtocol, useCase: LoginUseCaseProtocol) {
         self.coordinator = coordinator
-        self.loginUseCase = loginUseCase
+        self.useCase = useCase
     }
 
     func onEmailChange(email: String) {
@@ -39,7 +39,7 @@ class LoginViewModel {
 
         Task(priority: .background) {
             do {
-                try await loginUseCase.login(username: email, password: password)
+                try await useCase.login(username: email, password: password)
 
                 DispatchQueue.main.async {  [weak self] in
                     guard let self = self else { return }
