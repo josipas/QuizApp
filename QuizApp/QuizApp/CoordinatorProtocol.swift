@@ -12,4 +12,6 @@ protocol CoordinatorProtocol {
 
     func goBack()
 
+    func showQuestion(quizId: Int)
+
 }

@@ -6,6 +6,8 @@ protocol QuizUseCaseProtocol {
 
     func getLeaderboard(for quizId: Int) async throws -> [QuizLeaderboardModel]
 
+    func startQuizSession(for quizId: Int) async throws -> StartQuizSessionResponseClientModel
+
 }
 
 class QuizUseCase: QuizUseCaseProtocol {
@@ -36,6 +38,10 @@ class QuizUseCase: QuizUseCaseProtocol {
             .map {
                 QuizLeaderboardModel(from: $0)
             }
+    }
+
+    func startQuizSession(for quizId: Int) async throws -> StartQuizSessionResponseClientModel {
+        try await quizDataSource.startQuizSession(for: quizId)
     }
 
 }

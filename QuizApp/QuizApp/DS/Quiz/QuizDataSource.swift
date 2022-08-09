@@ -6,6 +6,8 @@ protocol QuizDataSourceProtocol {
 
     func getLeaderboard(for quizId: Int) async throws -> [QuizLeaderboardDataModel]
 
+    func startQuizSession(for quizId: Int) async throws -> StartQuizSessionResponseClientModel
+
 }
 
 class QuizDataSource: QuizDataSourceProtocol {
@@ -36,6 +38,10 @@ class QuizDataSource: QuizDataSourceProtocol {
             .map {
                 QuizLeaderboardDataModel(from: $0)
             }
+    }
+
+    func startQuizSession(for quizId: Int) async throws -> StartQuizSessionResponseClientModel {
+        try await quizClient.startQuizSession(for: quizId)
     }
 
 }

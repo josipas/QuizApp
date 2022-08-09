@@ -33,6 +33,10 @@ class Coordinator: CoordinatorProtocol {
         navigationController.popViewController(animated: true)
     }
 
+    func showQuestion(quizId: Int) {
+        navigationController.pushViewController(Container.questionViewController(quizId), animated: true)
+    }
+
     private func setUpTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
 
