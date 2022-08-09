@@ -4,6 +4,8 @@ protocol QuizUseCaseProtocol {
 
     func getQuizes(for category: QuizCategoryModel) async throws -> [QuizModel]
 
+    func getLeaderboard(for quizId: Int) async throws -> [QuizLeaderboardModel]
+
 }
 
 class QuizUseCase: QuizUseCaseProtocol {
@@ -25,6 +27,14 @@ class QuizUseCase: QuizUseCaseProtocol {
             .getQuizes(for: QuizCategoryDataModel(rawValue: category.rawValue)!)
             .map {
                 QuizModel(from: $0)
+            }
+    }
+
+    func getLeaderboard(for quizId: Int) async throws -> [QuizLeaderboardModel] {
+        try await quizDataSource
+            .getLeaderboard(for: quizId)
+            .map {
+                QuizLeaderboardModel(from: $0)
             }
     }
 

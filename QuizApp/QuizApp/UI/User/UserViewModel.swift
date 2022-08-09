@@ -3,18 +3,18 @@ import Combine
 class UserViewModel {
 
     private let coordinator: CoordinatorProtocol
-    private let userUseCase: UserUseCaseProtocol
+    private let useCase: UserUseCaseProtocol
 
     @Published var account = AccountModel(email: "", id: 0, name: "")
 
-    init(coordinator: CoordinatorProtocol, userUseCase: UserUseCaseProtocol) {
+    init(coordinator: CoordinatorProtocol, useCase: UserUseCaseProtocol) {
         self.coordinator = coordinator
-        self.userUseCase = userUseCase
+        self.useCase = useCase
     }
 
     func onLogoutButtonClick() {
         do {
-            try userUseCase.logOut()
+            try useCase.logOut()
             coordinator.showLogIn()
         } catch {
         }
@@ -26,7 +26,7 @@ class UserViewModel {
             guard let self = self else { return }
 
             do {
-                self.account = try await userUseCase.updateData(name: name)
+                self.account = try await useCase.updateData(name: name)
             } catch {
             }
         }
@@ -38,7 +38,7 @@ class UserViewModel {
             guard let self = self else { return }
 
             do {
-                self.account = try await userUseCase.data
+                self.account = try await useCase.data
             } catch {
             }
         }

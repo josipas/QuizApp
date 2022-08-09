@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
 
-                    self.coordinator.showTabBarController()
+                    self.coordinator.showHome()
                 }
             } catch {
                 DispatchQueue.main.async { [weak self] in
