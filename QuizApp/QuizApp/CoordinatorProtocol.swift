@@ -2,11 +2,11 @@ protocol CoordinatorProtocol {
 
     func showLogIn()
 
-    func showTabBar()
+    func showHome()
 
-    func showLeaderboard(_ quizId: Int)
+    func showLeaderboard(quizId: Int)
 
-    func dismiss()
+    func hideLeaderboard()
 
     func showQuizDetails(of quiz: Quiz)
 

@@ -20,7 +20,7 @@ class QuizDetailsViewModel {
     }
 
     func onLeaderboardButtonClick() {
-        coordinator.showLeaderboard(quiz.id)
+        coordinator.showLeaderboard(quizId: quiz.id)
     }
 
 }

@@ -21,7 +21,7 @@ class LeaderboardTableViewCell: UITableViewCell {
     }
 
     func set(rank: Int, name: String, points: Int) {
-        rankLabel.text = "\(rank+1)."
+        rankLabel.text = "\(rank)."
         nameLabel.text = name
         pointsLabel.text = "\(points)"
     }

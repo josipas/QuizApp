@@ -100,8 +100,8 @@ extension Container {
         QuizDetailsViewModel(coordinator: coordinator(), quiz: quiz)
     }
 
-    static let leaderboardViewModel = Factory {
-        LeaderboardViewModel(coordinator: coordinator(), quizUseCase: quizUseCase())
+    static let leaderboardViewModel = ParameterFactory<Int, LeaderboardViewModel> { quizId in
+        LeaderboardViewModel(coordinator: coordinator(), quizUseCase: quizUseCase(), quizId: quizId)
     }
 
 }
@@ -126,7 +126,7 @@ extension Container {
     }
 
     static let leaderboardViewController = ParameterFactory<Int, LeaderboardViewController> { quizId in
-        LeaderboardViewController(viewModel: leaderboardViewModel(), quizId: quizId)
+        LeaderboardViewController(viewModel: leaderboardViewModel(quizId))
     }
 
 }

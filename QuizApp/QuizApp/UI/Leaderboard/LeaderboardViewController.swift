@@ -7,18 +7,18 @@ class LeaderboardViewController: UIViewController {
 
     private var viewModel: LeaderboardViewModel!
     private var titleLabel: UILabel!
+    private var nameLabel: UILabel!
+    private var pointsLabel: UILabel!
+    private var separatorView: UIView!
     private var xButton: UIButton!
     private var tableView: UITableView!
-    private var headerView: LeaderboardHeader!
     private var cancellables = Set<AnyCancellable>()
-    private var quizId: Int!
     private var leaderboard: [QuizLeaderboard] = []
 
-    init(viewModel: LeaderboardViewModel, quizId: Int) {
+    init(viewModel: LeaderboardViewModel) {
         super.init(nibName: nil, bundle: nil)
 
         self.viewModel = viewModel
-        self.quizId = quizId
     }
 
     required init?(coder: NSCoder) {
@@ -65,7 +65,7 @@ class LeaderboardViewController: UIViewController {
     }
 
     private func loadData() {
-        viewModel.loadData(quizId: quizId)
+        viewModel.loadData()
     }
 
 }
@@ -76,17 +76,25 @@ extension LeaderboardViewController: ConstructViewsProtocol {
         titleLabel = UILabel()
         view.addSubview(titleLabel)
 
+        nameLabel = UILabel()
+        view.addSubview(nameLabel)
+
+        pointsLabel = UILabel()
+        view.addSubview(pointsLabel)
+
+        separatorView = UIView()
+        view.addSubview(separatorView)
+
         xButton = UIButton()
         view.addSubview(xButton)
 
-        tableView = UITableView(frame: .zero, style: .grouped)
+        tableView = UITableView()
         view.addSubview(tableView)
-
-        headerView = LeaderboardHeader()
-        view.addSubview(headerView)
     }
 
     func styleViews() {
+        isModalInPresentation = true
+
         titleLabel.text = "Leaderboard"
         titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
         titleLabel.textColor = .white
@@ -95,13 +103,21 @@ extension LeaderboardViewController: ConstructViewsProtocol {
         xButton.setImage(UIImage(named: "xButton"), for: .normal)
         xButton.addTarget(self, action: #selector(xButtonTapped), for: .touchUpInside)
 
+        nameLabel.text = "Player"
+        nameLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        nameLabel.textColor = .white
+
+        pointsLabel.text = "Points"
+        pointsLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        pointsLabel.textColor = .white
+        pointsLabel.textAlignment = .right
+
+        separatorView.backgroundColor = .white
+
         tableView.backgroundColor = .clear
         tableView.register(
             LeaderboardTableViewCell.self,
             forCellReuseIdentifier: LeaderboardTableViewCell.reuseIdentifier)
-        tableView.register(
-            LeaderboardHeader.self,
-            forHeaderFooterViewReuseIdentifier: LeaderboardHeader.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
@@ -122,8 +138,25 @@ extension LeaderboardViewController: ConstructViewsProtocol {
             $0.trailing.equalToSuperview().inset(25)
         }
 
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(50)
+            $0.leading.equalToSuperview().inset(20)
+        }
+
+        pointsLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(50)
+            $0.leading.equalTo(nameLabel.snp.trailing).offset(20)
+            $0.trailing.equalToSuperview().inset(20)
+        }
+
+        separatorView.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(15)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1 / UIScreen.main.scale)
+        }
+
         tableView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom)
+            $0.top.equalTo(separatorView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(80)
         }
@@ -132,23 +165,6 @@ extension LeaderboardViewController: ConstructViewsProtocol {
 }
 
 extension LeaderboardViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard
-            let cell = tableView
-                .dequeueReusableHeaderFooterView(
-                    withIdentifier: LeaderboardHeader.reuseIdentifier)
-                as? LeaderboardHeader
-        else {
-            fatalError()
-        }
-
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        80
-    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         60
@@ -171,7 +187,10 @@ extension LeaderboardViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         cell.separatorInset = .zero
         cell.layoutMargins = .zero
-        cell.set(rank: indexPath.row, name: leaderboard[indexPath.row].name, points: leaderboard[indexPath.row].points)
+        cell.set(
+            rank: indexPath.row + 1,
+            name: leaderboard[indexPath.row].name,
+            points: leaderboard[indexPath.row].points)
 
         return cell
     }
