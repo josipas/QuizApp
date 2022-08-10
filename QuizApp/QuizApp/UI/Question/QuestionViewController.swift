@@ -3,6 +3,8 @@ import UIKit
 class QuestionViewController: UIViewController {
 
     private var viewModel: QuestionViewModel!
+    private var titleLabel: UILabel!
+    private var backButtonImage: UIImage!
 
     init(viewModel: QuestionViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -16,6 +18,45 @@ class QuestionViewController: UIViewController {
 
     override func viewDidLoad() {
         viewModel.loadData()
+
+        configureGradient()
+        setUpNavBar()
+    }
+
+    private func setUpNavBar() {
+        titleLabel = UILabel()
+        titleLabel.text = "Pop Quiz"
+        titleLabel.textColor = .white
+        titleLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        navigationItem.titleView = titleLabel
+
+        backButtonImage = UIImage(named: "backButton")
+        let backItem = UIBarButtonItem(
+            image: backButtonImage,
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped))
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.leftBarButtonItem = backItem
+        navigationController?.isNavigationBarHidden = false
+    }
+
+    @objc private func backButtonTapped() {
+        viewModel.onBackButtonClick()
+    }
+
+}
+
+extension QuestionViewController: ConstructViewsProtocol {
+
+    func createViews() {
+    }
+
+    func styleViews() {
+
+    }
+
+    func defineLayoutForViews() {
     }
 
 }

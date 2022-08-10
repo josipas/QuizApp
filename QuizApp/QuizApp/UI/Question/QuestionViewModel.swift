@@ -45,6 +45,10 @@ class QuestionViewModel {
         }
     }
 
+    func onBackButtonClick() {
+        coordinator.goBack()
+    }
+
     private func recalculateData() {
         let correctAnswerColor = UIColor(red: 0.435, green: 0.812, blue: 0.592, alpha: 1)
         let incorrectAnswerColor = UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1)
