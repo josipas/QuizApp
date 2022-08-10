@@ -1,7 +1,16 @@
+import Combine
+import UIKit
+
 class QuestionViewModel {
 
     private let useCase: QuizUseCaseProtocol
     private let quizId: Int
+
+    private var quizData: StartQuizSessionModel!
+    private var selectedAnswerIds: [Int] = [39, 45]
+
+    @Published var currentQuestionIndex = 0
+    @Published var questions: [Question] = []
 
     init(useCase: QuizUseCaseProtocol, quizId: Int) {
         self.useCase = useCase
@@ -11,10 +20,75 @@ class QuestionViewModel {
     func loadData() {
         Task(priority: .background) {
             do {
-                let quizData = try await useCase.startQuizSession(for: quizId)
+                quizData = try await useCase.startQuizSession(for: quizId)
+                currentQuestionIndex = 0
+                recalculateData()
             } catch {
             }
         }
+    }
+
+    func onAnswerClick(answerId: Int) {
+        selectedAnswerIds.append(answerId)
+        recalculateData()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            guard let self = self else { return }
+
+            self.currentQuestionIndex += 1
+        }
+    }
+
+    private func recalculateData() {
+        var questions: [Question] = []
+        let correctAnswerColor = UIColor(red: 0.435, green: 0.812, blue: 0.592, alpha: 1)
+        let incorrectAnswerColor = UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1)
+
+        for (index, questionModel) in quizData.questions.enumerated() {
+            var progressColor: UIColor = .white
+
+            let answers = questionModel
+                .answers
+                .map { answer -> Answer in
+                    let backgroundColor: UIColor
+
+                    if index >= selectedAnswerIds.count {
+                        backgroundColor = .white.withAlphaComponent(0.3)
+                    } else {
+                        let selectedAnswerId = selectedAnswerIds[index]
+                        let isCorrect = questionModel.correctAnswerId == answer.id
+                        let isSelected = answer.id == selectedAnswerId
+
+                        backgroundColor = isCorrect ?
+                            correctAnswerColor :
+                            isSelected ?
+                                incorrectAnswerColor :
+                                .white.withAlphaComponent(0.3)
+                    }
+
+                    return Answer(id: answer.id, answer: answer.answer, backgroundColor: backgroundColor)
+                }
+
+            if index > selectedAnswerIds.count {
+                progressColor = .white.withAlphaComponent(0.5)
+            } else if index == selectedAnswerIds.count {
+                progressColor = .white
+            } else {
+                progressColor = quizData.questions[index].correctAnswerId == selectedAnswerIds[index] ?
+                    correctAnswerColor :
+                    incorrectAnswerColor
+            }
+
+            questions
+                .append(Question(
+                        id: questionModel.id,
+                        question: questionModel.question,
+                        answers: answers,
+                        progressColor: progressColor))
+        }
+
+        print(questions)
+        self.questions = questions
     }
 
 }

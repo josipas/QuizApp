@@ -18,4 +18,7 @@ class QuestionViewController: UIViewController {
         viewModel.loadData()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.onAnswerClick(answerId: 39)
+    }
 }

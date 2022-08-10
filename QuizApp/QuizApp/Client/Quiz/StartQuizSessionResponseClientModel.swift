@@ -1,4 +1,4 @@
-struct StartQuizSessionResponseClientModel: Decodable {
+struct StartQuizSessionResponseClientModel: Codable {
 
     let sessionId: String
     let questions: [QuestionClientModel]

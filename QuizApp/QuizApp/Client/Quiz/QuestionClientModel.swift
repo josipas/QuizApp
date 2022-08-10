@@ -1,4 +1,4 @@
-struct QuestionClientModel: Decodable {
+struct QuestionClientModel: Codable {
 
     let id: Int
     let question: String
