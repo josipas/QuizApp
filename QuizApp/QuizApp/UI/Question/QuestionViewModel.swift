@@ -40,7 +40,7 @@ class QuestionViewModel {
             guard let self = self else { return }
 
             self.currentQuestionIndex < self.questions.count - 1 ?
-                self.currentQuestionIndex+=1 :
+                self.currentQuestionIndex += 1 :
                 self.coordinator.showQuizResult()
         }
     }
