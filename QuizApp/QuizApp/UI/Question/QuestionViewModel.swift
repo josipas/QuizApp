@@ -4,6 +4,7 @@ import UIKit
 class QuestionViewModel {
 
     private let useCase: QuizUseCaseProtocol
+    private let coordinator: CoordinatorProtocol
     private let quizId: Int
 
     private var quizData: StartQuizSessionModel!
@@ -12,7 +13,8 @@ class QuestionViewModel {
     @Published var currentQuestionIndex = 0
     @Published var questions: [Question] = []
 
-    init(useCase: QuizUseCaseProtocol, quizId: Int) {
+    init(coordinator: CoordinatorProtocol, useCase: QuizUseCaseProtocol, quizId: Int) {
+        self.coordinator = coordinator
         self.useCase = useCase
         self.quizId = quizId
     }
@@ -37,7 +39,9 @@ class QuestionViewModel {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self = self else { return }
 
-            self.currentQuestionIndex += 1
+            self.currentQuestionIndex < self.questions.count - 1 ?
+                self.currentQuestionIndex+=1 :
+                self.coordinator.showQuizResult()
         }
     }
 

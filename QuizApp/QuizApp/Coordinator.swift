@@ -50,6 +50,9 @@ class Coordinator: CoordinatorProtocol {
         return tabBarController
     }
 
+    func showQuizResult() {
+    }
+
     private func makeQuizViewController() -> UIViewController {
         let quizViewController = Container.quizViewController()
 

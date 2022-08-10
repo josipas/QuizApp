@@ -105,7 +105,7 @@ extension Container {
     }
 
     static let questionViewModel = ParameterFactory<Int, QuestionViewModel> { quizId in
-        QuestionViewModel(useCase: quizUseCase(), quizId: quizId)
+        QuestionViewModel(coordinator: coordinator(), useCase: quizUseCase(), quizId: quizId)
     }
 
 }
