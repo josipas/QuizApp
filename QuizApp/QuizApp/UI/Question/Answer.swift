@@ -7,13 +7,3 @@ struct Answer {
     let backgroundColor: UIColor
 
 }
-
-extension Answer {
-
-    init(from model: AnswerModel) {
-        id = model.id
-        answer =  model.answer
-        backgroundColor = .white.withAlphaComponent(0.3)
-    }
-
-}

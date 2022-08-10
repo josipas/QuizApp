@@ -40,12 +40,12 @@ class QuestionViewModel {
     }
 
     private func recalculateData() {
-        var questions: [Question] = []
         let correctAnswerColor = UIColor(red: 0.435, green: 0.812, blue: 0.592, alpha: 1)
         let incorrectAnswerColor = UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1)
+        var questions: [Question] = []
 
         for (index, questionModel) in quizData.questions.enumerated() {
-            var progressColor: UIColor = .white
+            let progressColor: UIColor
 
             let answers = questionModel
                 .answers

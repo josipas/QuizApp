@@ -21,7 +21,8 @@ class QuizClient: QuizClientProtocol {
 
     var quizes: [QuizResponseClientModel] {
         get async throws {
-            try await networkClient.executeRequest(path: "\(path)/list", method: .get, parameters: nil)
+            try await networkClient
+                .executeRequest(path: "\(path)/list", method: .get, parameters: nil)
         }
     }
 
