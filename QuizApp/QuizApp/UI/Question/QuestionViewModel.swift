@@ -7,7 +7,7 @@ class QuestionViewModel {
     private let quizId: Int
 
     private var quizData: StartQuizSessionModel!
-    private var selectedAnswerIds: [Int] = [39, 45]
+    private var selectedAnswerIds: [Int] = []
 
     @Published var currentQuestionIndex = 0
     @Published var questions: [Question] = []
@@ -87,7 +87,6 @@ class QuestionViewModel {
                         progressColor: progressColor))
         }
 
-        print(questions)
         self.questions = questions
     }
 
