@@ -23,8 +23,8 @@ class QuestionViewModel {
 
             do {
                 self.quizData = try await useCase.startQuizSession(for: quizId)
-                currentQuestionIndex = 0
-                recalculateData()
+                self.currentQuestionIndex = 0
+                self.recalculateData()
             } catch {
             }
         }
