@@ -18,9 +18,11 @@ class QuestionViewModel {
     }
 
     func loadData() {
-        Task(priority: .background) {
+        Task(priority: .background) { [weak self] in
+            guard let self = self else { return }
+
             do {
-                quizData = try await useCase.startQuizSession(for: quizId)
+                self.quizData = try await useCase.startQuizSession(for: quizId)
                 currentQuestionIndex = 0
                 recalculateData()
             } catch {

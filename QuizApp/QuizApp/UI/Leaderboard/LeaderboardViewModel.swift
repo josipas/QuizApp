@@ -21,9 +21,11 @@ class LeaderboardViewModel {
 
     @MainActor
     func loadData() {
-        Task(priority: .background) {
+        Task(priority: .background) { [weak self] in
+            guard let self = self else { return }
+
             do {
-                leaderboardList = try await useCase.getLeaderboard(for: quizId).map { QuizLeaderboard(from: $0) }
+                self.leaderboardList = try await useCase.getLeaderboard(for: quizId).map { QuizLeaderboard(from: $0) }
             } catch {
             }
         }
