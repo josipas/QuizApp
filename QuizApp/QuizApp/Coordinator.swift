@@ -33,6 +33,10 @@ class Coordinator: CoordinatorProtocol {
         navigationController.popViewController(animated: true)
     }
 
+    func showQuiz(quizId: Int) {
+        navigationController.pushViewController(Container.quizSessionViewController(quizId), animated: true)
+    }
+
     private func setUpTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
 
@@ -44,6 +48,9 @@ class Coordinator: CoordinatorProtocol {
             makeUserViewController()]
 
         return tabBarController
+    }
+
+    func showQuizResult() {
     }
 
     private func makeQuizViewController() -> UIViewController {

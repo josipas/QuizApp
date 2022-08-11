@@ -22,7 +22,9 @@ class QuizViewModel {
 
     @MainActor
     func loadQuizes(for category: QuizCategory) {
-        Task(priority: .background) {
+        Task(priority: .background) { [weak self] in
+            guard let self = self else { return }
+
             do {
                 var quizes: [QuizModel] = []
 

@@ -104,6 +104,10 @@ extension Container {
         LeaderboardViewModel(coordinator: coordinator(), useCase: quizUseCase(), quizId: quizId)
     }
 
+    static let quizSessionViewModel = ParameterFactory<Int, QuizSessionViewModel> { quizId in
+        QuizSessionViewModel(coordinator: coordinator(), useCase: quizUseCase(), quizId: quizId)
+    }
+
 }
 
 // MARK: VC
@@ -127,6 +131,10 @@ extension Container {
 
     static let leaderboardViewController = ParameterFactory<Int, LeaderboardViewController> { quizId in
         LeaderboardViewController(viewModel: leaderboardViewModel(quizId))
+    }
+
+    static let quizSessionViewController = ParameterFactory<Int, QuizSessionViewController> { quizId in
+        QuizSessionViewController(viewModel: quizSessionViewModel(quizId))
     }
 
 }

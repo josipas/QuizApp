@@ -6,6 +6,8 @@ protocol QuizClientProtocol {
 
     func getLeaderboard(for quizId: Int) async throws -> [QuizLeaderboardResponseClientModel]
 
+    func startQuizSession(for quizId: Int) async throws -> StartQuizSessionResponseClientModel
+
 }
 
 class QuizClient: QuizClientProtocol {
@@ -19,7 +21,8 @@ class QuizClient: QuizClientProtocol {
 
     var quizes: [QuizResponseClientModel] {
         get async throws {
-            try await networkClient.executeRequest(path: "\(path)/list", method: .get, parameters: nil)
+            try await networkClient
+                .executeRequest(path: "\(path)/list", method: .get, parameters: nil)
         }
     }
 
@@ -37,6 +40,11 @@ class QuizClient: QuizClientProtocol {
                 path: "\(path)/leaderboard",
                 method: .get,
                 parameters: ["quizId": String(quizId)])
+    }
+
+    func startQuizSession(for quizId: Int) async throws -> StartQuizSessionResponseClientModel {
+        try await networkClient
+            .executeRequest(path: "\(path)/\(quizId)/session/start", method: .post, parameters: nil)
     }
 
 }
