@@ -38,7 +38,7 @@ class QuizSessionViewModel {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self = self else { return }
 
-            if !(self.currentQuestionIndex < self.questions.count) {
+            if self.currentQuestionIndex >= self.questions.count {
                 self.coordinator.showQuizResult()
             }
         }

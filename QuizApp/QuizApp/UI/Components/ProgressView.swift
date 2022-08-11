@@ -45,9 +45,12 @@ extension ProgressView: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
+        snp.makeConstraints {
+            $0.height.equalTo(5)
+        }
+
         stackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.height.equalTo(5)
         }
     }
 

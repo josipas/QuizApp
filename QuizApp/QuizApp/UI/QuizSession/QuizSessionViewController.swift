@@ -54,7 +54,7 @@ class QuizSessionViewController: UIViewController {
 
                 let numberOfQuestions = questions.count
                 self.numberOfQuestions = numberOfQuestions
-                if numberOfQuestions >= 1 {
+                if numberOfQuestions > 0 {
                     self.progressView.set(colors: questions.map { $0.progressColor })
                     self.progressView.setNeedsLayout()
                 }
@@ -115,7 +115,6 @@ extension QuizSessionViewController: ConstructViewsProtocol {
         progressView.snp.makeConstraints {
             $0.top.equalTo(progressLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(5)
         }
     }
 
