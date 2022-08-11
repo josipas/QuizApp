@@ -19,7 +19,7 @@ class ProgressView: UIView {
     func set(colors: [UIColor]) {
         stackView
             .arrangedSubviews
-            .forEach({ $0.removeFromSuperview() })
+            .forEach { $0.removeFromSuperview() }
 
         for color in colors {
             let view = UIView()
