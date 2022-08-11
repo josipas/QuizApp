@@ -1,7 +1,7 @@
 import Combine
 import UIKit
 
-class QuestionViewModel {
+class QuizSessionViewModel {
 
     private let useCase: QuizUseCaseProtocol
     private let coordinator: CoordinatorProtocol
@@ -39,9 +39,11 @@ class QuestionViewModel {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self = self else { return }
 
-            self.currentQuestionIndex < self.questions.count - 1 ?
-                self.currentQuestionIndex += 1 :
+            if self.currentQuestionIndex < self.questions.count - 1 {
+                self.currentQuestionIndex += 1
+            } else {
                 self.coordinator.showQuizResult()
+            }
         }
     }
 

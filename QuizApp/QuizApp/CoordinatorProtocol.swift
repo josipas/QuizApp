@@ -12,7 +12,7 @@ protocol CoordinatorProtocol {
 
     func goBack()
 
-    func showQuestion(quizId: Int)
+    func showQuiz(quizId: Int)
 
     func showQuizResult()
 

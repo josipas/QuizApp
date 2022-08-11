@@ -1,10 +1,10 @@
 import UIKit
 
-class QuestionViewController: UIViewController {
+class QuizSessionViewController: UIViewController {
 
-    private var viewModel: QuestionViewModel!
+    private var viewModel: QuizSessionViewModel!
 
-    init(viewModel: QuestionViewModel) {
+    init(viewModel: QuizSessionViewModel) {
         super.init(nibName: nil, bundle: nil)
 
         self.viewModel = viewModel
