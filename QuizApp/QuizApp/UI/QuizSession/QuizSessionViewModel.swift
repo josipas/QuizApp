@@ -6,7 +6,6 @@ class QuizSessionViewModel {
     private let useCase: QuizUseCaseProtocol
     private let coordinator: CoordinatorProtocol
     private let quizId: Int
-
     private var quizData: StartQuizSessionModel!
     private var selectedAnswerIds: [Int] = []
 
