@@ -26,12 +26,17 @@ class LeaderboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureGradient()
         createViews()
         styleViews()
         defineLayoutForViews()
         loadData()
         bindViewModel()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        configureGradient()
     }
 
     @objc func xButtonTapped() {
