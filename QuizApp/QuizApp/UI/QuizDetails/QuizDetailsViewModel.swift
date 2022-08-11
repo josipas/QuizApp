@@ -17,7 +17,7 @@ class QuizDetailsViewModel {
     }
 
     func onStartQuizButtonClick() {
-        coordinator.showQuestion(quizId: quiz.id)
+        coordinator.showQuiz(quizId: quiz.id)
     }
 
     func onLeaderboardButtonClick() {
