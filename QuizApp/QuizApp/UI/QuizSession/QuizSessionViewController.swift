@@ -9,9 +9,9 @@ class QuizSessionViewController: UIViewController {
     private var progressLabel: UILabel!
     private var progressView: ProgressView!
     private var collectionView: UICollectionView!
-    private var cancellables = Set<AnyCancellable>()
     private var numberOfQuestions = 0
     private var questions: [Question] = []
+    private var cancellables = Set<AnyCancellable>()
 
     init(viewModel: QuizSessionViewModel) {
         super.init(nibName: nil, bundle: nil)
