@@ -1,5 +1,6 @@
 import Combine
 import UIKit
+import SnapKit
 
 class QuizSessionViewController: UIViewController {
 
@@ -54,13 +55,14 @@ class QuizSessionViewController: UIViewController {
             .sink { [weak self] questions in
                 guard let self = self else { return }
 
+                self.questions = questions
                 let numberOfQuestions = questions.count
                 self.numberOfQuestions = numberOfQuestions
                 if numberOfQuestions > 0 {
                     self.progressView.set(colors: questions.map { $0.progressColor })
                     self.progressView.setNeedsLayout()
+                    self.collectionView.reloadData()
                 }
-                self.collectionView.reloadData()
             }
             .store(in: &cancellables)
 
@@ -70,6 +72,14 @@ class QuizSessionViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.progressLabel.text = "\(currentQuestionIndex+1)/\(self.numberOfQuestions)"
+                if currentQuestionIndex > 0 {
+                    self.collectionView.scrollToItem(
+                        at: IndexPath(
+                            row: currentQuestionIndex,
+                            section: 0),
+                        at: .centeredHorizontally,
+                        animated: true)
+                }
             }
             .store(in: &cancellables)
     }
@@ -93,8 +103,24 @@ class QuizSessionViewController: UIViewController {
     }
 
     private func makeLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1))
+
+        let questionItem = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1))
+
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [questionItem])
+
+        let section = NSCollectionLayoutSection(group: group)
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.scrollDirection = .horizontal
+        let layout = UICollectionViewCompositionalLayout(section: section, configuration: configuration)
 
         return layout
     }
@@ -118,11 +144,12 @@ extension QuizSessionViewController: ConstructViewsProtocol {
         progressLabel.textColor = .white
         progressLabel.font = .systemFont(ofSize: 18, weight: .bold)
 
-//        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.isScrollEnabled = false
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.translatesAutoresizingMaskIntoConstraints =  false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(
             QuizSessionCollectionViewCell.self,
             forCellWithReuseIdentifier: QuizSessionCollectionViewCell.reuseIdentifier)
@@ -142,8 +169,7 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 
         collectionView.snp.makeConstraints {
             $0.top.equalTo(progressView.snp.bottom).offset(50)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(400)
+            $0.leading.trailing.bottom.equalToSuperview().inset(20)
         }
     }
 
@@ -152,7 +178,7 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 extension QuizSessionViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        questions.count
+        numberOfQuestions
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -170,12 +196,17 @@ extension QuizSessionViewController: UICollectionViewDelegateFlowLayout, UIColle
         else { fatalError() }
 
         cell.set(question: questions[indexPath.row])
+        cell.delegate = self
 
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 100, height: 400)
+}
+
+extension QuizSessionViewController: QuizSessionCollectionViewCellDelegate {
+
+    func answerTapped(answerId: Int) {
+        viewModel.onAnswerClick(answerId: answerId)
     }
 
 }

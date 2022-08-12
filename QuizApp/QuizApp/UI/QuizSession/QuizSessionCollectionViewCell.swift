@@ -1,11 +1,16 @@
 import UIKit
 
+protocol QuizSessionCollectionViewCellDelegate: AnswerViewDelegate {
+}
+
 class QuizSessionCollectionViewCell: UICollectionViewCell {
 
     static let reuseIdentifier = String(describing: QuizSessionCollectionViewCell.self)
 
     private var questionLabel: UILabel!
     private var answersStack: UIStackView!
+
+    weak var delegate: QuizSessionCollectionViewCellDelegate!
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -28,6 +33,7 @@ class QuizSessionCollectionViewCell: UICollectionViewCell {
 
         for answer in question.answers {
             let answerView = AnswerView(answer: answer)
+            answerView.delegate = self
             answersStack.addArrangedSubview(answerView)
         }
     }
@@ -38,10 +44,10 @@ extension QuizSessionCollectionViewCell: ConstructViewsProtocol {
 
     func createViews() {
         questionLabel = UILabel()
-        addSubview(questionLabel)
+        contentView.addSubview(questionLabel)
 
         answersStack = UIStackView()
-        addSubview(answersStack)
+        contentView.addSubview(answersStack)
     }
 
     func styleViews() {
@@ -50,6 +56,7 @@ extension QuizSessionCollectionViewCell: ConstructViewsProtocol {
         questionLabel.numberOfLines = 0
 
         answersStack.spacing = 16
+        answersStack.axis = .vertical
     }
 
     func defineLayoutForViews() {
@@ -58,9 +65,18 @@ extension QuizSessionCollectionViewCell: ConstructViewsProtocol {
         }
 
         answersStack.snp.makeConstraints {
-            $0.top.equalTo(questionLabel.snp.bottom).offset(40)
-            $0.trailing.leading.bottom.equalToSuperview()
+            $0.top.equalTo(questionLabel.snp.bottom).offset(40).priority(.low)
+            $0.trailing.leading.equalToSuperview()
+            $0.bottom.lessThanOrEqualToSuperview()
         }
+    }
+
+}
+
+extension QuizSessionCollectionViewCell: AnswerViewDelegate {
+
+    func answerTapped(answerId: Int) {
+        delegate.answerTapped(answerId: answerId)
     }
 
 }
