@@ -8,8 +8,10 @@ class QuizSessionViewController: UIViewController {
     private var backButtonImage: UIImage!
     private var progressLabel: UILabel!
     private var progressView: ProgressView!
+    private var collectionView: UICollectionView!
     private var cancellables = Set<AnyCancellable>()
     private var numberOfQuestions = 0
+    private var questions: [Question] = []
 
     init(viewModel: QuizSessionViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -58,6 +60,7 @@ class QuizSessionViewController: UIViewController {
                     self.progressView.set(colors: questions.map { $0.progressColor })
                     self.progressView.setNeedsLayout()
                 }
+                self.collectionView.reloadData()
             }
             .store(in: &cancellables)
 
@@ -89,6 +92,13 @@ class QuizSessionViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
 
+    private func makeLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+
+        return layout
+    }
+
 }
 
 extension QuizSessionViewController: ConstructViewsProtocol {
@@ -99,11 +109,24 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 
         progressView = ProgressView()
         view.addSubview(progressView)
+
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
+        view.addSubview(collectionView)
     }
 
     func styleViews() {
         progressLabel.textColor = .white
         progressLabel.font = .systemFont(ofSize: 18, weight: .bold)
+
+//        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = true
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.translatesAutoresizingMaskIntoConstraints =  false
+        collectionView.register(
+            QuizSessionCollectionViewCell.self,
+            forCellWithReuseIdentifier: QuizSessionCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .clear
     }
 
     func defineLayoutForViews() {
@@ -116,6 +139,43 @@ extension QuizSessionViewController: ConstructViewsProtocol {
             $0.top.equalTo(progressLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
+
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(progressView.snp.bottom).offset(50)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(400)
+        }
+    }
+
+}
+
+extension QuizSessionViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        questions.count
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: QuizSessionCollectionViewCell.reuseIdentifier,
+                for: indexPath) as? QuizSessionCollectionViewCell
+        else { fatalError() }
+
+        cell.set(question: questions[indexPath.row])
+
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 100, height: 400)
     }
 
 }
