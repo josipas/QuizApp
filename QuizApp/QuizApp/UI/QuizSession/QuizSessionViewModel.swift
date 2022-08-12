@@ -6,7 +6,6 @@ class QuizSessionViewModel {
     private let useCase: QuizUseCaseProtocol
     private let coordinator: CoordinatorProtocol
     private let quizId: Int
-
     private var quizData: StartQuizSessionModel!
     private var selectedAnswerIds: [Int] = []
 
@@ -19,13 +18,13 @@ class QuizSessionViewModel {
         self.quizId = quizId
     }
 
+    @MainActor
     func loadData() {
         Task(priority: .background) { [weak self] in
             guard let self = self else { return }
 
             do {
                 self.quizData = try await useCase.startQuizSession(for: quizId)
-                self.currentQuestionIndex = 0
                 self.recalculateData()
             } catch {
             }
@@ -39,12 +38,14 @@ class QuizSessionViewModel {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self = self else { return }
 
-            if self.currentQuestionIndex < self.questions.count - 1 {
-                self.currentQuestionIndex += 1
-            } else {
+            if self.currentQuestionIndex >= self.questions.count {
                 self.coordinator.showQuizResult()
             }
         }
+    }
+
+    func onBackButtonClick() {
+        coordinator.goBack()
     }
 
     private func recalculateData() {
@@ -96,6 +97,7 @@ class QuizSessionViewModel {
         }
 
         self.questions = questions
+        self.currentQuestionIndex = selectedAnswerIds.count
     }
 
 }

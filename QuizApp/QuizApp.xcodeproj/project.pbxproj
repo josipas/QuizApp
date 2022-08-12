@@ -71,6 +71,8 @@
 		52C6649F28A2B7F800A7942A /* StartQuizSessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C6649E28A2B7F800A7942A /* StartQuizSessionModel.swift */; };
 		52C664A128A3A68B00A7942A /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C664A028A3A68B00A7942A /* Question.swift */; };
 		52C664A328A3A69700A7942A /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C664A228A3A69700A7942A /* Answer.swift */; };
+		52C664A728A4053200A7942A /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C664A628A4053200A7942A /* UIViewController+Extensions.swift */; };
+		52C664A928A5002B00A7942A /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C664A828A5002B00A7942A /* ProgressView.swift */; };
 		52DD12BC28902B6E0022AA31 /* QuizCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DD12BB28902B6E0022AA31 /* QuizCollectionViewCell.swift */; };
 		52DD12C32892DF7D0022AA31 /* QuizDifficultyLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DD12C22892DF7D0022AA31 /* QuizDifficultyLevelView.swift */; };
 		52E477332875999600884F2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E477322875999600884F2B /* AppDelegate.swift */; };
@@ -148,6 +150,8 @@
 		52C6649E28A2B7F800A7942A /* StartQuizSessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartQuizSessionModel.swift; sourceTree = "<group>"; };
 		52C664A028A3A68B00A7942A /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		52C664A228A3A69700A7942A /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
+		52C664A628A4053200A7942A /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		52C664A828A5002B00A7942A /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		52DD12BB28902B6E0022AA31 /* QuizCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizCollectionViewCell.swift; sourceTree = "<group>"; };
 		52DD12C22892DF7D0022AA31 /* QuizDifficultyLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDifficultyLevelView.swift; sourceTree = "<group>"; };
 		52E4772F2875999600884F2B /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,6 +250,7 @@
 				526755252876EEFF00DFA655 /* CustomInputFieldType.swift */,
 				527487C228857E9500124594 /* CustomSegmentedControl.swift */,
 				52C6645F2899393B00A7942A /* ErrorView.swift */,
+				52C664A828A5002B00A7942A /* ProgressView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 		52F621B62893FF19008DAC33 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				52C664A628A4053200A7942A /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -609,6 +615,7 @@
 				52F621B02893F155008DAC33 /* QuizDataSource.swift in Sources */,
 				52C664602899393B00A7942A /* ErrorView.swift in Sources */,
 				5224E454288069160047E2F2 /* UserUseCase.swift in Sources */,
+				52C664A728A4053200A7942A /* UIViewController+Extensions.swift in Sources */,
 				52C66468289AA0D500A7942A /* QuizDetailsViewController.swift in Sources */,
 				52F621A92893DEEE008DAC33 /* QuizClient.swift in Sources */,
 				5224E442287DC3E30047E2F2 /* LoginUseCase.swift in Sources */,
@@ -626,6 +633,7 @@
 				52C664A128A3A68B00A7942A /* Question.swift in Sources */,
 				52C6646A289AA0EE00A7942A /* QuizDetailsViewModel.swift in Sources */,
 				527487C028819B8700124594 /* AccountModel.swift in Sources */,
+				52C664A928A5002B00A7942A /* ProgressView.swift in Sources */,
 				5224E44E2880255F0047E2F2 /* QuizViewController.swift in Sources */,
 				52C6645C2898236000A7942A /* QuizCollectionViewHeader.swift in Sources */,
 				527487B828817D6200124594 /* AccountClient.swift in Sources */,
