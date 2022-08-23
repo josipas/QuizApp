@@ -99,11 +99,7 @@ class QuizSessionViewModel {
                 }
 
             if index >= selectedAnswerIds.count {
-                if index == 0 {
-                    progressColor = .white
-                } else {
-                    progressColor = .white.withAlphaComponent(0.5)
-                }
+                progressColor = index == 0 ? .white : .white.withAlphaComponent(0.5)
             } else {
                 progressColor = quizData.questions[index].correctAnswerId == selectedAnswerIds[index] ?
                     correctAnswerColor :
