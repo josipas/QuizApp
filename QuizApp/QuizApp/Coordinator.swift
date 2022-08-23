@@ -38,6 +38,7 @@ class Coordinator: CoordinatorProtocol {
     }
 
     func showQuizResult() {
+        print("Quiz Result")
     }
 
     private func setUpTabBarController() -> UITabBarController {

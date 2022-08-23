@@ -72,7 +72,8 @@ class QuizSessionViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.progressLabel.text = "\(currentQuestionIndex+1)/\(self.numberOfQuestions)"
-                if currentQuestionIndex > 0 {
+
+                if currentQuestionIndex > 0 && currentQuestionIndex < self.numberOfQuestions {
                     self.collectionView.scrollToItem(
                         at: IndexPath(
                             row: currentQuestionIndex,
@@ -82,6 +83,7 @@ class QuizSessionViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+
     }
 
     private func setUpNavBar() {
@@ -175,15 +177,10 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 
 }
 
-extension QuizSessionViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
+extension QuizSessionViewController: UICollectionViewDelegate {
+}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        numberOfQuestions
-    }
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
+extension QuizSessionViewController: UICollectionViewDataSource {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -199,6 +196,18 @@ extension QuizSessionViewController: UICollectionViewDelegateFlowLayout, UIColle
         cell.delegate = self
 
         return cell
+    }
+
+}
+
+extension QuizSessionViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        numberOfQuestions
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
     }
 
 }
