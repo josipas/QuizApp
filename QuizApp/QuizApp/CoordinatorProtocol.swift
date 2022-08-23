@@ -14,6 +14,6 @@ protocol CoordinatorProtocol {
 
     func showQuiz(quizId: Int)
 
-    func showQuizResult()
+    func showQuizResult(sessionId: String, numberOfCorrectQuestions: Int, numberOfQuestions: Int)
 
 }
