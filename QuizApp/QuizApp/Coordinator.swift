@@ -38,11 +38,9 @@ class Coordinator: CoordinatorProtocol {
         navigationController.pushViewController(Container.quizSessionViewController(quizId), animated: true)
     }
 
-    func showQuizResult(sessionId: String, numberOfCorrectQuestions: Int, numberOfQuestions: Int) {
+    func showQuizResult(session: EndSessionData) {
         navigationController.navigationBar.isHidden = true
-        navigationController.pushViewController(
-            Container.quizResultViewController((sessionId, numberOfCorrectQuestions, numberOfQuestions)),
-            animated: true)
+        navigationController.pushViewController(Container.quizResultViewController(session), animated: true)
     }
 
     private func setUpTabBarController() -> UITabBarController {

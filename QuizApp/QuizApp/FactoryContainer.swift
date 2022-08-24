@@ -108,15 +108,8 @@ extension Container {
         QuizSessionViewModel(coordinator: coordinator(), useCase: quizUseCase(), quizId: quizId)
     }
 
-    static let quizResultViewModel = ParameterFactory<
-        (String, Int, Int),
-        QuizResultViewModel> { (sessionId, numberOfCorrectQuestions, numberOfQuestions) in
-            QuizResultViewModel(
-                sessionId: sessionId,
-                numberOfCorrectQuestions: numberOfCorrectQuestions,
-                numberOfQuestions: numberOfQuestions,
-                useCase: quizUseCase(),
-                coordinator: coordinator())
+    static let quizResultViewModel = ParameterFactory<EndSessionData, QuizResultViewModel> { session in
+            QuizResultViewModel(session: session, useCase: quizUseCase(), coordinator: coordinator())
     }
 
 }
@@ -148,11 +141,8 @@ extension Container {
         QuizSessionViewController(viewModel: quizSessionViewModel(quizId))
     }
 
-    static let quizResultViewController = ParameterFactory<
-        (String, Int, Int),
-        QuizResultViewController> { (sessionId, numberOfCorrectQuestions, numberOfQuestions) in
-        QuizResultViewController(
-            viewModel: quizResultViewModel((sessionId, numberOfCorrectQuestions, numberOfQuestions)))
+    static let quizResultViewController = ParameterFactory<EndSessionData, QuizResultViewController> { session in
+        QuizResultViewController(viewModel: quizResultViewModel(session))
     }
 
 }

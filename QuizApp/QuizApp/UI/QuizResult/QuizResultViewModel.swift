@@ -11,14 +11,12 @@ class QuizResultViewModel {
     @Published var result: String = ""
 
     init(
-        sessionId: String,
-        numberOfCorrectQuestions: Int,
-        numberOfQuestions: Int,
+        session: EndSessionData,
         useCase: QuizUseCaseProtocol,
         coordinator: CoordinatorProtocol) {
-            self.sessionId = sessionId
-            self.numberOfCorrectQuestions = numberOfCorrectQuestions
-            self.numberOfQuestions = numberOfQuestions
+            self.sessionId = session.sessionId
+            self.numberOfCorrectQuestions = session.numberOfCorrectQuestions
+            self.numberOfQuestions = session.numberOfQuestions
             self.useCase = useCase
             self.coordinator = coordinator
         }

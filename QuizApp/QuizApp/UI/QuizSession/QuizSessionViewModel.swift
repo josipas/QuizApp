@@ -67,10 +67,11 @@ class QuizSessionViewModel {
                         self.numberOfCorrectAnswers += 1
                     }
                 }
-                self.coordinator.showQuizResult(
-                    sessionId: self.quizData.sessionId,
-                    numberOfCorrectQuestions: self.numberOfCorrectAnswers,
-                    numberOfQuestions: self.questions.count)
+                self.coordinator
+                    .showQuizResult(session: EndSessionData(
+                        sessionId: self.quizData.sessionId,
+                        numberOfCorrectQuestions: self.numberOfCorrectAnswers,
+                        numberOfQuestions: self.questions.count))
             }
         }
     }
