@@ -172,6 +172,8 @@ extension LoginViewController: CustomInputFieldDelegate {
             viewModel.onEmailChange(email: text)
         case .password:
             viewModel.onPasswordChange(password: text)
+        default:
+            break
         }
     }
 
