@@ -7,6 +7,7 @@ class SearchViewModel {
     private var quizes: [Quiz] = []
 
     @Published var filteredQuizes: [QuizCategory: [Quiz]] = [:]
+    @Published var hasErrorOccurred: Bool = false
 
     init(coordinator: CoordinatorProtocol, useCase: QuizUseCaseProtocol) {
         self.coordinator = coordinator
@@ -23,8 +24,10 @@ class SearchViewModel {
 
                 quizes = try await useCase.quizes
 
+                self.hasErrorOccurred = false
                 self.quizes = quizes.map { Quiz(from: $0) }
             } catch {
+                self.hasErrorOccurred = true
             }
         }
     }

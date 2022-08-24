@@ -8,6 +8,8 @@ class SearchViewController: UIViewController {
     private var searchButton: UIButton!
     private var collectionView: UICollectionView!
     private var viewModel: SearchViewModel!
+    private var infoLabel: UILabel!
+    private var errorView: ErrorView!
     private var cancellables = Set<AnyCancellable>()
     private var searchText: String = ""
     private var quizes: [QuizCategory: [Quiz]] = [:]
@@ -53,8 +55,21 @@ class SearchViewController: UIViewController {
             .sink { [weak self] quizes in
                 guard let self = self else { return }
 
+                self.infoLabel.isHidden = self.searchText.isEmpty ? true : !quizes.isEmpty
+                self.infoLabel.text = "Sorry! There are no quizzes! 😞"
                 self.quizes = quizes
                 self.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
+
+        viewModel
+            .$hasErrorOccurred
+            .sink { [weak self] hasErrorOcurred in
+                guard let self = self else { return }
+
+                self.infoLabel.isHidden = true
+                self.errorView.isHidden = !hasErrorOcurred
+                self.collectionView.isHidden = hasErrorOcurred
             }
             .store(in: &cancellables)
     }
@@ -84,6 +99,12 @@ extension SearchViewController: ConstructViewsProtocol {
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         view.addSubview(collectionView)
+
+        infoLabel = UILabel()
+        view.addSubview(infoLabel)
+
+        errorView = ErrorView()
+        view.addSubview(errorView)
     }
 
     func styleViews() {
@@ -106,6 +127,11 @@ extension SearchViewController: ConstructViewsProtocol {
         collectionView.backgroundColor = UIColor.clear
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
+
+        infoLabel.numberOfLines = 0
+        infoLabel.textColor = .white
+        infoLabel.textAlignment = .center
+        infoLabel.font = .systemFont(ofSize: 16)
     }
 
     func defineLayoutForViews() {
@@ -124,6 +150,16 @@ extension SearchViewController: ConstructViewsProtocol {
             $0.top.equalTo(searchTextField.snp.bottom).offset(35)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+
+        infoLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(90)
+        }
+
+        errorView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(90)
         }
     }
 

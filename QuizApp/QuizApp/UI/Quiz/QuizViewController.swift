@@ -58,7 +58,7 @@ class QuizViewController: UIViewController {
             .store(in: &cancellables)
 
         viewModel
-            .$hasErrorOcurred
+            .$hasErrorOccurred
             .sink { [weak self] hasErrorOcurred in
                 guard let self = self else { return }
 
