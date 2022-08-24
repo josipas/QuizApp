@@ -10,7 +10,7 @@ class QuizSessionCollectionViewCell: UICollectionViewCell {
     private var questionLabel: UILabel!
     private var answersStack: UIStackView!
 
-    weak var delegate: QuizSessionCollectionViewCellDelegate!
+    weak var delegate: QuizSessionCollectionViewCellDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -76,7 +76,7 @@ extension QuizSessionCollectionViewCell: ConstructViewsProtocol {
 extension QuizSessionCollectionViewCell: AnswerViewDelegate {
 
     func answerTapped(answerId: Int) {
-        delegate.answerTapped(answerId: answerId)
+        delegate?.answerTapped(answerId: answerId)
     }
 
 }
