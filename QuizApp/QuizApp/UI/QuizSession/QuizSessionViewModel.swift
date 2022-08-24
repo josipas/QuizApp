@@ -35,10 +35,30 @@ class QuizSessionViewModel {
         selectedAnswerIds.append(answerId)
         recalculateData()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self = self else { return }
 
-            if self.currentQuestionIndex >= self.questions.count {
+            var questions: [Question] = []
+
+            for (index, question) in self.questions.enumerated() {
+                if index == self.selectedAnswerIds.count {
+                    questions
+                        .append(
+                            Question(
+                                id: question.id,
+                                question: question.question,
+                                answers: question.answers,
+                                progressColor: .white))
+                } else {
+                    questions.append(question)
+                }
+            }
+
+            self.questions = questions
+
+            if self.currentQuestionIndex < self.questions.count - 1 {
+                self.currentQuestionIndex = self.selectedAnswerIds.count
+            } else {
                 self.coordinator.showQuizResult()
             }
         }
@@ -78,10 +98,8 @@ class QuizSessionViewModel {
                     return Answer(id: answer.id, answer: answer.answer, backgroundColor: backgroundColor)
                 }
 
-            if index > selectedAnswerIds.count {
-                progressColor = .white.withAlphaComponent(0.5)
-            } else if index == selectedAnswerIds.count {
-                progressColor = .white
+            if index >= selectedAnswerIds.count {
+                progressColor = index == 0 ? .white : .white.withAlphaComponent(0.5)
             } else {
                 progressColor = quizData.questions[index].correctAnswerId == selectedAnswerIds[index] ?
                     correctAnswerColor :
@@ -97,7 +115,9 @@ class QuizSessionViewModel {
         }
 
         self.questions = questions
-        self.currentQuestionIndex = selectedAnswerIds.count
+        if selectedAnswerIds.isEmpty {
+            self.currentQuestionIndex = selectedAnswerIds.count
+        }
     }
 
 }
