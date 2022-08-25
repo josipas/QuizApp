@@ -12,7 +12,7 @@ class AnswerView: UIView {
     private var label: UILabel!
     private var answer: Answer!
 
-    weak var delegate: AnswerViewDelegate!
+    weak var delegate: AnswerViewDelegate?
 
     init(answer: Answer) {
         super.init(frame: .zero)
@@ -35,7 +35,7 @@ class AnswerView: UIView {
     }
 
     @objc private func answerTapped() {
-        delegate.answerTapped(answerId: answer.id)
+        delegate?.answerTapped(answerId: answer.id)
     }
 
 }
@@ -66,7 +66,7 @@ extension AnswerView: ConstructViewsProtocol {
         }
 
         label.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(30)
         }
     }
