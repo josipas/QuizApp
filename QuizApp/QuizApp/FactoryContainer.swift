@@ -112,6 +112,10 @@ extension Container {
             QuizResultViewModel(session: session, useCase: quizUseCase(), coordinator: coordinator())
     }
 
+    static let searchViewModel = Factory {
+        SearchViewModel(coordinator: coordinator(), useCase: quizUseCase())
+    }
+
 }
 
 // MARK: VC
@@ -143,6 +147,10 @@ extension Container {
 
     static let quizResultViewController = ParameterFactory<EndSessionData, QuizResultViewController> { session in
         QuizResultViewController(viewModel: quizResultViewModel(session))
+    }
+
+    static let searchViewController = Factory {
+        SearchViewController(viewModel: searchViewModel())
     }
 
 }

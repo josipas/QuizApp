@@ -1,18 +1,20 @@
 import Combine
 import UIKit
+import SnapKit
 
-class QuizViewController: UIViewController {
+class SearchViewController: UIViewController {
 
-    private var titleLabel: UILabel!
-    private var selectionView: CustomSegmentedControl!
+    private var searchTextField: CustomInputFieldView!
+    private var searchButton: UIButton!
     private var collectionView: UICollectionView!
-    private var errorView: ErrorView!
+    private var viewModel: SearchViewModel!
     private var infoLabel: UILabel!
-    private var viewModel: QuizViewModel!
+    private var errorView: ErrorView!
     private var cancellables = Set<AnyCancellable>()
+    private var searchText: String = ""
     private var quizzes: [QuizCategory: [Quiz]] = [:]
 
-    init(viewModel: QuizViewModel) {
+    init(viewModel: SearchViewModel) {
         super.init(nibName: nil, bundle: nil)
 
         self.viewModel = viewModel
@@ -22,11 +24,26 @@ class QuizViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.navigationBar.isHidden = true
+
+        loadData()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        navigationController?.navigationBar.isHidden = false
+    }
+
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         createViews()
         styleViews()
         defineLayoutForViews()
-        loadData()
         bindViewModel()
     }
 
@@ -36,22 +53,18 @@ class QuizViewController: UIViewController {
         configureGradient()
     }
 
+    @objc func searchButtonTapped() {
+        viewModel.onSearchButtonTap(text: searchText)
+    }
+
     private func bindViewModel() {
         viewModel
-            .$categories
-            .sink { [weak self] categories in
-                guard let self = self else { return }
-
-                self.selectionView.set(data: categories)
-            }
-            .store(in: &cancellables)
-
-        viewModel
-            .$quizzes
+            .$filteredQuizzes
             .sink { [weak self] quizzes in
                 guard let self = self else { return }
 
-                self.infoLabel.isHidden = !quizzes.isEmpty
+                self.infoLabel.isHidden = self.searchText.isEmpty || !quizzes.isEmpty
+                self.infoLabel.text = "Sorry! There are no quizzes! 😞"
                 self.quizzes = quizzes
                 self.collectionView.reloadData()
             }
@@ -83,32 +96,32 @@ class QuizViewController: UIViewController {
 
 }
 
-extension QuizViewController: ConstructViewsProtocol {
+extension SearchViewController: ConstructViewsProtocol {
 
     func createViews() {
-        titleLabel = UILabel()
-        view.addSubview(titleLabel)
+        searchTextField = CustomInputFieldView(type: .basic)
+        view.addSubview(searchTextField)
 
-        selectionView = CustomSegmentedControl()
-        view.addSubview(selectionView)
+        searchButton = UIButton()
+        view.addSubview(searchButton)
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         view.addSubview(collectionView)
 
-        errorView = ErrorView()
-        view.addSubview(errorView)
-
         infoLabel = UILabel()
         view.addSubview(infoLabel)
+
+        errorView = ErrorView()
+        view.addSubview(errorView)
     }
 
     func styleViews() {
-        titleLabel.textColor = .white
-        titleLabel.font = .systemFont(ofSize: 32, weight: .bold)
-        titleLabel.textAlignment = .center
-        titleLabel.text = "PopQuiz"
+        searchTextField.delegate = self
 
-        selectionView.delegate = self
+        searchButton.setTitle("Search", for: .normal)
+        searchButton.setTitleColor(.white, for: .normal)
+        searchButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
 
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -123,7 +136,6 @@ extension QuizViewController: ConstructViewsProtocol {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
 
-        infoLabel.text = "Sorry! There are no quizzes for this category. 😞"
         infoLabel.numberOfLines = 0
         infoLabel.textColor = .white
         infoLabel.textAlignment = .center
@@ -131,30 +143,29 @@ extension QuizViewController: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
-        titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(80)
-            $0.trailing.leading.equalToSuperview().inset(30)
+        searchTextField.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(70)
+            $0.leading.equalToSuperview().inset(20)
         }
 
-        selectionView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
-            $0.trailing.equalToSuperview().inset(12)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-            $0.height.equalTo(30)
+        searchButton.snp.makeConstraints {
+            $0.centerY.equalTo(searchTextField)
+            $0.leading.equalTo(searchTextField.snp.trailing).offset(20)
+            $0.trailing.equalToSuperview().inset(20)
         }
 
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(selectionView.snp.bottom).offset(25)
+            $0.top.equalTo(searchTextField.snp.bottom).offset(35)
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
 
-        errorView.snp.makeConstraints {
+        infoLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(90)
         }
 
-        infoLabel.snp.makeConstraints {
+        errorView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(90)
         }
@@ -162,7 +173,15 @@ extension QuizViewController: ConstructViewsProtocol {
 
 }
 
-extension QuizViewController: UICollectionViewDataSource {
+extension SearchViewController: CustomInputFieldDelegate {
+
+    func reportChanges(_ type: CustomInputFieldType, _ text: String) {
+        searchText = text
+    }
+
+}
+
+extension SearchViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         quizzes.keys.count
@@ -205,7 +224,7 @@ extension QuizViewController: UICollectionViewDataSource {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        quizzes.keys.count < 2 ? .zero : CGSize(width: 0, height: 50)
+        CGSize(width: view.bounds.width - 40, height: 50)
     }
 
     func collectionView(
@@ -233,7 +252,7 @@ extension QuizViewController: UICollectionViewDataSource {
 
 }
 
-extension QuizViewController: UICollectionViewDelegate {
+extension SearchViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let category = Array(quizzes.keys)[indexPath.section]
@@ -247,7 +266,7 @@ extension QuizViewController: UICollectionViewDelegate {
 
 }
 
-extension QuizViewController: UICollectionViewDelegateFlowLayout {
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -255,16 +274,6 @@ extension QuizViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         CGSize(width: view.bounds.width - 40, height: 140)
-    }
-
-}
-
-extension QuizViewController: CustomSegmentedControlDelegate {
-
-    func segmentTapped(id: Any) {
-        guard let category = id as? QuizCategory else { return }
-
-        viewModel.onCategorySelected(category)
     }
 
 }

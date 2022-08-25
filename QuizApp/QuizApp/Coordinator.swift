@@ -14,7 +14,6 @@ class Coordinator: CoordinatorProtocol {
     }
 
     func showHome() {
-        navigationController.navigationBar.isHidden = false
         navigationController.setViewControllers([setUpTabBarController()], animated: true)
     }
 
@@ -39,7 +38,6 @@ class Coordinator: CoordinatorProtocol {
     }
 
     func showQuizResult(session: EndSessionData) {
-        navigationController.navigationBar.isHidden = true
         navigationController.pushViewController(Container.quizResultViewController(session), animated: true)
     }
 
@@ -51,6 +49,7 @@ class Coordinator: CoordinatorProtocol {
 
         tabBarController.viewControllers = [
             makeQuizViewController(),
+            makeSearchViewController(),
             makeUserViewController()]
 
         return tabBarController
@@ -67,13 +66,24 @@ class Coordinator: CoordinatorProtocol {
         return quizViewController
     }
 
+    private func makeSearchViewController() -> UIViewController {
+        let searchViewController = Container.searchViewController()
+
+        searchViewController.tabBarItem = UITabBarItem(
+            title: "Search",
+            image: UIImage(named: "Search"),
+            tag: 1)
+
+        return searchViewController
+    }
+
     private func makeUserViewController() -> UIViewController {
         let userViewController = Container.userViewController()
 
         userViewController.tabBarItem = UITabBarItem(
             title: "Settings",
             image: UIImage(named: "Settings"),
-            tag: 1)
+            tag: 2)
 
         return userViewController
     }

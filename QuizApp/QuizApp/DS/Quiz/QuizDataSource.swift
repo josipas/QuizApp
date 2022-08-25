@@ -1,8 +1,8 @@
 protocol QuizDataSourceProtocol {
 
-    var quizes: [QuizResponseDataModel] { get async throws }
+    var quizzes: [QuizResponseDataModel] { get async throws }
 
-    func getQuizes(for category: QuizCategoryDataModel) async throws -> [QuizResponseDataModel]
+    func getQuizzes(for category: QuizCategoryDataModel) async throws -> [QuizResponseDataModel]
 
     func getLeaderboard(for quizId: Int) async throws -> [QuizLeaderboardDataModel]
 
@@ -20,17 +20,17 @@ class QuizDataSource: QuizDataSourceProtocol {
         self.quizClient = quizClient
     }
 
-    var quizes: [QuizResponseDataModel] {
+    var quizzes: [QuizResponseDataModel] {
         get async throws {
             try await quizClient
-                .quizes
+                .quizzes
                 .map { QuizResponseDataModel(from: $0) }
         }
     }
 
-    func getQuizes(for category: QuizCategoryDataModel) async throws -> [QuizResponseDataModel] {
+    func getQuizzes(for category: QuizCategoryDataModel) async throws -> [QuizResponseDataModel] {
         try await quizClient
-            .getQuizes(for: QuizCategoryClientModel(rawValue: category.rawValue)!)
+            .getQuizzes(for: QuizCategoryClientModel(rawValue: category.rawValue)!)
             .map { QuizResponseDataModel(from: $0) }
     }
 

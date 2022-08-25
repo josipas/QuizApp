@@ -1,8 +1,8 @@
 protocol QuizClientProtocol {
 
-    var quizes: [QuizResponseClientModel] { get async throws }
+    var quizzes: [QuizResponseClientModel] { get async throws }
 
-    func getQuizes(for category: QuizCategoryClientModel) async throws -> [QuizResponseClientModel]
+    func getQuizzes(for category: QuizCategoryClientModel) async throws -> [QuizResponseClientModel]
 
     func getLeaderboard(for quizId: Int) async throws -> [QuizLeaderboardResponseClientModel]
 
@@ -24,14 +24,14 @@ class QuizClient: QuizClientProtocol {
         self.networkClient = networkClient
     }
 
-    var quizes: [QuizResponseClientModel] {
+    var quizzes: [QuizResponseClientModel] {
         get async throws {
             try await networkClient
                 .executeRequest(path: "\(path)/list", method: .get, parameters: nil)
         }
     }
 
-    func getQuizes(for category: QuizCategoryClientModel) async throws -> [QuizResponseClientModel] {
+    func getQuizzes(for category: QuizCategoryClientModel) async throws -> [QuizResponseClientModel] {
         try await networkClient
             .executeRequest(
                 path: "\(path)/list",
