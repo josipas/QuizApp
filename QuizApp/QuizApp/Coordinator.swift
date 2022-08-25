@@ -14,6 +14,7 @@ class Coordinator: CoordinatorProtocol {
     }
 
     func showHome() {
+        navigationController.navigationBar.isHidden = false
         navigationController.setViewControllers([setUpTabBarController()], animated: true)
     }
 
@@ -37,7 +38,9 @@ class Coordinator: CoordinatorProtocol {
         navigationController.pushViewController(Container.quizSessionViewController(quizId), animated: true)
     }
 
-    func showQuizResult() {
+    func showQuizResult(session: EndSessionData) {
+        navigationController.navigationBar.isHidden = true
+        navigationController.pushViewController(Container.quizResultViewController(session), animated: true)
     }
 
     private func setUpTabBarController() -> UITabBarController {

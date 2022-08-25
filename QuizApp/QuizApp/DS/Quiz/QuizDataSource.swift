@@ -8,6 +8,8 @@ protocol QuizDataSourceProtocol {
 
     func startQuizSession(for quizId: Int) async throws -> StartQuizSessionDataModel
 
+    func endQuizSession(with id: String, numberOfCorrectQuestions: Int) async throws -> EndQuizSessionDataModel
+
 }
 
 class QuizDataSource: QuizDataSourceProtocol {
@@ -40,6 +42,14 @@ class QuizDataSource: QuizDataSourceProtocol {
 
     func startQuizSession(for quizId: Int) async throws -> StartQuizSessionDataModel {
         StartQuizSessionDataModel(from: try await quizClient.startQuizSession(for: quizId))
+    }
+
+    func endQuizSession(with id: String, numberOfCorrectQuestions: Int) async throws -> EndQuizSessionDataModel {
+        EndQuizSessionDataModel(
+            from: try await quizClient
+                .endQuizSession(
+                    with: id,
+                    numberofCorrectQuestions: numberOfCorrectQuestions))
     }
 
 }

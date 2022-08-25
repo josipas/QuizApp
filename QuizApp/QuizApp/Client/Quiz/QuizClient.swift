@@ -8,6 +8,11 @@ protocol QuizClientProtocol {
 
     func startQuizSession(for quizId: Int) async throws -> StartQuizSessionResponseClientModel
 
+    func endQuizSession(
+        with id: String,
+        numberofCorrectQuestions: Int
+    ) async throws -> EndQuizSessionResponseClientModel
+
 }
 
 class QuizClient: QuizClientProtocol {
@@ -45,6 +50,17 @@ class QuizClient: QuizClientProtocol {
     func startQuizSession(for quizId: Int) async throws -> StartQuizSessionResponseClientModel {
         try await networkClient
             .executeRequest(path: "\(path)/\(quizId)/session/start", method: .post, parameters: nil)
+    }
+
+    func endQuizSession(
+        with id: String,
+        numberofCorrectQuestions: Int
+    ) async throws -> EndQuizSessionResponseClientModel {
+        try await networkClient
+            .executeRequest(
+                path: "\(path)/session/\(id)/end",
+                method: .post,
+                body: EndQuizSessionRequestClientModel(numberOfCorrectQuestions: numberofCorrectQuestions))
     }
 
 }

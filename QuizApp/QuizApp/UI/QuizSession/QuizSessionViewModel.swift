@@ -6,8 +6,11 @@ class QuizSessionViewModel {
     private let useCase: QuizUseCaseProtocol
     private let coordinator: CoordinatorProtocol
     private let quizId: Int
+    private let correctAnswerColor = UIColor(red: 0.435, green: 0.812, blue: 0.592, alpha: 1)
+    private let incorrectAnswerColor = UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1)
     private var quizData: StartQuizSessionModel!
     private var selectedAnswerIds: [Int] = []
+    private var numberOfCorrectAnswers = 0
 
     @Published var currentQuestionIndex = 0
     @Published var questions: [Question] = []
@@ -59,7 +62,17 @@ class QuizSessionViewModel {
             if self.currentQuestionIndex < self.questions.count - 1 {
                 self.currentQuestionIndex = self.selectedAnswerIds.count
             } else {
-                self.coordinator.showQuizResult()
+                questions.forEach { question in
+                    if question.progressColor == self.correctAnswerColor {
+                        self.numberOfCorrectAnswers += 1
+                    }
+                }
+                self.coordinator
+                    .showQuizResult(
+                        session: EndSessionData(
+                            sessionId: self.quizData.sessionId,
+                            numberOfCorrectQuestions: self.numberOfCorrectAnswers,
+                            numberOfQuestions: self.questions.count))
             }
         }
     }
@@ -69,8 +82,6 @@ class QuizSessionViewModel {
     }
 
     private func recalculateData() {
-        let correctAnswerColor = UIColor(red: 0.435, green: 0.812, blue: 0.592, alpha: 1)
-        let incorrectAnswerColor = UIColor(red: 0.988, green: 0.395, blue: 0.395, alpha: 1)
         var questions: [Question] = []
 
         for (index, questionModel) in quizData.questions.enumerated() {
