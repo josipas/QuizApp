@@ -14,7 +14,6 @@ class Coordinator: CoordinatorProtocol {
     }
 
     func showHome() {
-        navigationController.navigationBar.isHidden = false
         navigationController.setViewControllers([setUpTabBarController()], animated: true)
     }
 
@@ -39,7 +38,6 @@ class Coordinator: CoordinatorProtocol {
     }
 
     func showQuizResult(session: EndSessionData) {
-        navigationController.navigationBar.isHidden = true
         navigationController.pushViewController(Container.quizResultViewController(session), animated: true)
     }
 
