@@ -12,7 +12,7 @@ class SearchViewController: UIViewController {
     private var errorView: ErrorView!
     private var cancellables = Set<AnyCancellable>()
     private var searchText: String = ""
-    private var quizes: [QuizCategory: [Quiz]] = [:]
+    private var quizzes: [QuizCategory: [Quiz]] = [:]
 
     init(viewModel: SearchViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -59,13 +59,13 @@ class SearchViewController: UIViewController {
 
     private func bindViewModel() {
         viewModel
-            .$filteredQuizes
-            .sink { [weak self] quizes in
+            .$filteredQuizzes
+            .sink { [weak self] quizzes in
                 guard let self = self else { return }
 
-                self.infoLabel.isHidden = self.searchText.isEmpty ? true : !quizes.isEmpty
+                self.infoLabel.isHidden = self.searchText.isEmpty || !quizzes.isEmpty
                 self.infoLabel.text = "Sorry! There are no quizzes! 😞"
-                self.quizes = quizes
+                self.quizzes = quizzes
                 self.collectionView.reloadData()
             }
             .store(in: &cancellables)
@@ -184,13 +184,13 @@ extension SearchViewController: CustomInputFieldDelegate {
 extension SearchViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        quizes.keys.count
+        quizzes.keys.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let quizes = quizes[Array(quizes.keys)[section]] else { return 0 }
+        guard let quizzes = quizzes[Array(quizzes.keys)[section]] else { return 0 }
 
-        return quizes.count
+        return quizzes.count
     }
 
     func collectionView(
@@ -203,11 +203,11 @@ extension SearchViewController: UICollectionViewDataSource {
                 for: indexPath) as? QuizCollectionViewCell
         else { fatalError() }
 
-        let category = Array(quizes.keys)[indexPath.section]
+        let category = Array(quizzes.keys)[indexPath.section]
 
-        guard let quizes = quizes[category] else { return cell }
+        guard let quizzes = quizzes[category] else { return cell }
 
-        let quiz = quizes[indexPath.row]
+        let quiz = quizzes[indexPath.row]
 
         cell.set(
             title: quiz.name,
@@ -224,7 +224,7 @@ extension SearchViewController: UICollectionViewDataSource {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        CGSize(width: 0, height: 50)
+        CGSize(width: view.bounds.width - 40, height: 50)
     }
 
     func collectionView(
@@ -242,7 +242,7 @@ extension SearchViewController: UICollectionViewDataSource {
                         for: indexPath) as? QuizCollectionViewHeader
             else { fatalError() }
 
-            cell.set(category: Array(quizes.keys)[indexPath.section])
+            cell.set(category: Array(quizzes.keys)[indexPath.section])
 
             return cell
         default:
@@ -255,11 +255,11 @@ extension SearchViewController: UICollectionViewDataSource {
 extension SearchViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let category = Array(quizes.keys)[indexPath.section]
+        let category = Array(quizzes.keys)[indexPath.section]
 
-        guard let quizes = quizes[category] else { return }
+        guard let quizzes = quizzes[category] else { return }
 
-        let quiz = quizes[indexPath.row]
+        let quiz = quizzes[indexPath.row]
 
         viewModel.onQuizSelected(quiz)
     }

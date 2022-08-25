@@ -7,7 +7,7 @@ class QuizViewModel {
     private let useCase: QuizUseCaseProtocol
 
     @Published var categories: [CustomSegmentedControlModel] = []
-    @Published var quizes: [QuizCategory: [Quiz]] = [:]
+    @Published var quizzes: [QuizCategory: [Quiz]] = [:]
     @Published var hasErrorOccurred: Bool = false
 
     init(coordinator: CoordinatorProtocol, useCase: QuizUseCaseProtocol) {
@@ -21,21 +21,21 @@ class QuizViewModel {
     }
 
     @MainActor
-    func loadQuizes(for category: QuizCategory) {
+    func loadQuizzes(for category: QuizCategory) {
         Task(priority: .background) { [weak self] in
             guard let self = self else { return }
 
             do {
-                var quizes: [QuizModel] = []
+                var quizzes: [QuizModel] = []
 
                 if category != .all {
-                    quizes = try await useCase.getQuizes(for: QuizCategoryModel(rawValue: category.rawValue)!)
+                    quizzes = try await useCase.getQuizzes(for: QuizCategoryModel(rawValue: category.rawValue)!)
                 } else {
-                    quizes = try await useCase.quizes
+                    quizzes = try await useCase.quizzes
                 }
 
                 self.hasErrorOccurred = false
-                self.quizes = Dictionary(grouping: quizes.map { Quiz(from: $0) }, by: { $0.category })
+                self.quizzes = Dictionary(grouping: quizzes.map { Quiz(from: $0) }, by: { $0.category })
             } catch {
                 self.hasErrorOccurred = true
             }
@@ -55,7 +55,7 @@ class QuizViewModel {
 
     @MainActor
     func onCategorySelected(_ category: QuizCategory) {
-        loadQuizes(for: category)
+        loadQuizzes(for: category)
         loadCategories(active: category)
     }
 

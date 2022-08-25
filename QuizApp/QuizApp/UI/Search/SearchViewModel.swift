@@ -4,9 +4,9 @@ class SearchViewModel {
 
     private let coordinator: CoordinatorProtocol
     private let useCase: QuizUseCaseProtocol
-    private var quizes: [Quiz] = []
+    private var quizzes: [Quiz] = []
 
-    @Published var filteredQuizes: [QuizCategory: [Quiz]] = [:]
+    @Published var filteredQuizzes: [QuizCategory: [Quiz]] = [:]
     @Published var hasErrorOccurred: Bool = false
 
     init(coordinator: CoordinatorProtocol, useCase: QuizUseCaseProtocol) {
@@ -20,12 +20,12 @@ class SearchViewModel {
             guard let self = self else { return }
 
             do {
-                var quizes: [QuizModel] = []
+                var quizzes: [QuizModel] = []
 
-                quizes = try await useCase.quizes
+                quizzes = try await useCase.quizzes
 
                 self.hasErrorOccurred = false
-                self.quizes = quizes.map { Quiz(from: $0) }
+                self.quizzes = quizzes.map { Quiz(from: $0) }
             } catch {
                 self.hasErrorOccurred = true
             }
@@ -35,11 +35,11 @@ class SearchViewModel {
     func onSearchButtonTap(text: String) {
         var filter: [Quiz] = []
 
-        filter = quizes.filter {
+        filter = quizzes.filter {
             $0.name.lowercased().contains(text.lowercased())
         }
 
-        filteredQuizes = Dictionary(grouping: filter, by: { $0.category })
+        filteredQuizzes = Dictionary(grouping: filter, by: { $0.category })
     }
 
     func onQuizSelected(_ quiz: Quiz) {
